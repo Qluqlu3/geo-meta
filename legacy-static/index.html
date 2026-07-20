@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>日本電柱メタ図鑑 | GeoGuessr 電力会社 見分け方ガイド</title>
+<meta name="description" content="GeoGuessr日本メタ:電柱・支線プレート・変圧器の形や色から10電力会社を見分けるための図鑑。電力会社別に識別ポイントをまとめています。">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="mk-triangle" viewBox="0 0 20 20"><polygon points="10,2 18,17 2,17"/></symbol>
+  <symbol id="mk-circle" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8"/></symbol>
+  <symbol id="mk-diamond" viewBox="0 0 20 20"><polygon points="10,1 19,10 10,19 1,10"/></symbol>
+  <symbol id="mk-bottle" viewBox="0 0 20 20"><path d="M8 1h4v5l3 3v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9l3-3z"/></symbol>
+  <symbol id="mk-stripe" viewBox="0 0 20 20"><rect x="2" y="6" width="16" height="8" rx="4"/></symbol>
+  <symbol id="mk-square" viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="2"/></symbol>
+  <pattern id="stripe-pattern" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#1a1a19"/>
+    <rect width="4" height="8" fill="#f0b400"/>
+  </pattern>
+</defs>
+</svg>
+<a class="skip-link" href="#main">本文へスキップ</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="#top">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="10.5" y="2" width="3" height="20" rx="1" fill="var(--c-kansai)"/>
+        <line x1="3" y1="8" x2="21" y2="8" stroke="var(--text-secondary)" stroke-width="2"/>
+        <line x1="4" y1="20" x2="9" y2="10" stroke="var(--text-muted)" stroke-width="1.6"/>
+        <circle cx="4" cy="20" r="1.8" fill="var(--c-tepco)"/>
+      </svg>
+      <span>電柱メタ図鑑</span>
+    </a>
+    <nav class="header-nav" aria-label="電力会社ショートカット">
+      <a href="#map-section">地図</a>
+      <a href="#compare">比較表</a>
+      <a href="#hokkaido"><span class="dot" style="background:var(--c-hokkaido)"></span>北海道電力</a>
+      <a href="#tohoku"><span class="dot" style="background:var(--c-tohoku)"></span>東北電力</a>
+      <a href="#tepco"><span class="dot" style="background:var(--c-tepco)"></span>東京電力</a>
+      <a href="#chubu"><span class="dot" style="background:var(--c-chubu)"></span>中部電力</a>
+      <a href="#hokuriku"><span class="dot" style="background:var(--c-hokuriku)"></span>北陸電力</a>
+      <a href="#kansai"><span class="dot" style="background:var(--c-kansai)"></span>関西電力</a>
+      <a href="#chugoku"><span class="dot" style="background:var(--c-chugoku)"></span>中国電力</a>
+      <a href="#shikoku"><span class="dot" style="background:var(--c-shikoku)"></span>四国電力</a>
+      <a href="#kyushu"><span class="dot" style="background:var(--c-kyushu)"></span>九州電力</a>
+      <a href="#okinawa"><span class="dot" style="background:var(--c-okinawa)"></span>沖縄電力</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="ライト/ダーク切り替え">🌙 ダーク</button>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+
+    <section class="hero" id="top">
+      <span class="tagline">GeoGuessr Japan Meta</span>
+      <h1>電柱・電力設備で都道府県を当てる「電柱メタ」図鑑</h1>
+      <p>日本国内では電力会社ごとに電柱・支線プレート(guy-wire marker)・変圧器・がいしなどの規格が異なり、これが GeoGuessr で地域を絞り込む強力な手がかりになります。このサイトは10電力会社ごとに視覚的な識別ポイントを整理した早見リファレンスです。</p>
+      <p>まずは下の <a href="#compare">比較表</a> でざっくり全体像をつかみ、気になる会社があれば詳細セクションへジャンプしてください。</p>
+      <div class="callout">
+        <strong>使い方のコツ:</strong> 色・形だけで断定せず、複数の特徴(支線プレートの形 + 電柱の色 + ナンバープレートの書式など)を組み合わせて判断すると精度が上がります。曇天・逆光・拡大不可の場面もあるため、100%当たる指標ではない点に注意してください。
+      </div>
+      <div style="margin-top:14px;">
+        <label for="quick-search" style="font-size:0.82rem; color:var(--text-secondary); display:block; margin-bottom:4px;">🔍 会社名・キーワードで絞り込み</label>
+        <input id="quick-search" type="search" placeholder="例: 支線プレート, 三角, TEPCO..." style="width:100%; max-width:360px; padding:8px 12px; border-radius:8px; border:1px solid var(--border-strong); background:var(--surface-2); color:var(--text-primary); font-size:0.9rem;">
+      </div>
+    </section>
+
+    <section id="legend">
+      <h2 class="section-title">見分け方の基本カテゴリ</h2>
+      <p class="section-sub">電力会社ごとに違いが出やすい5つのポイント。まずはこれらの「見る場所」を覚えましょう。</p>
+      <div class="legend-grid">
+        <div class="legend-item">
+          <svg class="icon" viewBox="0 0 40 40"><polygon points="20,6 32,30 8,30" fill="none" stroke="var(--c-kansai)" stroke-width="2.5"/></svg>
+          <h4>① 支線プレート(支線標識)</h4>
+          <p>電柱を斜めに支える「支線(ワイヤー)」の目印板。三角・丸・四角など会社ごとに形と色の規格が違い、最も判別しやすい特徴のひとつ。</p>
+        </div>
+        <div class="legend-item">
+          <svg class="icon" viewBox="0 0 40 40"><rect x="16" y="4" width="8" height="32" rx="2" fill="none" stroke="var(--c-hokkaido)" stroke-width="2.5"/></svg>
+          <h4>② 電柱本体の色・素材</h4>
+          <p>コンクリート柱の色味(灰色/やや茶色)や継ぎ目の位置、木柱の残存率など。地域差はあるが単独では判断しにくい補助的特徴。</p>
+        </div>
+        <div class="legend-item">
+          <svg class="icon" viewBox="0 0 40 40"><rect x="10" y="12" width="20" height="16" rx="8" fill="none" stroke="var(--c-chubu)" stroke-width="2.5"/></svg>
+          <h4>③ 変圧器(トランス)の形</h4>
+          <p>柱上変圧器(円柱の缶)のサイズ・取付方法。円柱形の太さや台座の形状に会社ごとの傾向がある。</p>
+        </div>
+        <div class="legend-item">
+          <svg class="icon" viewBox="0 0 40 40"><rect x="8" y="15" width="24" height="10" rx="2" fill="none" stroke="var(--c-hokuriku)" stroke-width="2.5"/><line x1="12" y1="19" x2="28" y2="19" stroke="var(--c-hokuriku)" stroke-width="1.5"/></svg>
+          <h4>④ 番号プレート・注意プレート</h4>
+          <p>電柱番号札の色(白地/黄色地)やフォント、注意書きプレートのデザイン。接写できる場面では最も確実な手がかり。</p>
+        </div>
+        <div class="legend-item">
+          <svg class="icon" viewBox="0 0 40 40"><ellipse cx="20" cy="14" rx="7" ry="3" fill="none" stroke="var(--c-shikoku)" stroke-width="2.5"/><ellipse cx="20" cy="19" rx="7" ry="3" fill="none" stroke="var(--c-shikoku)" stroke-width="2.5"/><ellipse cx="20" cy="24" rx="7" ry="3" fill="none" stroke="var(--c-shikoku)" stroke-width="2.5"/></svg>
+          <h4>⑤ がいし(碍子)の色</h4>
+          <p>電線を支える絶縁体。グレー・茶色・白など塗色や素材の違いが会社ごとの傾向として現れることがある。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="map-section">
+      <h2 class="section-title">供給エリア地図</h2>
+      <p class="section-sub">クリック(タップ)すると各社の詳細セクションにジャンプします。※実際の県境を簡略化した模式図です。</p>
+      <div class="map-wrap">
+        <figure class="map-figure">
+          <svg viewBox="0 0 300 560" role="group" aria-label="日本の電力会社供給エリア簡略図">
+            <polygon class="map-region" data-target="hokkaido" tabindex="0" aria-label="北海道電力エリアへ" points="195,10 245,15 268,55 260,95 220,115 180,100 165,60 175,25" fill="var(--c-hokkaido)"><title>北海道電力</title></polygon>
+            <text class="map-label" x="218" y="62">北海道</text>
+
+            <polygon class="map-region" data-target="tohoku" tabindex="0" aria-label="東北電力エリアへ" points="205,130 250,125 268,150 265,195 235,225 200,215 185,175 190,145" fill="var(--c-tohoku)"><title>東北電力</title></polygon>
+            <text class="map-label" x="227" y="177">東北</text>
+
+            <polygon class="map-region" data-target="tepco" tabindex="0" aria-label="東京電力エリアへ" points="205,235 250,230 268,255 260,285 230,300 205,285 195,255" fill="var(--c-tepco)"><title>東京電力(TEPCO)</title></polygon>
+            <text class="map-label" x="230" y="267">関東</text>
+
+            <polygon class="map-region" data-target="chubu" tabindex="0" aria-label="中部電力エリアへ" points="150,255 205,250 220,285 210,315 175,325 145,305 140,275" fill="var(--c-chubu)"><title>中部電力</title></polygon>
+            <text class="map-label" x="178" y="288">中部</text>
+
+            <polygon class="map-region" data-target="hokuriku" tabindex="0" aria-label="北陸電力エリアへ" points="105,240 140,235 150,265 138,290 108,295 95,270" fill="var(--c-hokuriku)"><title>北陸電力</title></polygon>
+            <text class="map-label" x="122" y="268">北陸</text>
+
+            <polygon class="map-region" data-target="kansai" tabindex="0" aria-label="関西電力エリアへ" points="130,320 185,315 205,335 195,365 165,380 140,360 125,340" fill="var(--c-kansai)"><title>関西電力</title></polygon>
+            <text class="map-label" x="163" y="348">関西</text>
+
+            <polygon class="map-region" data-target="chugoku" tabindex="0" aria-label="中国電力エリアへ" points="60,335 130,325 135,360 105,380 60,375 40,355" fill="var(--c-chugoku)"><title>中国電力</title></polygon>
+            <text class="map-label" x="90" y="358">中国</text>
+
+            <polygon class="map-region" data-target="shikoku" tabindex="0" aria-label="四国電力エリアへ" points="115,385 170,380 190,400 175,420 130,425 105,405" fill="var(--c-shikoku)"><title>四国電力</title></polygon>
+            <text class="map-label" x="143" y="405">四国</text>
+
+            <polygon class="map-region" data-target="kyushu" tabindex="0" aria-label="九州電力エリアへ" points="20,375 75,370 90,400 80,430 55,455 25,445 10,410" fill="var(--c-kyushu)"><title>九州電力</title></polygon>
+            <text class="map-label" x="52" y="408">九州</text>
+
+            <rect class="map-region" data-target="okinawa" tabindex="0" aria-label="沖縄電力エリアへ" x="15" y="472" width="95" height="58" rx="8" fill="var(--c-okinawa)" stroke-dasharray="4 3"><title>沖縄電力</title></rect>
+            <circle cx="40" cy="510" r="3" fill="rgba(255,255,255,.75)"/>
+            <circle cx="55" cy="500" r="4" fill="rgba(255,255,255,.75)"/>
+            <circle cx="75" cy="512" r="3.5" fill="rgba(255,255,255,.75)"/>
+            <text class="map-label" x="62" y="536">沖縄(別枠)</text>
+          </svg>
+          <div class="map-legend">
+            <span><i class="dot" style="background:var(--c-hokkaido)"></i>北海道電力</span>
+            <span><i class="dot" style="background:var(--c-tohoku)"></i>東北電力</span>
+            <span><i class="dot" style="background:var(--c-tepco)"></i>東京電力</span>
+            <span><i class="dot" style="background:var(--c-chubu)"></i>中部電力</span>
+            <span><i class="dot" style="background:var(--c-hokuriku)"></i>北陸電力</span>
+            <span><i class="dot" style="background:var(--c-kansai)"></i>関西電力</span>
+            <span><i class="dot" style="background:var(--c-chugoku)"></i>中国電力</span>
+            <span><i class="dot" style="background:var(--c-shikoku)"></i>四国電力</span>
+            <span><i class="dot" style="background:var(--c-kyushu)"></i>九州電力</span>
+            <span><i class="dot" style="background:var(--c-okinawa)"></i>沖縄電力</span>
+          </div>
+        </figure>
+        <div class="map-side">
+          <h3>この地図の読み方</h3>
+          <ol>
+            <li>まず色でざっくりエリアを絞り込む</li>
+            <li>気になる地域をクリックして詳細カードへ</li>
+            <li>詳細カードの識別図と特徴リストを確認</li>
+            <li>迷ったら「混同しやすい会社」の注記もチェック</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare">
+      <h2 class="section-title">早見比較表</h2>
+      <p class="section-sub">プレイ中にサッと見返すための一覧。詳細は各社カードへ。</p>
+      <div class="table-scroll">
+        <table class="compare">
+          <thead>
+            <tr>
+              <th>電力会社</th>
+              <th>主な供給エリア</th>
+              <th>支線プレート</th>
+              <th>電柱本体</th>
+              <th>変圧器</th>
+              <th>がいし</th>
+            </tr>
+          </thead>
+          <tbody id="compare-body">
+            <tr>
+              <td class="company-cell"><span class="chip"><span class="dot" style="background:var(--c-hokkaido)"></span>北海道電力</span></td>
+              <td>北海道</td>
+              <td>支線ガードが長め</td>
+              <td>縦長方形・横書きで上から「区/画/図」の順</td>
+              <td>プラス字バー固定/木製板は使わない</td>
+              <td>資料少なめ</td>
+            </tr>
+            <tr>
+              <td class="company-cell"><span class="chip"><span class="dot" style="background:var(--c-tohoku)"></span>東北電力</span></td>
+              <td>東北6県+新潟</td>
+              <td>資料少なめ</td>
+              <td>横長ワイド・左上にロゴ、灰色標識板</td>
+              <td>四角ブラケット+社名ロゴ/丸板+ジグザグ棒</td>
+              <td>資料少なめ</td>
+            </tr>
+            <tr>
+              <td class="company-cell"><span class="chip"><span class="dot" style="background:var(--c-tepco)"></span>東京電力</span></td>
+              <td>関東+山梨+静岡東部</td>
+              <td>資料少なめ</td>
+              <td>縦長・白地・漢字横書き</td>
+              <td>木製板+2本バー / 丸板+T字バー</td>
+              <td>黒い四角めのキャップ</td>
+            </tr>
+            <tr>
+              <td class="company-cell"><span class="chip"><span class="dot" style="background:var(--c-chubu)"></span>中部電力</span></td>
+              <td>東海+長野</td>
+              <td>黒黄の縦縞ストライプ</td>
+              <td>縦型・角丸(情報源により楕円との報告も)</td>
+              <td>黄色ペイント数字+黒タップ/三角+横棒</td>
+              <td>資料少なめ</td>
+            </tr>
+            <tr>
+              <td class="company-cell"><span class="chip"><span class="dot" style="background:var(--c-hokuriku)"></span>北陸電力</span></td>
+              <td>富山・石川・福井東部</td>
+              <td>ボトル型+黒テープ螺旋巻き</td>
+              <td>横長・幅やや狭い/カタカナ+4桁数字</td>
+              <td>資料少なめ</td>
+              <td>資料少なめ</td>
+            </tr>
+            <tr>
+              <td class="company-cell"><span class="chip"><span class="dot" style="background:var(--c-kansai)"></span>関西電力</span></td>
+              <td>近畿+福井西部</td>
+              <td>瓶型GWキャップ/W字ワイヤー</td>
+              <td>縦長・白地・縦書き漢字orカタカナ</td>
+              <td>120°腕金/引き下げ線が下から延びる</td>
+              <td>資料少なめ</td>
+            </tr>
+            <tr>
+              <td class="company-cell"><span class="chip"><span class="dot" style="background:var(--c-chugoku)"></span>中国電力</span></td>
+              <td>中国地方5県</td>
+              <td>ガード下部が丸型</td>
+              <td>縦型・ENERGIAロゴ/3枚以上貼付されがち</td>
+              <td>十字バー+三角固定/朱色数字シール</td>
+              <td>資料少なめ</td>
+            </tr>
+            <tr>
+              <td class="company-cell"><span class="chip"><span class="dot" style="background:var(--c-shikoku)"></span>四国電力</span></td>
+              <td>四国4県</td>
+              <td>資料少なめ</td>
+              <td>カタカナ横書き+ロゴ/プレート間隔が狭い</td>
+              <td>底面にシール/引き下げ線が90°に曲がる</td>
+              <td>資料少なめ</td>
+            </tr>
+            <tr>
+              <td class="company-cell"><span class="chip"><span class="dot" style="background:var(--c-kyushu)"></span>九州電力</span></td>
+              <td>九州7県</td>
+              <td>ボトルキャップなし・中央に直挿し</td>
+              <td>縦型・厚め/カタカナ1文字+数字・縦書き</td>
+              <td>資料少なめ</td>
+              <td>黒い三角めのキャップ</td>
+            </tr>
+            <tr>
+              <td class="company-cell"><span class="chip"><span class="dot" style="background:var(--c-okinawa)"></span>沖縄電力</span></td>
+              <td>沖縄県</td>
+              <td>黒黄ストライプ(中部と類似・要注意)</td>
+              <td>罫線あり・プレート3枚付け</td>
+              <td>他社スタイルが混在する傾向</td>
+              <td>資料少なめ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="companies">
+      <h2 class="section-title">電力会社別 詳細ガイド</h2>
+      <p class="section-sub">北から順に10電力会社を掲載しています。</p>
+      <div class="company-nav-grid">
+        <a href="#hokkaido"><span class="dot" style="background:var(--c-hokkaido)"></span>北海道電力</a>
+        <a href="#tohoku"><span class="dot" style="background:var(--c-tohoku)"></span>東北電力</a>
+        <a href="#tepco"><span class="dot" style="background:var(--c-tepco)"></span>東京電力</a>
+        <a href="#chubu"><span class="dot" style="background:var(--c-chubu)"></span>中部電力</a>
+        <a href="#hokuriku"><span class="dot" style="background:var(--c-hokuriku)"></span>北陸電力</a>
+        <a href="#kansai"><span class="dot" style="background:var(--c-kansai)"></span>関西電力</a>
+        <a href="#chugoku"><span class="dot" style="background:var(--c-chugoku)"></span>中国電力</a>
+        <a href="#shikoku"><span class="dot" style="background:var(--c-shikoku)"></span>四国電力</a>
+        <a href="#kyushu"><span class="dot" style="background:var(--c-kyushu)"></span>九州電力</a>
+        <a href="#okinawa"><span class="dot" style="background:var(--c-okinawa)"></span>沖縄電力</a>
+      </div>
+
+      <article class="company-card" id="hokkaido">
+        <div class="company-head">
+          <span class="swatch" style="background:var(--c-hokkaido)"></span>
+          <h3>北海道電力</h3><span class="romaji">Hokkaido Electric Power</span>
+        </div>
+        <div class="area-tags"><span>北海道</span></div>
+        <div class="company-body">
+          <div class="diagram-box">
+            <svg viewBox="0 0 140 200">
+              <rect x="66" y="8" width="8" height="184" rx="3" fill="var(--baseline)"/>
+              <rect x="38" y="28" width="64" height="6" rx="3" fill="var(--text-secondary)"/>
+              <circle cx="44" cy="20" r="5" fill="var(--text-muted)"/><circle cx="70" cy="20" r="5" fill="var(--text-muted)"/><circle cx="96" cy="20" r="5" fill="var(--text-muted)"/>
+              <line x1="70" y1="34" x2="70" y2="46" stroke="var(--c-hokkaido)" stroke-width="4"/>
+              <line x1="82" y1="46" x2="58" y2="46" stroke="var(--c-hokkaido)" stroke-width="4"/>
+              <circle cx="100" cy="58" r="14" fill="var(--surface-2)" stroke="var(--c-hokkaido)" stroke-width="3"/>
+              <line x1="70" y1="95" x2="24" y2="182" stroke="var(--text-muted)" stroke-width="2"/>
+              <use href="#mk-diamond" x="12" y="171" width="24" height="24" fill="var(--c-hokkaido)"/>
+              <rect x="80" y="150" width="24" height="34" rx="2" fill="var(--surface-2)" stroke="var(--c-hokkaido)" stroke-width="2"/>
+              <line x1="84" y1="159" x2="100" y2="159" stroke="var(--c-hokkaido)" stroke-width="1.5"/>
+              <line x1="84" y1="167" x2="100" y2="167" stroke="var(--c-hokkaido)" stroke-width="1.5"/>
+              <line x1="84" y1="175" x2="100" y2="175" stroke="var(--c-hokkaido)" stroke-width="1.5"/>
+            </svg>
+            <p class="diagram-caption">プラス字バーの変圧器固定+区/画/図プレート(模式図)</p>
+          </div>
+          <div>
+            <ul class="feature-list">
+              <li><span class="k">支線プレート</span><span>支線ガード(ワイヤーの保護カバー)が他社より長めという報告あり。</span></li>
+              <li><span class="k">番号プレート</span><span>縦長の長方形・横書きで、上から「区」「画」「図」の順に数字が並ぶ独特の書式。</span></li>
+              <li><span class="k">変圧器</span><span>プラス(＋)字型のバーで側面固定、または2本バーに変圧器1個。<strong>木製の取付板は使われない</strong>点がTEPCO/関東の似た構成と見分けるポイント。</span></li>
+              <li><span class="k">ポールトップ</span><span>柱の頭が円錐形の構造。</span></li>
+            </ul>
+            <div class="confuse-note"><strong>混同注意:</strong> 変圧器の2本バー構成は関東(TEPCO)にも似た例があるが、木製取付板の有無で区別できるとされる。</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="company-card" id="tohoku">
+        <div class="company-head">
+          <span class="swatch" style="background:var(--c-tohoku)"></span>
+          <h3>東北電力</h3><span class="romaji">Tohoku Electric Power</span>
+        </div>
+        <div class="area-tags"><span>青森</span><span>岩手</span><span>宮城</span><span>秋田</span><span>山形</span><span>福島</span><span>新潟</span></div>
+        <div class="company-body">
+          <div class="diagram-box">
+            <svg viewBox="0 0 140 200">
+              <rect x="66" y="8" width="8" height="184" rx="3" fill="var(--baseline)"/>
+              <rect x="38" y="28" width="64" height="6" rx="3" fill="var(--text-secondary)"/>
+              <circle cx="44" cy="20" r="5" fill="var(--text-muted)"/><circle cx="70" cy="20" r="5" fill="var(--text-muted)"/><circle cx="96" cy="20" r="5" fill="var(--text-muted)"/>
+              <circle cx="100" cy="58" r="14" fill="var(--surface-2)" stroke="var(--c-tohoku)" stroke-width="3"/>
+              <path d="M92 58 l4 -5 l4 5 l4 -5" fill="none" stroke="var(--c-tohoku)" stroke-width="1.6"/>
+              <rect x="86" y="47" width="7" height="7" fill="none" stroke="var(--c-tohoku)" stroke-width="1.4"/>
+              <line x1="70" y1="95" x2="24" y2="182" stroke="var(--text-muted)" stroke-width="2"/>
+              <use href="#mk-diamond" x="12" y="171" width="24" height="24" fill="var(--c-tohoku)"/>
+              <rect x="72" y="156" width="40" height="16" rx="2" fill="var(--surface-2)" stroke="var(--c-tohoku)" stroke-width="2"/>
+              <circle cx="79" cy="164" r="2" fill="var(--c-tohoku)"/>
+            </svg>
+            <p class="diagram-caption">丸板+ジグザグ棒の変圧器+横長プレート(模式図)</p>
+          </div>
+          <div>
+            <ul class="feature-list">
+              <li><span class="k">番号プレート</span><span>やや縦に幅のある横長タイプ。左上に社名ロゴ、幹線名が小さく書かれる。標識板自体は灰色のものが多い。</span></li>
+              <li><span class="k">変圧器</span><span>四角いホールディングブラケットと東北電力のロゴが付くことが多く、丸板+ジグザグ棒に載る例も報告されている。</span></li>
+              <li><span class="k">ポールトップ</span><span>円錐形の頭部構造(北海道と似た系統)。</span></li>
+              <li><span class="k">その他</span><span>新潟県内ではNTTの横長プレートが確認できるとの報告あり(新潟は行政区分としては中部寄りだが電力供給は東北電力エリア)。</span></li>
+            </ul>
+            <div class="confuse-note"><strong>混同注意:</strong> 円錐形ポールトップは北海道電力とも共通するため、プレート書式(横長+ロゴ位置)や供給エリア(緯度)と合わせて判断すること。</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="company-card" id="tepco">
+        <div class="company-head">
+          <span class="swatch" style="background:var(--c-tepco)"></span>
+          <h3>東京電力(TEPCO)</h3><span class="romaji">Tokyo Electric Power Company</span>
+        </div>
+        <div class="area-tags"><span>東京</span><span>神奈川</span><span>埼玉</span><span>千葉</span><span>茨城</span><span>栃木</span><span>群馬</span><span>山梨</span><span>静岡東部</span></div>
+        <div class="company-body">
+          <div class="diagram-box">
+            <svg viewBox="0 0 140 200">
+              <rect x="66" y="8" width="8" height="184" rx="3" fill="var(--baseline)"/>
+              <rect x="38" y="28" width="64" height="6" rx="3" fill="var(--text-secondary)"/>
+              <rect x="40" y="16" width="8" height="8" rx="1.5" fill="#111"/>
+              <rect x="66" y="16" width="8" height="8" rx="1.5" fill="#111"/>
+              <rect x="92" y="16" width="8" height="8" rx="1.5" fill="#111"/>
+              <rect x="86" y="44" width="20" height="10" fill="#8a5a2b" opacity="0.55"/>
+              <circle cx="100" cy="58" r="14" fill="var(--surface-2)" stroke="var(--c-tepco)" stroke-width="3"/>
+              <line x1="70" y1="95" x2="24" y2="182" stroke="var(--text-muted)" stroke-width="2"/>
+              <use href="#mk-diamond" x="12" y="171" width="24" height="24" fill="var(--c-tepco)"/>
+              <rect x="82" y="150" width="24" height="36" rx="2" fill="#fff" stroke="var(--c-tepco)" stroke-width="2"/>
+              <line x1="86" y1="160" x2="102" y2="160" stroke="var(--c-tepco)" stroke-width="1.5"/>
+              <line x1="86" y1="170" x2="102" y2="170" stroke="var(--c-tepco)" stroke-width="1.5"/>
+            </svg>
+            <p class="diagram-caption">黒い四角がいしキャップ+木製取付板+白い縦長プレート(模式図)</p>
+          </div>
+          <div>
+            <ul class="feature-list">
+              <li><span class="k">番号プレート</span><span>縦長の白いプレートで、標識名(地名)は漢字・横書き。灰色ブリキ製で手書き文字の例もある。</span></li>
+              <li><span class="k">がいし</span><span>黒いキャップが被さった四角めの形状。</span></li>
+              <li><span class="k">変圧器</span><span>絶縁体2〜3個構成で、木製の取付板+2本バー、または丸板+T字バーに載ることが多い。木製板が変圧器に差し込まれる例も。</span></li>
+              <li><span class="k">ポールトップ</span><span>GWキャップ、D字型の腕金、ひらがな「も」の字のような形の腕金が特徴として報告されている。</span></li>
+              <li><span class="k">その他</span><span>青みがかった電線が多いという報告もある(補助的な手がかり)。</span></li>
+            </ul>
+            <div class="confuse-note"><strong>混同注意:</strong> 木製取付板は北海道電力の変圧器には基本的に付かないとされるため、木製板の有無が北海道 vs 関東の判別に使える。</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="company-card" id="chubu">
+        <div class="company-head">
+          <span class="swatch" style="background:var(--c-chubu)"></span>
+          <h3>中部電力</h3><span class="romaji">Chubu Electric Power</span>
+        </div>
+        <div class="area-tags"><span>愛知</span><span>岐阜</span><span>三重</span><span>静岡西部</span><span>長野</span></div>
+        <div class="company-body">
+          <div class="diagram-box">
+            <svg viewBox="0 0 140 200">
+              <rect x="66" y="8" width="8" height="184" rx="3" fill="var(--baseline)"/>
+              <rect x="38" y="28" width="64" height="6" rx="3" fill="var(--text-secondary)"/>
+              <circle cx="44" cy="20" r="5" fill="var(--text-muted)"/><circle cx="70" cy="20" r="5" fill="var(--text-muted)"/><circle cx="96" cy="20" r="5" fill="var(--text-muted)"/>
+              <polygon points="90,72 110,72 100,50" fill="none" stroke="var(--c-chubu)" stroke-width="2.5"/>
+              <circle cx="100" cy="58" r="13" fill="var(--surface-2)" stroke="var(--c-chubu)" stroke-width="3"/>
+              <text x="100" y="61" font-size="9" text-anchor="middle" fill="var(--c-chubu)" font-weight="700">15</text>
+              <line x1="70" y1="95" x2="24" y2="182" stroke="var(--text-muted)" stroke-width="2"/>
+              <rect x="10" y="168" width="26" height="18" rx="4" fill="url(#stripe-pattern)" stroke="var(--c-chubu)" stroke-width="2"/>
+              <ellipse cx="92" cy="167" rx="16" ry="20" fill="var(--surface-2)" stroke="var(--c-chubu)" stroke-width="2"/>
+            </svg>
+            <p class="diagram-caption">黒黄ストライプの支線ガード+楕円形プレート(模式図)</p>
+          </div>
+          <div>
+            <ul class="feature-list">
+              <li><span class="k">支線プレート</span><span>黒と黄色の縦縞ストライプの支線ガードが特徴的(<strong>沖縄電力にも同様の柄が見られ混同しやすい</strong>)。</span></li>
+              <li><span class="k">番号プレート</span><span>楕円形(他社は長方形が基本)という報告がある一方、「縦型で角が丸い札、上部に中部電力ロゴ」とする別の報告もあり<strong>情報源により形状の説明が食い違う</strong>。共通して縦長・角丸〜楕円のシルエットと覚えておくとよい。</span></li>
+              <li><span class="k">変圧器</span><span>黄色で手書き風の数字と黒い「タップ」端子が付き、大きな三角形+横棒、または細い金属ブラケットで固定。</span></li>
+              <li><span class="k">ポールトップ</span><span>直角に曲がったGWキャップ、三角形の腕金。</span></li>
+            </ul>
+            <div class="confuse-note"><strong>混同注意:</strong> 黒黄ストライプの支線ガードは沖縄電力エリアでも見られるため、これ単独ではなくプレート形状や地域(気候・植生など)も合わせて判断すること。</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="company-card" id="hokuriku">
+        <div class="company-head">
+          <span class="swatch" style="background:var(--c-hokuriku)"></span>
+          <h3>北陸電力</h3><span class="romaji">Hokuriku Electric Power</span>
+        </div>
+        <div class="area-tags"><span>富山</span><span>石川</span><span>福井東部</span></div>
+        <div class="company-body">
+          <div class="diagram-box">
+            <svg viewBox="0 0 140 200">
+              <rect x="66" y="8" width="8" height="184" rx="3" fill="var(--baseline)"/>
+              <rect x="38" y="28" width="64" height="6" rx="3" fill="var(--text-secondary)"/>
+              <circle cx="44" cy="20" r="5" fill="var(--text-muted)"/><circle cx="70" cy="20" r="5" fill="var(--text-muted)"/><circle cx="96" cy="20" r="5" fill="var(--text-muted)"/>
+              <circle cx="100" cy="58" r="14" fill="var(--surface-2)" stroke="var(--c-hokuriku)" stroke-width="3"/>
+              <line x1="70" y1="95" x2="24" y2="182" stroke="var(--text-muted)" stroke-width="2"/>
+              <use href="#mk-bottle" x="10" y="166" width="28" height="28" fill="var(--c-hokuriku)"/>
+              <path d="M14 172 q10 4 20 0" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="1.4"/>
+              <path d="M14 178 q10 4 20 0" fill="none" stroke="#000" stroke-opacity=".4" stroke-width="1.4"/>
+              <rect x="70" y="158" width="38" height="16" rx="3" fill="var(--surface-2)" stroke="var(--c-hokuriku)" stroke-width="2"/>
+            </svg>
+            <p class="diagram-caption">ボトル型+黒テープ螺旋巻きの支線ガード(模式図)</p>
+          </div>
+          <div>
+            <ul class="feature-list">
+              <li><span class="k">支線プレート</span><span>下が太く上が細い「ボトル型」の支線ガードに、黒いテープが螺旋状に巻かれているのが特徴。</span></li>
+              <li><span class="k">番号プレート</span><span>幅がやや狭い横長タイプ。カタカナ+4桁数字の組み合わせで表示され、番号帯で県が絞り込める(目安: 0000〜3999=富山, 4000〜7999=石川, 8000〜9999=福井)。</span></li>
+              <li><span class="k">ポールトップ</span><span>テント状にGW(支線)を支える腕金。</span></li>
+            </ul>
+            <div class="confuse-note"><strong>Tips:</strong> カタカナ+4桁数字が見えたら北陸電力とほぼ確定できる、最も信頼度の高い識別ポイントのひとつ。</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="company-card" id="kansai">
+        <div class="company-head">
+          <span class="swatch" style="background:var(--c-kansai)"></span>
+          <h3>関西電力</h3><span class="romaji">Kansai Electric Power</span>
+        </div>
+        <div class="area-tags"><span>大阪</span><span>京都</span><span>兵庫</span><span>奈良</span><span>滋賀</span><span>和歌山</span><span>福井西部</span></div>
+        <div class="company-body">
+          <div class="diagram-box">
+            <svg viewBox="0 0 140 200">
+              <rect x="66" y="8" width="8" height="184" rx="3" fill="var(--baseline)"/>
+              <line x1="38" y1="34" x2="70" y2="24" stroke="var(--text-secondary)" stroke-width="4"/>
+              <line x1="70" y1="24" x2="102" y2="34" stroke="var(--text-secondary)" stroke-width="4"/>
+              <circle cx="44" cy="24" r="5" fill="var(--text-muted)"/><circle cx="70" cy="16" r="5" fill="var(--text-muted)"/><circle cx="96" cy="24" r="5" fill="var(--text-muted)"/>
+              <circle cx="100" cy="58" r="14" fill="var(--surface-2)" stroke="var(--c-kansai)" stroke-width="3"/>
+              <line x1="100" y1="72" x2="112" y2="90" stroke="var(--c-kansai)" stroke-width="2"/>
+              <line x1="70" y1="95" x2="24" y2="182" stroke="var(--text-muted)" stroke-width="2"/>
+              <use href="#mk-bottle" x="12" y="171" width="24" height="24" fill="var(--c-kansai)"/>
+              <rect x="82" y="152" width="24" height="34" rx="2" fill="#fff" stroke="var(--c-kansai)" stroke-width="2"/>
+              <text x="94" y="172" font-size="10" text-anchor="middle" fill="var(--c-kansai)" font-weight="700" writing-mode="vertical-rl">カ</text>
+            </svg>
+            <p class="diagram-caption">120°の腕金+瓶型GWキャップ+縦書きプレート(模式図)</p>
+          </div>
+          <div>
+            <ul class="feature-list">
+              <li><span class="k">番号プレート</span><span>縦長の白いプレート。標識名は漢字またはカタカナの縦書き。</span></li>
+              <li><span class="k">ポールトップ</span><span>120°に角度のついた腕金、W字型のワイヤー、瓶型のGWキャップ、鳥居のような支持腕金が報告されている。</span></li>
+              <li><span class="k">変圧器</span><span>高圧引き下げ線が変圧器の枠に対して下側から延びる。</span></li>
+            </ul>
+            <div class="confuse-note"><strong>混同注意:</strong> 縦書きプレートは中国電力にも似た書式があるため、プレート単体で断定せず腕金の角度(120°)やポールトップの形も併せて確認すること。</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="company-card" id="chugoku">
+        <div class="company-head">
+          <span class="swatch" style="background:var(--c-chugoku)"></span>
+          <h3>中国電力</h3><span class="romaji">Chugoku Electric Power (ENERGIA)</span>
+        </div>
+        <div class="area-tags"><span>広島</span><span>岡山</span><span>山口</span><span>島根</span><span>鳥取</span></div>
+        <div class="company-body">
+          <div class="diagram-box">
+            <svg viewBox="0 0 140 200">
+              <rect x="66" y="8" width="8" height="184" rx="3" fill="var(--baseline)"/>
+              <rect x="38" y="28" width="64" height="6" rx="3" fill="var(--text-secondary)"/>
+              <circle cx="44" cy="20" r="5" fill="var(--text-muted)"/><circle cx="70" cy="20" r="5" fill="var(--text-muted)"/><circle cx="96" cy="20" r="5" fill="var(--text-muted)"/>
+              <line x1="90" y1="58" x2="110" y2="58" stroke="var(--c-chugoku)" stroke-width="2.5"/>
+              <line x1="100" y1="48" x2="100" y2="68" stroke="var(--c-chugoku)" stroke-width="2.5"/>
+              <polygon points="100,44 108,58 92,58" fill="none" stroke="var(--c-chugoku)" stroke-width="2"/>
+              <circle cx="100" cy="58" r="12" fill="var(--surface-2)" stroke="var(--c-chugoku)" stroke-width="2.5"/>
+              <circle cx="100" cy="66" r="3" fill="#c0392b"/>
+              <line x1="70" y1="95" x2="24" y2="182" stroke="var(--text-muted)" stroke-width="2"/>
+              <circle cx="24" cy="178" r="11" fill="none" stroke="var(--c-chugoku)" stroke-width="3"/>
+              <rect x="80" y="148" width="26" height="36" rx="3" fill="var(--surface-2)" stroke="var(--c-chugoku)" stroke-width="2"/>
+              <rect x="76" y="152" width="26" height="36" rx="3" fill="var(--surface-2)" stroke="var(--c-chugoku)" stroke-width="1.5" opacity=".7"/>
+            </svg>
+            <p class="diagram-caption">十字バー+三角固定+朱色数字の変圧器/プレート複数枚(模式図)</p>
+          </div>
+          <div>
+            <ul class="feature-list">
+              <li><span class="k">番号プレート</span><span>縦型の札で「ENERGIA」ロゴが入ることがあり、1本の柱に3枚以上貼付されている例が多い。</span></li>
+              <li><span class="k">変圧器</span><span>柱の中ほどに三角形金具で固定された十字型バー。長めの横向き、または短めの縦向きがいしが付く。変圧器の底面や側面に朱色(赤)の数字シールが貼られることが多い。</span></li>
+              <li><span class="k">支線プレート</span><span>支線ガードの下部が丸みを帯びた形状という報告がある。</span></li>
+            </ul>
+            <div class="confuse-note"><strong>混同注意:</strong> 縦書き系のプレート書式は関西電力とも似るため、ENERGIAロゴやプレート枚数(3枚以上)の有無を優先して確認すること。</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="company-card" id="shikoku">
+        <div class="company-head">
+          <span class="swatch" style="background:var(--c-shikoku)"></span>
+          <h3>四国電力</h3><span class="romaji">Shikoku Electric Power</span>
+        </div>
+        <div class="area-tags"><span>香川</span><span>徳島</span><span>愛媛</span><span>高知</span></div>
+        <div class="company-body">
+          <div class="diagram-box">
+            <svg viewBox="0 0 140 200">
+              <rect x="66" y="8" width="8" height="184" rx="3" fill="var(--baseline)"/>
+              <rect x="38" y="28" width="64" height="6" rx="3" fill="var(--text-secondary)"/>
+              <circle cx="44" cy="20" r="5" fill="var(--text-muted)"/><circle cx="70" cy="20" r="5" fill="var(--text-muted)"/><circle cx="96" cy="20" r="5" fill="var(--text-muted)"/>
+              <circle cx="100" cy="58" r="13" fill="var(--surface-2)" stroke="var(--c-shikoku)" stroke-width="3"/>
+              <path d="M100 71 L100 80 L114 80" fill="none" stroke="var(--c-shikoku)" stroke-width="2.2"/>
+              <rect x="94" y="76" width="10" height="6" fill="var(--c-shikoku)" opacity=".5"/>
+              <line x1="70" y1="95" x2="24" y2="182" stroke="var(--text-muted)" stroke-width="2"/>
+              <use href="#mk-diamond" x="12" y="171" width="24" height="24" fill="var(--c-shikoku)"/>
+              <rect x="66" y="156" width="18" height="14" rx="2" fill="var(--surface-2)" stroke="var(--c-shikoku)" stroke-width="1.6"/>
+              <rect x="87" y="156" width="18" height="14" rx="2" fill="var(--surface-2)" stroke="var(--c-shikoku)" stroke-width="1.6"/>
+            </svg>
+            <p class="diagram-caption">狭い間隔で並ぶ小型プレート+直角に曲がる引き下げ線(模式図)</p>
+          </div>
+          <div>
+            <ul class="feature-list">
+              <li><span class="k">番号プレート</span><span>カタカナ+横書きで、上部に四国電力のロゴ。複数の小さめプレートがプレート間の隙間を狭くして取り付けられる傾向。</span></li>
+              <li><span class="k">変圧器</span><span>高圧引き下げ線が直角(90°)に曲がる派手な形状という報告があり、底面にシールが貼られることも。</span></li>
+            </ul>
+            <div class="confuse-note"><strong>Tips:</strong> 情報量がやや少ない会社のため、供給エリア(四国4県)と合わせて総合的に判断するとよい。</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="company-card" id="kyushu">
+        <div class="company-head">
+          <span class="swatch" style="background:var(--c-kyushu)"></span>
+          <h3>九州電力</h3><span class="romaji">Kyushu Electric Power</span>
+        </div>
+        <div class="area-tags"><span>福岡</span><span>佐賀</span><span>長崎</span><span>熊本</span><span>大分</span><span>宮崎</span><span>鹿児島</span></div>
+        <div class="company-body">
+          <div class="diagram-box">
+            <svg viewBox="0 0 140 200">
+              <rect x="66" y="8" width="8" height="184" rx="3" fill="var(--baseline)"/>
+              <rect x="38" y="28" width="64" height="6" rx="3" fill="var(--text-secondary)"/>
+              <polygon points="44,16 49,24 39,24" fill="#111"/>
+              <polygon points="70,16 75,24 65,24" fill="#111"/>
+              <polygon points="96,16 101,24 91,24" fill="#111"/>
+              <circle cx="80" cy="46" r="2" fill="var(--c-kyushu)"/><circle cx="86" cy="46" r="2" fill="var(--c-kyushu)"/>
+              <circle cx="100" cy="58" r="14" fill="var(--surface-2)" stroke="var(--c-kyushu)" stroke-width="3"/>
+              <line x1="70" y1="95" x2="24" y2="182" stroke="var(--text-muted)" stroke-width="2.4"/>
+              <rect x="82" y="150" width="22" height="38" rx="2" fill="var(--surface-2)" stroke="var(--c-kyushu)" stroke-width="2.4"/>
+            </svg>
+            <p class="diagram-caption">黒い三角がいしキャップ+厚手の縦型プレート/支線に覆いなし(模式図)</p>
+          </div>
+          <div>
+            <ul class="feature-list">
+              <li><span class="k">番号プレート</span><span>縦型でやや厚みのある札。標識名は基本的にカタカナ1文字+数字の組み合わせで縦書き。</span></li>
+              <li><span class="k">がいし</span><span>黒いキャップが被さった三角めの形状。</span></li>
+              <li><span class="k">支線プレート</span><span>ボトル型のキャップが無く、細い支線がそのまま柱の中央付近に直接差し込まれているタイプが多い。</span></li>
+              <li><span class="k">ポールトップ</span><span>高圧引き下げ線が隙間なく延びる、GW支持腕金に2つ穴があるなどの報告あり。</span></li>
+            </ul>
+            <div class="confuse-note"><strong>混同注意:</strong> 「カタカナ+数字」の縦書きプレートは北陸電力とも似て見えるため、支線ガードの有無(北陸=ボトル型あり/九州=なし)で区別するとよい。</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="company-card" id="okinawa">
+        <div class="company-head">
+          <span class="swatch" style="background:var(--c-okinawa)"></span>
+          <h3>沖縄電力</h3><span class="romaji">Okinawa Electric Power</span>
+        </div>
+        <div class="area-tags"><span>沖縄</span></div>
+        <div class="company-body">
+          <div class="diagram-box">
+            <svg viewBox="0 0 140 200">
+              <rect x="66" y="8" width="8" height="184" rx="3" fill="var(--baseline)"/>
+              <rect x="38" y="28" width="64" height="6" rx="3" fill="var(--text-secondary)"/>
+              <circle cx="44" cy="20" r="5" fill="var(--text-muted)"/><circle cx="70" cy="20" r="5" fill="var(--text-muted)"/><circle cx="96" cy="20" r="5" fill="var(--text-muted)"/>
+              <circle cx="100" cy="58" r="14" fill="var(--surface-2)" stroke="var(--c-okinawa)" stroke-width="3"/>
+              <line x1="70" y1="95" x2="24" y2="182" stroke="var(--text-muted)" stroke-width="2"/>
+              <rect x="10" y="168" width="26" height="18" rx="4" fill="url(#stripe-pattern)" stroke="var(--c-okinawa)" stroke-width="2"/>
+              <rect x="74" y="146" width="30" height="12" rx="2" fill="var(--surface-2)" stroke="var(--c-okinawa)" stroke-width="1.6"/>
+              <rect x="74" y="160" width="30" height="12" rx="2" fill="var(--surface-2)" stroke="var(--c-okinawa)" stroke-width="1.6"/>
+              <rect x="74" y="174" width="30" height="12" rx="2" fill="var(--surface-2)" stroke="var(--c-okinawa)" stroke-width="1.6"/>
+              <line x1="78" y1="152" x2="100" y2="152" stroke="var(--c-okinawa)" stroke-width="1"/>
+              <line x1="78" y1="166" x2="100" y2="166" stroke="var(--c-okinawa)" stroke-width="1"/>
+            </svg>
+            <p class="diagram-caption">罫線入りプレート3枚+黒黄ストライプの支線(模式図)</p>
+          </div>
+          <div>
+            <ul class="feature-list">
+              <li><span class="k">番号プレート</span><span>罫線が引かれており、1本の柱にプレートが3枚(他社は基本2枚)付いているという報告が特徴的。</span></li>
+              <li><span class="k">支線プレート</span><span>黒黄ストライプの支線ガードが見られるが、<strong>中部電力エリアと同じ柄</strong>のため単独では確定できない。</span></li>
+              <li><span class="k">その他</span><span>本土の各電力会社と似た構成の電柱・設備が混在して見られるとの報告があり、単独の特徴よりも複合的な判断が必要。</span></li>
+            </ul>
+            <div class="confuse-note"><strong>混同注意:</strong> 沖縄は地理的に他地域と隣接しないため、南国らしい植生・気候の手がかりと合わせれば誤認するリスクは低い。</div>
+          </div>
+        </div>
+      </article>
+
+
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>本サイトは GeoGuessr プレイヤー向けの非公式リファレンスです。図版はすべて識別ポイントを説明するためのオリジナルの模式図(イラスト)であり、実際の写真ではありません。実運用は各電力会社の設備更新等により変化するため、最終的には現地の複数の手がかりを総合して判断してください。</p>
+  </div>
+</footer>
+
+<button class="back-to-top" type="button" aria-label="トップに戻る">↑</button>
+<script src="assets/script.js"></script>
+</body>
+</html>
