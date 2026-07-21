@@ -288,16 +288,13 @@ section {
   cursor: pointer;
   stroke: var(--surface-1);
   stroke-width: 0.6;
+  outline: none;
   transition:
     opacity 0.12s ease,
     filter 0.12s ease;
 }
 .map-region:hover {
   filter: brightness(1.12);
-}
-.map-region:focus-visible {
-  outline: 3px solid var(--text-primary);
-  outline-offset: 2px;
 }
 .map-label {
   font-size: 9.5px;
