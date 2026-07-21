@@ -234,6 +234,18 @@ function TopExitTransformer() {
   );
 }
 
+function TohokuLogo() {
+  // 東北電力のロゴ(模式化した丸バッジ)…変圧器の缶に貼られることが多いロゴマーク
+  // (商標の忠実な再現ではなく識別用の模式)
+  return (
+    <svg viewBox="0 0 64 60">
+      <Can cx={32} cy={30} r={13} />
+      <circle cx="26" cy="24" r="6" fill="#1a56b0" />
+      <path d="M21 24 q5 -5 10 0" stroke="#fff" strokeWidth="1.4" fill="none" />
+    </svg>
+  );
+}
+
 function SpiralCylinderGuard() {
   // 円柱+黒テープ螺旋巻き(東北特有・ボトル型ではない点がポイント)
   return (
@@ -559,6 +571,7 @@ const DETAILS: Record<string, DetailCategory[]> = {
       items: [
         { icon: <WideGrayPlate />, label: "灰色地・横長プレート+左上ロゴ" },
         { icon: <TopExitTransformer />, label: "引き下げ線が枠の上部から延びる" },
+        { icon: <TohokuLogo />, label: "変圧器に東北電力のロゴが付く" },
       ],
     },
     {

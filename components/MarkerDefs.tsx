@@ -30,6 +30,13 @@ export function MarkerDefs() {
           <stop offset="0.45" stopColor="var(--text-muted)" />
           <stop offset="1" stopColor="var(--baseline)" />
         </linearGradient>
+        {/* pole-gradientと同じ配色を縦方向(y)に適用したもの。腕金など横向きの
+            棒状パーツに使うと、柱と同じ質感の円柱ハイライトになる */}
+        <linearGradient id="beam-gradient" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="var(--baseline)" />
+          <stop offset="0.45" stopColor="var(--text-muted)" />
+          <stop offset="1" stopColor="var(--baseline)" />
+        </linearGradient>
       </defs>
     </svg>
   );
