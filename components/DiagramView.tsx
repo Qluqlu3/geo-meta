@@ -5,10 +5,48 @@ import { useState } from "react";
 import { CompanyDiagram } from "./CompanyDiagram";
 import { DetailPoints, hasDetailPoints } from "./DetailPoints";
 
+const loadingFallback = () => <div className="diagram-3d-loading">読み込み中…</div>;
+
 const DIAGRAM_3D: Record<string, ReturnType<typeof dynamic>> = {
+  hokkaido: dynamic(() => import("./diagram3d/HokkaidoPole3D").then((m) => m.HokkaidoPole3D), {
+    ssr: false,
+    loading: loadingFallback,
+  }),
+  tohoku: dynamic(() => import("./diagram3d/TohokuPole3D").then((m) => m.TohokuPole3D), {
+    ssr: false,
+    loading: loadingFallback,
+  }),
   tepco: dynamic(() => import("./diagram3d/TepcoPole3D").then((m) => m.TepcoPole3D), {
     ssr: false,
-    loading: () => <div className="diagram-3d-loading">読み込み中…</div>,
+    loading: loadingFallback,
+  }),
+  chubu: dynamic(() => import("./diagram3d/ChubuPole3D").then((m) => m.ChubuPole3D), {
+    ssr: false,
+    loading: loadingFallback,
+  }),
+  hokuriku: dynamic(() => import("./diagram3d/HokurikuPole3D").then((m) => m.HokurikuPole3D), {
+    ssr: false,
+    loading: loadingFallback,
+  }),
+  kansai: dynamic(() => import("./diagram3d/KansaiPole3D").then((m) => m.KansaiPole3D), {
+    ssr: false,
+    loading: loadingFallback,
+  }),
+  chugoku: dynamic(() => import("./diagram3d/ChugokuPole3D").then((m) => m.ChugokuPole3D), {
+    ssr: false,
+    loading: loadingFallback,
+  }),
+  shikoku: dynamic(() => import("./diagram3d/ShikokuPole3D").then((m) => m.ShikokuPole3D), {
+    ssr: false,
+    loading: loadingFallback,
+  }),
+  kyushu: dynamic(() => import("./diagram3d/KyushuPole3D").then((m) => m.KyushuPole3D), {
+    ssr: false,
+    loading: loadingFallback,
+  }),
+  okinawa: dynamic(() => import("./diagram3d/OkinawaPole3D").then((m) => m.OkinawaPole3D), {
+    ssr: false,
+    loading: loadingFallback,
   }),
 };
 
