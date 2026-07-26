@@ -45,12 +45,14 @@ cd out && python3 -m http.server 8000
 ## ディレクトリ構成
 
 | パス | 内容 |
-|---|---|
-| `app/` | ページ本体・レイアウト・グローバルCSS |
-| `components/` | UIコンポーネント一式 |
+| --- | --- |
+| `app/` | ページ本体・レイアウト・グローバルCSS(`/` = 電柱メタ、`/road-markings` = 路面標示メタ) |
+| `components/` | UIコンポーネント一式(`components/roadmarkings/` は路面標示メタ専用) |
 | `data/companies.ts` | 10電力会社ぶんのデータ(編集はここ1箇所でOK) |
+| `data/roadMarkings.ts` | 路面標示メタのデータ(「止まれ」字体タイプ・ウインカー促進標示・ダイヤマークなど) |
 | `data/japanPrefectures.json` | 都道府県境界の地図データ(地球地図日本より生成、要出典表示) |
 | `legacy-static/` | 移行前の静的HTML/CSS/JS版 |
 | `PLAN.md` | 作業まとめ・調査の出典・技術メモ |
+| `RESEARCH_road-markings.md` | 路面標示メタの一次調査メモ・出典一覧 |
 
 詳しい経緯やコンポーネント設計は [PLAN.md](./PLAN.md) を参照してください。
