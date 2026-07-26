@@ -36,6 +36,13 @@
   --part-guywire: #1baf7a; /* 支線プレート(支線標識) */
   --part-transformer: #eb6834; /* 変圧器 */
   --part-insulator: #4a3aa7; /* がいし */
+
+  /* 路面標示メタ: 「止まれ」字体タイプのカテゴリカルカラー(5種) */
+  --rm-tokyo: #1f6fb2;
+  --rm-osaka: #d5610a;
+  --rm-nagoya: #a8459c;
+  --rm-transition: #b98420;
+  --rm-hokkaido: #8a8a86;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -68,6 +75,12 @@
     --part-guywire: #199e70;
     --part-transformer: #d95926;
     --part-insulator: #9085e9;
+
+    --rm-tokyo: #4a97d9;
+    --rm-osaka: #e37a33;
+    --rm-nagoya: #c467b8;
+    --rm-transition: #d69f3f;
+    --rm-hokkaido: #9c9b95;
   }
 }
 :root[data-theme="dark"] {
@@ -99,6 +112,12 @@
   --part-guywire: #199e70;
   --part-transformer: #d95926;
   --part-insulator: #9085e9;
+
+  --rm-tokyo: #4a97d9;
+  --rm-osaka: #e37a33;
+  --rm-nagoya: #c467b8;
+  --rm-transition: #d69f3f;
+  --rm-hokkaido: #9c9b95;
 }
 
 * {
@@ -597,6 +616,9 @@ table.compare tbody tr:hover td.company-cell {
 .detail-badge.region {
   background: var(--part-plate);
 }
+.detail-badge.reference {
+  background: var(--text-muted);
+}
 .detail-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -672,6 +694,77 @@ table.compare tbody tr:hover td.company-cell {
 }
 .confuse-note strong {
   color: var(--text-primary);
+}
+
+/* ---------- diamond showcase(ダイヤマーク形状差、大きめ表示) ---------- */
+.diamond-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+}
+.diamond-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  text-align: center;
+}
+.diamond-item svg {
+  width: auto;
+  height: 128px;
+}
+.diamond-item span {
+  font-size: 0.74rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+/* ---------- source list (出典) ---------- */
+.source-list {
+  margin: 10px 0 0;
+  padding-left: 1.1em;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.source-list li {
+  margin-bottom: 3px;
+}
+.source-list a {
+  color: var(--text-secondary);
+  text-decoration: underline;
+}
+
+/* ---------- reference list (参考程度の弱いネタ) ---------- */
+.reference-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.reference-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-1);
+  padding: 14px 16px;
+}
+.reference-item-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.reference-item-head h4 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+.reference-item p {
+  margin: 4px 0 0;
+  font-size: 0.86rem;
+  color: var(--text-secondary);
 }
 
 /* ---------- legend / how-to section ---------- */
