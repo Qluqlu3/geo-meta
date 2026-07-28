@@ -43,6 +43,11 @@
   --rm-nagoya: #a8459c;
   --rm-transition: #b98420;
   --rm-hokkaido: #8a8a86;
+
+  /* 道路標識メタ: 信号機の縦型/横型タイプのカテゴリカルカラー(3種) */
+  --rs-vertical: #2464a8;
+  --rs-mixed: #8a4fae;
+  --rs-horizontal: #c98a2f;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -81,6 +86,10 @@
     --rm-nagoya: #c467b8;
     --rm-transition: #d69f3f;
     --rm-hokkaido: #9c9b95;
+
+    --rs-vertical: #4a8fd9;
+    --rs-mixed: #b07ad9;
+    --rs-horizontal: #d9a34a;
   }
 }
 :root[data-theme="dark"] {
@@ -118,6 +127,10 @@
   --rm-nagoya: #c467b8;
   --rm-transition: #d69f3f;
   --rm-hokkaido: #9c9b95;
+
+  --rs-vertical: #4a8fd9;
+  --rs-mixed: #b07ad9;
+  --rs-horizontal: #d9a34a;
 }
 
 * {
