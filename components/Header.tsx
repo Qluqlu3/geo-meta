@@ -24,6 +24,7 @@ export function Header({ companies }: { companies: Company[] }) {
             </a>
           ))}
           <a href="/road-markings">🚧 路面標示メタ(β)</a>
+          <a href="/road-signs">🚧 道路標識メタ(β)</a>
         </nav>
         <ThemeToggle />
       </div>
