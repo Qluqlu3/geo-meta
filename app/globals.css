@@ -53,6 +53,15 @@
      dataviz検証スクリプトで light/dark とも CVD・コントラスト合格済み */
   --nr-route: #2a78d6;
   --nr-selected: #eb6834;
+
+  /* 廃墟アーカイブ: 分類ごとのマーカー色(4種)。マーカーは航空写真・地形図タイルの上に
+     載り、タイルはページのライト/ダークで変わらないため、ダーク用の段は定義しない。
+     dataviz検証スクリプトで all-pairs の CVD・normal-vision とも合格(黄のみ淡色面で
+     3:1未満のため、凡例ラベル・形(●■◆▲)・一覧表を必ず併用する) */
+  --rn-haikyo: #eda100;
+  --rn-village: #2a78d6;
+  --rn-temple: #4a3aa7;
+  --rn-shrine: #e34948;
 }
 
 @media (prefers-color-scheme: dark) {
