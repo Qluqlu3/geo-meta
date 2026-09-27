@@ -37,7 +37,7 @@ export function Segment({ from, to, radius = 0.014, color = "#9a9890" }: { from:
     return { pos: [mid.x, mid.y, mid.z] as V3, quat: [q.x, q.y, q.z, q.w] as [number, number, number, number], len: length };
   }, [from, to]);
   return (
-    <mesh position={pos} quaternion={quat} castShadow>
+    <mesh position={pos} quaternion={quat}>
       <cylinderGeometry args={[radius, radius, len, 8]} />
       <meshStandardMaterial color={color} roughness={0.8} />
     </mesh>
@@ -46,7 +46,7 @@ export function Segment({ from, to, radius = 0.014, color = "#9a9890" }: { from:
 
 export function PoleShaft() {
   return (
-    <mesh position={[0, 2.15, 0]} castShadow>
+    <mesh position={[0, 2.15, 0]}>
       <cylinderGeometry args={[0.1, 0.14, 4.3, 20]} />
       <meshStandardMaterial color={POLE_COLOR} roughness={0.85} />
     </mesh>
@@ -55,7 +55,7 @@ export function PoleShaft() {
 
 export function CrossArm({ y = 3.5 }: { y?: number }) {
   return (
-    <mesh position={[0, y, 0]} castShadow>
+    <mesh position={[0, y, 0]}>
       <boxGeometry args={[1.7, 0.1, 0.13]} />
       <meshStandardMaterial color={METAL} roughness={0.6} metalness={0.3} />
     </mesh>
@@ -67,11 +67,11 @@ export function CrossArm({ y = 3.5 }: { y?: number }) {
 export function PinInsulatorGeneric({ position }: { position: V3 }) {
   return (
     <group position={position}>
-      <mesh castShadow>
+      <mesh>
         <cylinderGeometry args={[0.055, 0.07, 0.16, 14]} />
         <meshStandardMaterial color={INSULATOR} roughness={0.4} />
       </mesh>
-      <mesh position={[0, 0.1, 0]} castShadow>
+      <mesh position={[0, 0.1, 0]}>
         <sphereGeometry args={[0.06, 14, 10, 0, Math.PI * 2, 0, Math.PI / 2]} />
         <meshStandardMaterial color={INSULATOR} roughness={0.35} />
       </mesh>
@@ -83,15 +83,15 @@ export function PinInsulatorGeneric({ position }: { position: V3 }) {
 export function PinInsulatorSquareCap({ position }: { position: V3 }) {
   return (
     <group position={position}>
-      <mesh castShadow>
+      <mesh>
         <cylinderGeometry args={[0.05, 0.06, 0.12, 12]} />
         <meshStandardMaterial color={INSULATOR} roughness={0.35} />
       </mesh>
-      <mesh position={[0, 0.1, 0]} castShadow>
+      <mesh position={[0, 0.1, 0]}>
         <boxGeometry args={[0.14, 0.08, 0.14]} />
         <meshStandardMaterial color={INSULATOR} roughness={0.3} />
       </mesh>
-      <mesh position={[0, 0.15, 0]} castShadow>
+      <mesh position={[0, 0.15, 0]}>
         <boxGeometry args={[0.16, 0.05, 0.16]} />
         <meshStandardMaterial color={INSULATOR_CAP} roughness={0.45} />
       </mesh>
@@ -103,11 +103,11 @@ export function PinInsulatorSquareCap({ position }: { position: V3 }) {
 export function PinInsulatorTriangleCap({ position }: { position: V3 }) {
   return (
     <group position={position}>
-      <mesh castShadow>
+      <mesh>
         <cylinderGeometry args={[0.05, 0.06, 0.12, 12]} />
         <meshStandardMaterial color={INSULATOR} roughness={0.35} />
       </mesh>
-      <mesh position={[0, 0.15, 0]} castShadow>
+      <mesh position={[0, 0.15, 0]}>
         <coneGeometry args={[0.09, 0.14, 4]} />
         <meshStandardMaterial color={INSULATOR_CAP} roughness={0.45} />
       </mesh>
@@ -153,11 +153,11 @@ export function OverheadGroundWire() {
 export function GWCapGeneric() {
   return (
     <group position={[0, 4.16, 0]}>
-      <mesh castShadow>
+      <mesh>
         <cylinderGeometry args={[0.07, 0.09, 0.12, 14]} />
         <meshStandardMaterial color={METAL} metalness={0.5} roughness={0.4} />
       </mesh>
-      <mesh position={[0, 0.07, 0]} castShadow>
+      <mesh position={[0, 0.07, 0]}>
         <sphereGeometry args={[0.07, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2]} />
         <meshStandardMaterial color={METAL} metalness={0.5} roughness={0.4} />
       </mesh>
@@ -168,7 +168,7 @@ export function GWCapGeneric() {
 // 円錐形のポールトップ(雪対策・北海道/東北系)。
 export function ConeTop() {
   return (
-    <mesh position={[0, 4.22, 0]} castShadow>
+    <mesh position={[0, 4.22, 0]}>
       <coneGeometry args={[0.13, 0.28, 16]} />
       <meshStandardMaterial color={METAL} metalness={0.3} roughness={0.5} />
     </mesh>
@@ -222,7 +222,7 @@ export function PlateBox({
   const rowYs = Array.from({ length: rows }, (_, i) => 0.22 - i * (0.4 / Math.max(rows - 1, 1)));
   return (
     <group position={position}>
-      <mesh castShadow>
+      <mesh>
         <boxGeometry args={[0.42, 0.74, 0.03]} />
         <meshStandardMaterial color={PLATE} roughness={0.6} />
       </mesh>
@@ -231,7 +231,7 @@ export function PlateBox({
         <meshStandardMaterial color={faceColor} roughness={0.75} />
       </mesh>
       {logo && (
-        <mesh position={[0, 0.27, 0.024]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+        <mesh position={[0, 0.27, 0.024]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.045, 0.045, 0.006, 16]} />
           <meshStandardMaterial color={PLATE} roughness={0.5} />
         </mesh>
@@ -275,7 +275,7 @@ function SpiralTape({
     return new THREE.CatmullRomCurve3(points);
   }, [rTop, rBottom, height, turns, surfaceOffset, steps]);
   return (
-    <mesh castShadow>
+    <mesh>
       <tubeGeometry args={[curve, steps, 0.007, 6, false]} />
       <meshStandardMaterial color="#111" roughness={0.6} />
     </mesh>
@@ -296,7 +296,7 @@ export function BottleGuyGuard({ from, to, t = 0.28 }: { from: V3; to: V3; t?: n
   }, [from, to, t]);
   return (
     <group position={pos} quaternion={quat}>
-      <mesh castShadow>
+      <mesh>
         <cylinderGeometry args={[0.03, 0.055, 0.4, 12]} />
         <meshStandardMaterial color={GUYWIRE} roughness={0.55} />
       </mesh>
@@ -317,7 +317,7 @@ export function SpiralCylinderGuyGuard({ from, to, t = 0.28 }: { from: V3; to: V
   }, [from, to, t]);
   return (
     <group position={pos} quaternion={quat}>
-      <mesh castShadow>
+      <mesh>
         <cylinderGeometry args={[0.04, 0.04, 0.42, 12]} />
         <meshStandardMaterial color={GUYWIRE} roughness={0.55} />
       </mesh>
@@ -340,7 +340,7 @@ export function StripedGuyGuard({ from, to, t = 0.28 }: { from: V3; to: V3; t?: 
   return (
     <group position={pos} quaternion={quat}>
       {bands.map((y, i) => (
-        <mesh key={y} position={[0, y, 0]} castShadow>
+        <mesh key={y} position={[0, y, 0]}>
           <cylinderGeometry args={[0.045, 0.045, 0.11, 12]} />
           <meshStandardMaterial color={i % 2 === 0 ? STRIPE_YELLOW : STRIPE_DARK} roughness={0.6} />
         </mesh>
@@ -361,11 +361,11 @@ export function RoundBottomGuyGuard({ from, to, t = 0.28 }: { from: V3; to: V3; 
   }, [from, to, t]);
   return (
     <group position={pos} quaternion={quat}>
-      <mesh position={[0, 0.02, 0]} castShadow>
+      <mesh position={[0, 0.02, 0]}>
         <cylinderGeometry args={[0.045, 0.045, 0.32, 12]} />
         <meshStandardMaterial color={GUYWIRE} roughness={0.55} />
       </mesh>
-      <mesh position={[0, -0.14, 0]} rotation={[Math.PI, 0, 0]} castShadow>
+      <mesh position={[0, -0.14, 0]} rotation={[Math.PI, 0, 0]}>
         <sphereGeometry args={[0.045, 14, 10, 0, Math.PI * 2, 0, Math.PI / 2]} />
         <meshStandardMaterial color={GUYWIRE} roughness={0.55} />
       </mesh>
@@ -385,7 +385,7 @@ export function TallYellowGuyGuard({ from, to, t = 0.24 }: { from: V3; to: V3; t
   }, [from, to, t]);
   return (
     <group position={pos} quaternion={quat}>
-      <mesh castShadow>
+      <mesh>
         <capsuleGeometry args={[0.045, 0.5, 6, 12]} />
         <meshStandardMaterial color={STRIPE_YELLOW} roughness={0.55} />
       </mesh>
@@ -393,20 +393,24 @@ export function TallYellowGuyGuard({ from, to, t = 0.24 }: { from: V3; to: V3; t
   );
 }
 
-export function SceneShell({ children, target = [0.1, 2.2, 0] as V3 }: { children: ReactNode; target?: V3 }) {
+// 静止した模型なので、描画は操作中だけ(frameloop="demand"。OrbitControls が
+// 変化のたびに再描画を要求する)。接地影も初回の1フレームで焼けば足りる。
+// three.js のシャドウマップは、影を受ける面(receiveShadow)が無く何も
+// 描かれないため使わない。
+export function SceneShell({ children }: { children: ReactNode }) {
   return (
-    <Canvas camera={{ position: [3.4, 2.9, 4.6], fov: 38 }} shadows dpr={[1, 2]}>
+    <Canvas camera={{ position: [3.4, 2.9, 4.6], fov: 38 }} frameloop="demand" dpr={[1, 2]}>
       <ambientLight intensity={0.7} />
-      <directionalLight position={[4, 6, 3]} intensity={1.3} castShadow shadow-mapSize={[1024, 1024]} />
+      <directionalLight position={[4, 6, 3]} intensity={1.3} />
       <directionalLight position={[-3, 2, -4]} intensity={0.35} />
       {children}
-      <ContactShadows position={[0, 0, 0]} opacity={0.35} scale={8} blur={2} far={2} />
+      <ContactShadows position={[0, 0, 0]} opacity={0.35} scale={8} blur={2} far={2} frames={1} />
       <OrbitControls
         makeDefault
         enablePan={false}
         minDistance={2.6}
         maxDistance={8}
-        target={target}
+        target={[0.1, 2.2, 0]}
         minPolarAngle={Math.PI / 6}
         maxPolarAngle={Math.PI / 2.05}
       />

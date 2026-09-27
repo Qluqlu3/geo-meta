@@ -14,7 +14,7 @@ import {
 function TriangleBracketTransformer() {
   return (
     <group position={[0.55, 2.9, 0]}>
-      <mesh castShadow>
+      <mesh>
         <cylinderGeometry args={[0.27, 0.27, 0.66, 28]} />
         <meshStandardMaterial color={TRANSFORMER} roughness={0.55} metalness={0.15} />
       </mesh>
@@ -25,12 +25,12 @@ function TriangleBracketTransformer() {
         </mesh>
       ))}
       {/* 手書き風の黄色数字(簡易表現の板) */}
-      <mesh position={[0, 0, 0.275]} castShadow>
+      <mesh position={[0, 0, 0.275]}>
         <boxGeometry args={[0.16, 0.1, 0.006]} />
         <meshStandardMaterial color="#e0b400" roughness={0.6} />
       </mesh>
       {/* 黒いタップ端子 */}
-      <mesh position={[0.24, 0.15, 0.16]} castShadow>
+      <mesh position={[0.24, 0.15, 0.16]}>
         <boxGeometry args={[0.06, 0.06, 0.06]} />
         <meshStandardMaterial color="#111" roughness={0.5} />
       </mesh>

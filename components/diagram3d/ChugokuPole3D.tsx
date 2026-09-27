@@ -16,7 +16,7 @@ import {
 function CrossBarTransformer() {
   return (
     <group position={[0.55, 2.9, 0]}>
-      <mesh castShadow>
+      <mesh>
         <cylinderGeometry args={[0.24, 0.24, 0.6, 28]} />
         <meshStandardMaterial color={TRANSFORMER} roughness={0.55} metalness={0.15} />
       </mesh>
@@ -27,7 +27,7 @@ function CrossBarTransformer() {
         </mesh>
       ))}
       {/* 朱色(赤)の数字シール */}
-      <mesh position={[0, -0.16, 0.245]} castShadow>
+      <mesh position={[0, -0.16, 0.245]}>
         <boxGeometry args={[0.12, 0.08, 0.006]} />
         <meshStandardMaterial color={RED_ACCENT} roughness={0.6} />
       </mesh>

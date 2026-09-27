@@ -4,7 +4,7 @@ import { ArmInsulatorsAndWires, BottleGuyGuard, CrossArm, LBracketTop, METAL, Po
 function BentDropTransformer() {
   return (
     <group position={[0.55, 2.9, 0]}>
-      <mesh castShadow>
+      <mesh>
         <cylinderGeometry args={[0.27, 0.27, 0.66, 28]} />
         <meshStandardMaterial color={TRANSFORMER} roughness={0.55} metalness={0.15} />
       </mesh>
@@ -15,7 +15,7 @@ function BentDropTransformer() {
         </mesh>
       ))}
       {/* 底面のシール */}
-      <mesh position={[0, -0.34, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+      <mesh position={[0, -0.34, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <circleGeometry args={[0.08, 16]} />
         <meshStandardMaterial color="#e0b400" roughness={0.6} />
       </mesh>
@@ -42,7 +42,7 @@ export function ShikokuPole() {
       {/* 隙間の狭い小型プレート2枚(左右に並べる。狭い間隔を強調) */}
       {[-0.16, 0.02].map((x) => (
         <group key={x} position={[x, 1.55, 0.16]}>
-          <mesh castShadow>
+          <mesh>
             <boxGeometry args={[0.16, 0.32, 0.03]} />
             <meshStandardMaterial color="#2a78d6" roughness={0.6} />
           </mesh>

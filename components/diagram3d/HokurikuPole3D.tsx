@@ -15,7 +15,7 @@ import {
 function GenericTransformer() {
   return (
     <group position={[0.55, 2.9, 0]}>
-      <mesh castShadow>
+      <mesh>
         <cylinderGeometry args={[0.27, 0.27, 0.66, 28]} />
         <meshStandardMaterial color={TRANSFORMER} roughness={0.55} metalness={0.15} />
       </mesh>
@@ -34,7 +34,7 @@ function GenericTransformer() {
 function NarrowWidePlate() {
   return (
     <group position={[0, 1.55, 0.16]}>
-      <mesh castShadow>
+      <mesh>
         <boxGeometry args={[0.56, 0.32, 0.03]} />
         <meshStandardMaterial color={PLATE} roughness={0.6} />
       </mesh>

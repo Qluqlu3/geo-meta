@@ -28,7 +28,7 @@ function Segment({ from, to, radius = 0.014, color = "#9a9890" }: { from: V3; to
     return { pos: [mid.x, mid.y, mid.z] as V3, quat: [q.x, q.y, q.z, q.w] as [number, number, number, number], len: length };
   }, [from, to]);
   return (
-    <mesh position={pos} quaternion={quat} castShadow>
+    <mesh position={pos} quaternion={quat}>
       <cylinderGeometry args={[radius, radius, len, 8]} />
       <meshStandardMaterial color={color} roughness={0.8} />
     </mesh>
@@ -40,15 +40,15 @@ function Segment({ from, to, radius = 0.014, color = "#9a9890" }: { from: V3; to
 function PinInsulator({ position }: { position: V3 }) {
   return (
     <group position={position}>
-      <mesh castShadow>
+      <mesh>
         <cylinderGeometry args={[0.05, 0.06, 0.12, 12]} />
         <meshStandardMaterial color={INSULATOR} roughness={0.35} />
       </mesh>
-      <mesh position={[0, 0.1, 0]} castShadow>
+      <mesh position={[0, 0.1, 0]}>
         <boxGeometry args={[0.14, 0.08, 0.14]} />
         <meshStandardMaterial color={INSULATOR} roughness={0.3} />
       </mesh>
-      <mesh position={[0, 0.15, 0]} castShadow>
+      <mesh position={[0, 0.15, 0]}>
         <boxGeometry args={[0.16, 0.05, 0.16]} />
         <meshStandardMaterial color={INSULATOR_CAP} roughness={0.45} />
       </mesh>
@@ -74,12 +74,12 @@ function MoArm({ position }: { position: V3 }) {
   );
   return (
     <group position={position}>
-      <mesh castShadow>
+      <mesh>
         <tubeGeometry args={[curve, 40, 0.02, 8, false]} />
         <meshStandardMaterial color={METAL} metalness={0.6} roughness={0.4} />
       </mesh>
       {[0.15, 0.0].map((y) => (
-        <mesh key={y} position={[0, y, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
+        <mesh key={y} position={[0, y, 0]} rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.018, 0.018, 0.24, 8]} />
           <meshStandardMaterial color={METAL} metalness={0.6} roughness={0.4} />
         </mesh>
@@ -96,15 +96,15 @@ function DArm({ position, rotation }: { position: V3; rotation?: V3 }) {
   const H = 0.26;
   return (
     <group position={position} rotation={rotation}>
-      <mesh position={[R / 2, H, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
+      <mesh position={[R / 2, H, 0]} rotation={[0, 0, Math.PI / 2]}>
         <cylinderGeometry args={[0.02, 0.02, R, 8]} />
         <meshStandardMaterial color={METAL} metalness={0.6} roughness={0.4} />
       </mesh>
-      <mesh position={[R, 0, 0]} castShadow>
+      <mesh position={[R, 0, 0]}>
         <cylinderGeometry args={[0.02, 0.02, H * 2, 8]} />
         <meshStandardMaterial color={METAL} metalness={0.6} roughness={0.4} />
       </mesh>
-      <mesh position={[R / 2, -H, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
+      <mesh position={[R / 2, -H, 0]} rotation={[0, 0, Math.PI / 2]}>
         <cylinderGeometry args={[0.02, 0.02, R, 8]} />
         <meshStandardMaterial color={METAL} metalness={0.6} roughness={0.4} />
       </mesh>
@@ -117,13 +117,13 @@ export function TepcoPole() {
   return (
     <group>
       {/* 電柱本体 (pole), spanning y 0–4.3 */}
-      <mesh position={[0, 2.15, 0]} castShadow>
+      <mesh position={[0, 2.15, 0]}>
         <cylinderGeometry args={[0.1, 0.14, 4.3, 20]} />
         <meshStandardMaterial color={POLE} roughness={0.85} />
       </mesh>
 
       {/* 腕金 (cross-arm) */}
-      <mesh position={[0, 3.5, 0]} castShadow>
+      <mesh position={[0, 3.5, 0]}>
         <boxGeometry args={[1.7, 0.1, 0.13]} />
         <meshStandardMaterial color={METAL} roughness={0.6} metalness={0.3} />
       </mesh>
@@ -149,11 +149,11 @@ export function TepcoPole() {
       </mesh>
       {/* GWキャップ at the pole top */}
       <group position={[0, 4.16, 0]}>
-        <mesh castShadow>
+        <mesh>
           <cylinderGeometry args={[0.07, 0.09, 0.12, 14]} />
           <meshStandardMaterial color={METAL} metalness={0.5} roughness={0.4} />
         </mesh>
-        <mesh position={[0, 0.07, 0]} castShadow>
+        <mesh position={[0, 0.07, 0]}>
           <sphereGeometry args={[0.07, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2]} />
           <meshStandardMaterial color={METAL} metalness={0.5} roughness={0.4} />
         </mesh>
@@ -164,7 +164,7 @@ export function TepcoPole() {
 
       {/* ---- 変圧器 assembly: the can SITS ON a wooden board (東京電力特有) ---- */}
       {/* 木の板 (horizontal plank under the can, extending from the pole) */}
-      <mesh position={[0.5, 2.53, 0]} castShadow>
+      <mesh position={[0.5, 2.53, 0]}>
         <boxGeometry args={[0.85, 0.08, 0.56]} />
         <meshStandardMaterial color={WOOD} roughness={0.9} />
       </mesh>
@@ -172,17 +172,17 @@ export function TepcoPole() {
           length of the board and out past its far edge, capped there by a
           perpendicular crossbar forming a "T" that clearly overhangs the
           board rather than staying under its footprint */}
-      <mesh position={[0.58, 2.45, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
+      <mesh position={[0.58, 2.45, 0]} rotation={[0, 0, Math.PI / 2]}>
         <cylinderGeometry args={[0.04, 0.04, 0.94, 10]} />
         <meshStandardMaterial color={METAL} roughness={0.5} metalness={0.3} />
       </mesh>
-      <mesh position={[1.05, 2.45, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+      <mesh position={[1.05, 2.45, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.04, 0.04, 0.4, 10]} />
         <meshStandardMaterial color={METAL} roughness={0.5} metalness={0.3} />
       </mesh>
       <group position={[0.5, 2.9, 0]}>
         {/* 変圧器 (upright can) resting on the board */}
-        <mesh castShadow>
+        <mesh>
           <cylinderGeometry args={[0.27, 0.27, 0.66, 28]} />
           <meshStandardMaterial color={TRANSFORMER} roughness={0.55} metalness={0.15} />
         </mesh>
@@ -196,11 +196,11 @@ export function TepcoPole() {
         {/* 絶縁体2〜3個 (bushings) on the can top */}
         {[-0.1, 0.1].map((z) => (
           <group key={z} position={[0, 0.33, z]}>
-            <mesh castShadow>
+            <mesh>
               <cylinderGeometry args={[0.04, 0.045, 0.12, 10]} />
               <meshStandardMaterial color={INSULATOR} roughness={0.35} />
             </mesh>
-            <mesh position={[0, 0.08, 0]} castShadow>
+            <mesh position={[0, 0.08, 0]}>
               <sphereGeometry args={[0.042, 10, 8]} />
               <meshStandardMaterial color={INSULATOR_CAP} roughness={0.45} />
             </mesh>
@@ -210,7 +210,7 @@ export function TepcoPole() {
 
       {/* 番号プレート: 縦長・灰色ブリキ・漢字横書き・青枠 */}
       <group position={[0, 1.55, 0.16]}>
-        <mesh castShadow>
+        <mesh>
           <boxGeometry args={[0.42, 0.74, 0.03]} />
           <meshStandardMaterial color={PLATE} roughness={0.6} />
         </mesh>

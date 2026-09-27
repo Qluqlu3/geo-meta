@@ -24,7 +24,7 @@ function BracketTransformer() {
       {/* 高圧引き下げ線: ブラケット上部から延びる */}
       <Segment from={[0, 0.44, 0.15]} to={[-0.1, 0.78, 0.05]} radius={0.014} color="#6f8db3" />
 
-      <mesh castShadow>
+      <mesh>
         <cylinderGeometry args={[0.27, 0.27, 0.66, 28]} />
         <meshStandardMaterial color={TRANSFORMER} roughness={0.55} metalness={0.15} />
       </mesh>
@@ -36,7 +36,7 @@ function BracketTransformer() {
       ))}
       {/* 東北電力のロゴ(丸バッジ、商標の忠実な再現ではなく識別用の模式)。
           円柱を正面(+Z)に向けて立てるため90°回転させる */}
-      <mesh position={[0, 0.05, 0.275]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+      <mesh position={[0, 0.05, 0.275]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.09, 0.09, 0.01, 20]} />
         <meshStandardMaterial color="#1a56b0" roughness={0.4} />
       </mesh>
@@ -50,7 +50,7 @@ function BracketTransformer() {
 function WideGrayPlate() {
   return (
     <group position={[0, 1.55, 0.16]} rotation={[0, 0, 0]}>
-      <mesh castShadow>
+      <mesh>
         <boxGeometry args={[0.66, 0.4, 0.03]} />
         <meshStandardMaterial color={PLATE} roughness={0.6} />
       </mesh>
@@ -59,7 +59,7 @@ function WideGrayPlate() {
         <meshStandardMaterial color="#c9c8c2" roughness={0.75} />
       </mesh>
       {/* 左上のロゴ */}
-      <mesh position={[-0.2, 0.1, 0.024]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+      <mesh position={[-0.2, 0.1, 0.024]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.045, 0.045, 0.006, 16]} />
         <meshStandardMaterial color={PLATE} roughness={0.5} />
       </mesh>

@@ -13,7 +13,7 @@ import {
 function BottomExitTransformer() {
   return (
     <group position={[0.55, 2.9, 0]}>
-      <mesh castShadow>
+      <mesh>
         <cylinderGeometry args={[0.27, 0.27, 0.66, 28]} />
         <meshStandardMaterial color={TRANSFORMER} roughness={0.55} metalness={0.15} />
       </mesh>
@@ -44,7 +44,7 @@ export function KansaiPole() {
       <BottomExitTransformer />
       {/* 縦長・白プレート。標識名は漢字/カタカナの縦書き(縦の帯で表現) */}
       <group position={[0, 1.55, 0.16]}>
-        <mesh castShadow>
+        <mesh>
           <boxGeometry args={[0.42, 0.74, 0.03]} />
           <meshStandardMaterial color="#2a78d6" roughness={0.6} />
         </mesh>
