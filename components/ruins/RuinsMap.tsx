@@ -43,7 +43,10 @@ const SHAPE_PATH: Record<MarkerShape, string> = {
   triangle: '<path d="M12 4.5 19.5 18H4.5Z"/>',
 };
 
-function markerHtml(category: RuinCategory, variant: "ruin" | "candidate") {
+/** ruin = 登録地点 / auto = 旧版地形図の記号から自動検出した未確認の地点(中抜きで描く) / candidate = 手元の候補 */
+type MarkerVariant = "ruin" | "auto" | "candidate";
+
+function markerHtml(category: RuinCategory, variant: MarkerVariant) {
   const info = ruinCategoryInfo[category];
   return `<svg viewBox="0 0 24 24" width="24" height="24" style="--mk:var(${info.colorVar})" class="ruin-mk ruin-mk--${variant}">${SHAPE_PATH[info.shape]}</svg>`;
 }
@@ -191,19 +194,21 @@ export function RuinsMap({
     if (!L || !group) return;
     group.clearLayers();
     markerById.current.clear();
-    const add = (key: string, lat: number, lon: number, name: string, category: RuinCategory, variant: "ruin" | "candidate") => {
+    const add = (key: string, lat: number, lon: number, name: string, category: RuinCategory, variant: MarkerVariant) => {
       const icon = L.divIcon({ html: markerHtml(category, variant), className: "ruin-marker", iconSize: [24, 24] });
       const selected = key === selectedKeyRef.current;
       const m = L.marker([lat, lon], { icon, keyboard: true, title: name, alt: name, zIndexOffset: selected ? 1000 : 0 })
         .bindTooltip(`${variant === "candidate" ? "候補: " : ""}${name}`, { direction: "top", offset: [0, -10] })
         .on("click", () =>
-          variant === "ruin" ? handlers.current.onSelectRuin(key.slice(2)) : handlers.current.onSelectCandidate(key.slice(2)),
+          variant === "candidate"
+            ? handlers.current.onSelectCandidate(key.slice(2))
+            : handlers.current.onSelectRuin(key.slice(2)),
         );
       m.addTo(group);
       m.getElement()?.classList.toggle("is-selected", selected);
       markerById.current.set(key, m);
     };
-    for (const r of ruins) add(`r:${r.id}`, r.lat, r.lon, r.name, r.category, "ruin");
+    for (const r of ruins) add(`r:${r.id}`, r.lat, r.lon, r.name, r.category, r.discovery === "symbol" ? "auto" : "ruin");
     for (const c of candidates) add(`c:${c.id}`, c.lat, c.lon, c.name || "(名称未入力)", c.category, "candidate");
   }, [L, ruins, candidates]);
 

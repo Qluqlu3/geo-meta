@@ -24,6 +24,7 @@ export function RuinsHeader() {
           <a href="#explorer">新旧比較マップ</a>
           <a href="#database">データベース</a>
           <a href="#method">探し方</a>
+          <a href="#symbols">消えた寺社記号</a>
           <a href="#layers">比較できる年代</a>
           <a href="#caution">注意事項</a>
           <a href="/sitemap">サイトマップ</a>

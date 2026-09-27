@@ -1349,6 +1349,23 @@ footer a {
   stroke: #fff;
   stroke-width: 2;
 }
+/* 自動検出の地点は中抜きにして、下の旧版地形図の記号が透けて見えるようにする */
+.ruin-mk--auto {
+  filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff);
+}
+.ruin-mk--auto * {
+  fill: none;
+  stroke: var(--mk);
+  stroke-width: 2.2;
+}
+/* 選択時は旧図の記号(ズーム16で約26px)を囲む大きさにし、線は細くして記号に重ねない */
+.ruin-marker.is-selected svg.ruin-mk--auto {
+  transform: scale(2.6);
+}
+.ruin-marker.is-selected svg.ruin-mk--auto * {
+  stroke: var(--mk);
+  stroke-width: 1.1;
+}
 .ruin-mk--candidate * {
   fill: #fff;
   stroke: var(--mk);
@@ -1402,6 +1419,11 @@ footer a {
 }
 .ruins-swatch--triangle {
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.ruins-swatch--auto {
+  border: 2px solid var(--text-secondary);
+  border-radius: 50%;
+  background: transparent;
 }
 .ruins-swatch--candidate {
   border: 2px dashed var(--text-secondary);

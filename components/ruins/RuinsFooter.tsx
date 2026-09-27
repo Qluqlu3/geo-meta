@@ -1,4 +1,4 @@
-import { osmSource, osmTimestamp } from "@/data/ruins";
+import { oldMapSymbolSource, osmSource, osmTimestamp } from "@/data/ruins";
 
 export function RuinsFooter() {
   return (
@@ -22,6 +22,7 @@ export function RuinsFooter() {
           既存情報のレコード: {osmSource}(データ取得 {osmTimestamp.slice(0, 10)})。OpenStreetMap 由来のレコードは ODbL
           で提供します。詳しい調査手順・出典は同リポジトリの RESEARCH_ruins.md を参照。
         </p>
+        <p>消えた寺社記号: {oldMapSymbolSource}。自動検出のため、各地点は未確認です。</p>
         <p>
           <a href="/sitemap">サイトマップ</a>
         </p>

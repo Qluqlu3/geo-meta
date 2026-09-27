@@ -14,6 +14,7 @@
       "!data/nationalRoutes.json",
       "!data/ruinsOsm.json",
       "!data/gsiMuni.json",
+      "!data/ruinsOldMapSymbols.json",
       "!out"
     ]
   },

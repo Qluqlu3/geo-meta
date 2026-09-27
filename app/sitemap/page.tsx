@@ -59,11 +59,12 @@ const TRACKS: { id: string; title: string; lead: string; pages: Page[] }[] = [
       {
         href: "/ruins",
         title: "廃墟アーカイブ(首都圏・静岡)",
-        desc: "1都7県と静岡県の廃墟・廃集落・廃寺・廃神社。新旧比較マップで候補を探して記録できる。",
+        desc: "1都7県と静岡県の廃墟・廃集落・廃寺・廃神社。新旧比較マップで候補を探して記録できる。旧版地形図から消えた寺社記号の自動検出も。",
         anchors: [
           { id: "explorer", label: "新旧比較マップ" },
           { id: "database", label: "データベース" },
           { id: "method", label: "探し方" },
+          { id: "symbols", label: "消えた寺社記号" },
           { id: "layers", label: "比較できる年代" },
           { id: "caution", label: "注意事項" },
         ],

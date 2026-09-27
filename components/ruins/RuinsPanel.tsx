@@ -41,6 +41,12 @@ export function CategoryChip({ category, kind }: { category: RuinCategory; kind?
   );
 }
 
+const PRECISION_LABEL: Record<Ruin["precision"], string> = {
+  point: "建物・社殿の位置",
+  area: "範囲のおおよその中心",
+  symbol: "旧図の記号の位置(数十mずれることがある)",
+};
+
 function Coordinates({ lat, lon, precision }: { lat: number; lon: number; precision?: Ruin["precision"] }) {
   const dec = formatLatLon(lat, lon);
   return (
@@ -51,7 +57,7 @@ function Coordinates({ lat, lon, precision }: { lat: number; lon: number; precis
       </div>
       <div className="ruins-coord-row ruins-muted">
         <span>{formatDms(lat, lon)}</span>
-        {precision && <span>・{precision === "area" ? "範囲のおおよその中心" : "建物・社殿の位置"}</span>}
+        {precision && <span>・{PRECISION_LABEL[precision]}</span>}
       </div>
     </div>
   );

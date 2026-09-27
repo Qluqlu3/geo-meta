@@ -192,6 +192,10 @@ export function RuinsExplorer() {
                 </span>
               ))}
               <span>
+                <span className="ruins-swatch ruins-swatch--auto" />
+                中抜き = 旧版地形図の記号から自動検出(未確認)
+              </span>
+              <span>
                 <span className="ruins-swatch ruins-swatch--candidate" />
                 白抜き = 手元の候補
               </span>

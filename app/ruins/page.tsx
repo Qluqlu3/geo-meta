@@ -3,7 +3,7 @@ import { BackToTop } from "@/components/BackToTop";
 import { RuinsExplorer } from "@/components/ruins/RuinsExplorer";
 import { RuinsFooter } from "@/components/ruins/RuinsFooter";
 import { RuinsHeader } from "@/components/ruins/RuinsHeader";
-import { CURRENT_LAYERS, PAST_LAYERS, ruinCategoryInfo, ruins } from "@/data/ruins";
+import { CURRENT_LAYERS, oldMapSymbolCount, PAST_LAYERS, ruinCategoryInfo, ruins } from "@/data/ruins";
 
 export const metadata: Metadata = {
   title: "廃墟アーカイブ(首都圏・静岡) | 新旧の地図比較で埋もれた廃墟・廃集落・廃寺社を記録する",
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default function RuinsPage() {
+  const symbolRuins = ruins.filter((r) => r.discovery === "symbol");
   return (
     <>
       <a className="skip-link" href="#main">
@@ -32,6 +33,12 @@ export default function RuinsPage() {
                 .map((c) => `${ruinCategoryInfo[c].label}${ruins.filter((r) => r.category === c).length}`)
                 .join("・")}
               )を収録。
+            </p>
+            <p>
+              このうち {symbolRuins.length}件は、1972〜82年の旧版地形図から画像照合で拾った神社(鳥居)・寺院(卍)の記号
+              {oldMapSymbolCount.toLocaleString()}
+              か所のうち、今の地理院地図から消えていたものです(現在は山梨県と静岡県の大井川以東の、カラー印刷の図幅のみ。
+              <a href="#symbols">詳しく</a>)。地図では中抜きの記号で表示しています。
             </p>
             <div className="callout">
               <strong>立ち入りについて:</strong>{" "}
@@ -83,6 +90,35 @@ export default function RuinsPage() {
             <div className="callout">
               <strong>見間違えやすいもの:</strong>{" "}
               ダム湖に沈んだ集落(小河内ダム・宮ヶ瀬ダムなど)は「廃集落」ですが水没のため現地に痕跡はありません。採石場・ゴルフ場・林道工事の造成地は、写真上で集落跡のような更地に見えます。また、古い写真は位置が数十mずれることがあるので、道路や川の形で位置合わせをしてから座標を取ってください。
+            </div>
+          </section>
+
+          <section id="symbols">
+            <h2 className="section-title">旧版地形図から消えた寺社記号</h2>
+            <p className="section-sub">
+              旧版地形図には、小さな村の神社やお堂まで記号で描かれています。その記号が今の地図から消えている場所は、廃神社・廃寺の手がかりになります。1枚ずつ見比べるのは大変なので、機械的に拾いました。
+            </p>
+            <div className="legend-grid">
+              <div className="legend-item">
+                <h4>① 旧図の記号を拾う</h4>
+                <p>
+                  今昔マップの「関東
+                  1972〜1982年」の地形図から、神社(鳥居)と寺院(卍)の記号を画像照合で検出。目視で確かめた実例・誤検出例(地名の漢字や黒い等高線など)と照らし合わせてふるい分け、一致度の高いものだけを使っています。抜き取りで目視した一致度0.80以上の検出は、すべて実際の記号でした。等高線まで黒一色で印刷された図幅(富士・沼津周辺、静岡市南部〜焼津、伊豆東海岸、奥多摩・秩父など)は、記号と等高線を区別できないため対象外です。
+                </p>
+              </div>
+              <div className="legend-item">
+                <h4>② 今の地図と突き合わせる</h4>
+                <p>
+                  現在の地理院地図で、半径250m以内に同じ種類の記号(神社・寺院)も名称の注記もない地点だけを残しました。大きな寺社は記号ではなく名称で描かれるため、両方を見ています。旧図は数十m〜200mほどずれることがあるため、半径を広めにとっています。
+                </p>
+              </div>
+              <div className="legend-item">
+                <h4>③ 候補として読む</h4>
+                <p>
+                  消えた理由は区別できません。廃絶のほか、合祀・移転、今の地図で小さな社寺が省略されただけのこともあります。地図で「過去」を旧版地形図
+                  1972〜1982年にして記号を確かめ、現地や文献で確認できたものから正式な記録にしてください。
+                </p>
+              </div>
             </div>
           </section>
 

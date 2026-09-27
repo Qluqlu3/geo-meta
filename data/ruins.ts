@@ -5,10 +5,13 @@
 //
 // - curatedRuins: 新旧比較や文献で本アーカイブが独自に記録した地点(ここを手で編集する)
 // - ruinsOsm.json: OpenStreetMap に登録済みの地点(scripts/fetch-ruins-osm.mjs で生成、ODbL)
+// - ruinsOldMapSymbols.json: 旧版地形図にあって現行の地図から消えた寺社記号の地点
+//   (scripts/detect-old-map-symbols.py → scripts/find-vanished-shrines.mjs で生成。自動検出で未確認)
 // 住所は廃集落・山中の寺社では特定しづらいため、位置は世界測地系(WGS84)の緯度経度を
 // 小数6桁(約10cm単位)で持ち、市区町村・大字は国土地理院の逆ジオコーダーによる参考表示に留める。
 // 詳しい調査手順・出典は RESEARCH_ruins.md を参照。
 
+import oldMap from "./ruinsOldMapSymbols.json";
 import osm from "./ruinsOsm.json";
 
 // ---------------------------------------------------------------------------
@@ -49,9 +52,10 @@ export const ruinCategoryInfo: Record<RuinCategory, { label: string; colorVar: s
 export type MarkerShape = "circle" | "square" | "diamond" | "triangle";
 
 /** 情報の出どころ */
-export type Discovery = "comparison" | "literature" | "osm";
+export type Discovery = "comparison" | "symbol" | "literature" | "osm";
 export const discoveryLabel: Record<Discovery, string> = {
   comparison: "新旧比較で発見",
+  symbol: "旧版地形図の記号から検出",
   literature: "文献・記事",
   osm: "OSM登録済み",
 };
@@ -241,7 +245,8 @@ export const PAST_LAYERS: MapLayer[] = [
     minZoom: 8,
     maxNativeZoom: 15,
     years: "1972〜1982",
-    coverage: "関東全域と山梨県・静岡県の大井川以東。空中写真 1974〜78年と同じ時代の地図記号で確認できる",
+    coverage:
+      "関東全域と山梨県・静岡県の大井川以東。空中写真 1974〜78年と同じ時代の地図記号で確認できる。寺社記号の自動検出にも使っている",
   },
   {
     id: "kanto-03",
@@ -328,8 +333,8 @@ export type Ruin = {
   /** WGS84 緯度経度(小数6桁) */
   lat: number;
   lon: number;
-  /** point = 建物・社殿そのものの位置 / area = 集落などの範囲のおおよその中心 */
-  precision: "point" | "area";
+  /** point = 建物・社殿そのものの位置 / area = 集落などの範囲のおおよその中心 / symbol = 旧版地形図上の記号の位置 */
+  precision: "point" | "area" | "symbol";
   /** 都県の JIS コード */
   pref: number;
   municipality?: string;
@@ -608,10 +613,66 @@ const osmRuins: Ruin[] = (osm.items as OsmItem[]).map((o) => ({
   ],
 }));
 
-const curatedOsmIds = new Set(curatedRuins.flatMap((r) => (r.osm ? [r.osm] : [])));
+type OldMapSymbol = {
+  id: string;
+  kind: "shrine" | "temple";
+  lat: number;
+  lon: number;
+  pref: number;
+  municipality: string;
+  locality?: string;
+  elevation?: number;
+  match: number;
+  nearestSameM: number | null;
+};
 
-/** 首都圏(1都7県)と静岡県の全レコード。独自記録を先頭に、同じ OSM 要素の重複は独自記録を優先 */
-export const ruins: Ruin[] = [
-  ...curatedRuins,
-  ...osmRuins.filter((r) => !curatedOsmIds.has(r.osm ?? "") && prefNameOf.has(r.pref)),
-];
+export const oldMapSymbolSource = oldMap.source;
+export const oldMapSymbolCount = oldMap.oldSymbols;
+
+const KIND_LABEL = { shrine: "神社", temple: "寺院" } as const;
+const SYMBOL_LABEL = { shrine: "鳥居", temple: "卍" } as const;
+
+const oldMapRuins: Ruin[] = (oldMap.items as OldMapSymbol[]).map((o) => ({
+  id: o.id,
+  name: `旧図の${KIND_LABEL[o.kind]}(${o.locality ?? o.municipality})`,
+  category: o.kind,
+  kind: "旧版地形図にのみ記号",
+  lat: o.lat,
+  lon: o.lon,
+  precision: "symbol",
+  pref: o.pref,
+  municipality: o.municipality,
+  locality: o.locality,
+  elevation: o.elevation,
+  discovery: "symbol",
+  check: "none",
+  status: "unknown",
+  evidence: [
+    {
+      past: oldMap.past,
+      pastNote: `${KIND_LABEL[o.kind]}の記号(${SYMBOL_LABEL[o.kind]})がある`,
+      nowNote: `現行の地理院地図では半径${oldMap.radius}m以内に${KIND_LABEL[o.kind]}の記号・名称がない(${
+        o.nearestSameM == null ? "近くに同種の記号なし" : `最寄りの同種の記号まで約${o.nearestSameM}m`
+      })`,
+    },
+  ],
+  note: "旧版地形図の記号を画像照合で自動検出した地点。廃絶のほか、合祀・移転や、現行の地図で小さな社寺が省略されている可能性がある。位置は旧図の記号の位置で、数十mずれることがある。",
+  sources: [
+    { label: "今昔マップ on the web 関東 1972〜1982年(記号の自動検出)" },
+    { label: "地理院ベクトルタイル(現行の寺社記号・名称の注記)" },
+  ],
+  addedAt: oldMap.generatedAt,
+}));
+
+const curatedOsmIds = new Set(curatedRuins.flatMap((r) => (r.osm ? [r.osm] : [])));
+const namedRuins = [...curatedRuins, ...osmRuins.filter((r) => !curatedOsmIds.has(r.osm ?? "") && prefNameOf.has(r.pref))];
+// 自動検出の地点のうち、同じ分類の登録済みレコードが近くにあるものは重複として外す
+const nearNamed = (r: Ruin) =>
+  namedRuins.some(
+    (n) =>
+      n.category === r.category &&
+      Math.hypot((n.lat - r.lat) * 111000, (n.lon - r.lon) * 111000 * Math.cos((r.lat * Math.PI) / 180)) < 150,
+  );
+
+/** 全レコード。独自記録 → OSM → 旧版地形図の記号の順。同じ OSM 要素の重複は独自記録を優先 */
+export const ruins: Ruin[] = [...namedRuins, ...oldMapRuins.filter((r) => prefNameOf.has(r.pref) && !nearNamed(r))];
