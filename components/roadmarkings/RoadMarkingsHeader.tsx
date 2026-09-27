@@ -17,7 +17,7 @@ export function RoadMarkingsHeader() {
           <a href="#diamond">ダイヤマーク</a>
           <a href="#snow-pipe">消雪パイプ</a>
           <a href="#reference">参考程度</a>
-          <a href="/">電柱メタ図鑑</a>
+          <a href="/poles">電柱メタ図鑑</a>
           <a href="/road-signs">道路標識メタ</a>
         </nav>
         <ThemeToggle />

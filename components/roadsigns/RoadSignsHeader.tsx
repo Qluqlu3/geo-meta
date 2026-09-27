@@ -20,7 +20,7 @@ export function RoadSignsHeader() {
           <a href="#animal">動物注意標識</a>
           <a href="#chain">チェーン規制</a>
           <a href="#reference">参考程度</a>
-          <a href="/">電柱メタ図鑑</a>
+          <a href="/poles">電柱メタ図鑑</a>
           <a href="/road-markings">路面標示メタ</a>
         </nav>
         <ThemeToggle />
