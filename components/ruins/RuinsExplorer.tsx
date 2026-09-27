@@ -36,7 +36,7 @@ export function RuinsExplorer() {
   const [selection, setSelection] = useState<MapSelection | null>(null);
   const [focus, setFocus] = useState<MapFocus | null>(null);
   const [showAll, setShowAll] = useState(false);
-  const { candidates, add, update, remove, clear } = useCandidates();
+  const { candidates, add, addMany, update, remove, clear } = useCandidates();
 
   const filtered = useMemo(() => {
     const q = query.trim();
@@ -239,6 +239,7 @@ export function RuinsExplorer() {
               candidates={candidates}
               selectedId={selectedCandidate?.id ?? null}
               onSelect={selectCandidate}
+              onImport={addMany}
               onClear={() => {
                 clear();
                 if (selection?.type === "candidate") setSelection(null);

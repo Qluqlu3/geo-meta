@@ -384,18 +384,44 @@ export function CandidateEditor({
 
 // ---------------------------------------------------------------------------
 
+/** 読み込んだ JSON から、地図に置ける最低限の項目がそろった候補だけを取り出す */
+function parseCandidates(text: string): Candidate[] {
+  const data: unknown = JSON.parse(text);
+  if (!Array.isArray(data)) return [];
+  return data.filter(
+    (c): c is Candidate =>
+      typeof c?.id === "string" &&
+      typeof c?.name === "string" &&
+      typeof c?.lat === "number" &&
+      typeof c?.lon === "number" &&
+      CATEGORIES.includes(c?.category),
+  );
+}
+
 export function CandidateList({
   candidates,
   selectedId,
   onSelect,
+  onImport,
   onClear,
 }: {
   candidates: Candidate[];
   selectedId: string | null;
   onSelect: (c: Candidate) => void;
+  onImport: (list: Candidate[]) => void;
   onClear: () => void;
 }) {
   const json = JSON.stringify(candidates, null, 2);
+
+  async function importFile(file: File) {
+    try {
+      const list = parseCandidates(await file.text());
+      if (list.length === 0) window.alert("読み込める候補がありませんでした。");
+      else onImport(list.map((c) => ({ ...c, sources: c.sources ?? [] })));
+    } catch {
+      window.alert("JSONとして読み込めませんでした。");
+    }
+  }
 
   function download() {
     const url = URL.createObjectURL(new Blob([json], { type: "application/json" }));
@@ -410,21 +436,36 @@ export function CandidateList({
     <div className="ruins-candidates">
       <div className="ruins-candidates-head">
         <h3>候補リスト({candidates.length}件)</h3>
-        {candidates.length > 0 && (
-          <div className="ruins-links">
-            <CopyButton text={json} label="JSONをコピー" />
-            <button type="button" className="ruins-copy" onClick={download}>
-              JSONを保存
-            </button>
-            <button
-              type="button"
-              className="ruins-copy ruins-danger"
-              onClick={() => window.confirm("候補リストをすべて削除しますか?") && onClear()}
-            >
-              全削除
-            </button>
-          </div>
-        )}
+        <div className="ruins-links">
+          <label className="ruins-copy">
+            JSONを読み込む
+            <input
+              type="file"
+              accept="application/json,.json"
+              className="visually-hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) importFile(file);
+                e.target.value = "";
+              }}
+            />
+          </label>
+          {candidates.length > 0 && (
+            <>
+              <CopyButton text={json} label="JSONをコピー" />
+              <button type="button" className="ruins-copy" onClick={download}>
+                JSONを保存
+              </button>
+              <button
+                type="button"
+                className="ruins-copy ruins-danger"
+                onClick={() => window.confirm("候補リストをすべて削除しますか?") && onClear()}
+              >
+                全削除
+              </button>
+            </>
+          )}
+        </div>
       </div>
       {candidates.length === 0 ? (
         <p className="ruins-muted">

@@ -46,6 +46,15 @@ export function useCandidates() {
   }, []);
 
   const add = useCallback((c: Candidate) => commit((prev) => [...prev, c]), [commit]);
+  /** 書き出した JSON や scripts/find-ruin-candidates.mjs の出力を取り込む(同じ id は上書きしない) */
+  const addMany = useCallback(
+    (list: Candidate[]) =>
+      commit((prev) => {
+        const ids = new Set(prev.map((c) => c.id));
+        return [...prev, ...list.filter((c) => !ids.has(c.id))];
+      }),
+    [commit],
+  );
   const update = useCallback(
     (id: string, patch: Partial<Candidate>) => commit((prev) => prev.map((c) => (c.id === id ? { ...c, ...patch } : c))),
     [commit],
@@ -53,5 +62,5 @@ export function useCandidates() {
   const remove = useCallback((id: string) => commit((prev) => prev.filter((c) => c.id !== id)), [commit]);
   const clear = useCallback(() => commit(() => []), [commit]);
 
-  return { candidates, add, update, remove, clear };
+  return { candidates, add, addMany, update, remove, clear };
 }
