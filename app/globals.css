@@ -1103,3 +1103,473 @@ footer a {
 .route-chart-tooltip .muted {
   color: var(--text-muted);
 }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 廃墟アーカイブ(/ruins) ---------- */
+.ruins-muted {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+.ruins-filters,
+.ruins-layer-pickers,
+.ruins-map-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 12px;
+}
+.ruins-filters select,
+.ruins-filters input,
+.ruins-layer-pickers select,
+.ruins-form input,
+.ruins-form select,
+.ruins-form textarea {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  color: var(--text-primary);
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  max-width: 100%;
+}
+.ruins-search {
+  flex: 1;
+  min-width: 180px;
+}
+.ruins-search input {
+  width: 100%;
+}
+.ruins-cat-filter,
+.ruins-seg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.ruins-cat-filter button,
+.ruins-seg button,
+.ruins-ghost-btn,
+.ruins-copy,
+.ruins-primary-btn {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  color: var(--text-secondary);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.ruins-cat-filter button {
+  opacity: 0.5;
+}
+.ruins-cat-filter button.active {
+  opacity: 1;
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+.ruins-count {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+.ruins-seg button.active {
+  color: var(--surface-1);
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+}
+.ruins-copy {
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  border-radius: 6px;
+}
+.ruins-primary-btn {
+  justify-content: center;
+  color: var(--surface-1);
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+.ruins-danger {
+  color: var(--c-shikoku);
+}
+.ruins-more {
+  margin-top: 12px;
+}
+.ruins-layer-pickers label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.ruins-layer-pickers p {
+  margin: 0;
+  flex-basis: 100%;
+}
+.ruins-opacity {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.ruins-explorer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .ruins-explorer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.ruins-map-frame {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--surface-2);
+}
+.ruins-map {
+  position: relative;
+  z-index: 0;
+  height: min(72vh, 620px);
+  min-height: 380px;
+  background: var(--gridline);
+}
+.ruins-map-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+.ruins-map-tag {
+  position: absolute;
+  bottom: 26px;
+  z-index: 1;
+  max-width: 45%;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.62);
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ruins-map-tag--past {
+  left: 10px;
+}
+.ruins-map-tag--now {
+  right: 10px;
+}
+.ruins-swipe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 24px;
+  margin-left: -12px;
+  cursor: ew-resize;
+  touch-action: none;
+}
+.ruins-swipe::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 11px;
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+/* 地点へ移動すると地図の中心にマーカーが来るため、つまみは中心から外しておく */
+.ruins-swipe-knob {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 28px;
+  border-radius: 14px;
+  border: 2px solid #fff;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 0.6rem;
+  letter-spacing: -0.1em;
+  cursor: ew-resize;
+}
+.ruins-swipe-knob:focus-visible {
+  outline: 3px solid var(--rn-village);
+  outline-offset: 2px;
+}
+
+/* マーカー: 分類ごとの形+色、2px の白い縁で航空写真の上でも輪郭を保つ */
+.ruin-marker {
+  background: none;
+  border: none;
+}
+.ruin-mk {
+  overflow: visible;
+  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.55));
+  transition: transform 0.12s ease;
+}
+.ruin-mk--ruin * {
+  fill: var(--mk);
+  stroke: #fff;
+  stroke-width: 2;
+}
+.ruin-mk--candidate * {
+  fill: #fff;
+  stroke: var(--mk);
+  stroke-width: 2.5;
+  stroke-dasharray: 3 2;
+}
+.ruin-marker.is-selected .ruin-mk {
+  transform: scale(1.6);
+}
+.ruin-marker.is-selected .ruin-mk * {
+  stroke: #0b0b0b;
+}
+.ruin-pick {
+  background: none;
+  border: none;
+}
+.ruin-pick::before,
+.ruin-pick::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6);
+}
+.ruin-pick::before {
+  left: 13px;
+  top: 0;
+  width: 2px;
+  height: 28px;
+}
+.ruin-pick::after {
+  top: 13px;
+  left: 0;
+  width: 28px;
+  height: 2px;
+}
+
+.ruins-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  flex: none;
+}
+.ruins-swatch--circle {
+  border-radius: 50%;
+}
+.ruins-swatch--square {
+  border-radius: 2px;
+}
+.ruins-swatch--diamond {
+  transform: rotate(45deg) scale(0.85);
+}
+.ruins-swatch--triangle {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.ruins-swatch--candidate {
+  border: 2px dashed var(--text-secondary);
+  border-radius: 50%;
+  background: var(--surface-2);
+}
+
+.ruins-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.ruins-panel-body,
+.ruins-candidates {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-1);
+  box-shadow: var(--shadow);
+  padding: 14px 16px;
+}
+.ruins-panel-body h3 {
+  margin: 6px 0 10px;
+  font-size: 1.1rem;
+}
+.ruins-panel-body .route-facts {
+  grid-template-columns: 6.5em 1fr;
+  font-size: 0.85rem;
+}
+.ruins-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+.ruins-panel-empty ol {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+}
+.ruins-coord code,
+.ruins-coord-cell code {
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+.ruins-coord-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.ruins-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-top: 10px;
+  font-size: 0.8rem;
+}
+.ruins-links a {
+  color: var(--text-secondary);
+}
+td.ruins-links {
+  margin-top: 0;
+}
+.ruins-evidence h4,
+.ruins-form h4 {
+  margin: 12px 0 6px;
+  font-size: 0.85rem;
+}
+.ruins-evidence ul {
+  margin: 0;
+  padding-left: 1.1em;
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+}
+.ruins-note {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+}
+.ruins-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--gridline);
+}
+.ruins-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.ruins-candidates-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.ruins-candidates-head h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+.ruins-candidates-head .ruins-links {
+  margin-top: 0;
+}
+.ruins-candidate-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.ruins-candidate-list button {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  text-align: left;
+  font: inherit;
+  font-size: 0.82rem;
+  padding: 6px 8px;
+  color: var(--text-primary);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.ruins-candidate-list button:hover,
+.ruins-candidate-list button.active {
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+.ruins-table {
+  min-width: 960px;
+}
+.ruins-table tr.is-selected td {
+  background: var(--surface-2);
+}
+.ruins-row-btn {
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  padding: 0;
+  color: var(--text-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--baseline);
+  text-underline-offset: 3px;
+  white-space: normal;
+}
+table.compare td.company-cell:has(.ruins-row-btn) {
+  white-space: normal;
+  min-width: 12em;
+}
+.ruins-coord-cell {
+  white-space: nowrap;
+}
+.ruins-coord-cell code {
+  margin-right: 6px;
+}
