@@ -3,6 +3,11 @@
 GeoGuessr日本メタ「電柱の見た目で電力会社(≒地域)を見分ける」ための静的リファレンスサイト。
 Next.js (App Router) の SSG で静的HTMLに書き出しています。
 
+目的の異なる2系統のページがあり、`/sitemap` で分けて案内しています。
+
+- **地域見分けメタ図鑑**: `/`(電柱)、`/road-markings`(路面標示)、`/road-signs`(道路標識)
+- **廃墟アーカイブ(首都圏)**: `/ruins` — 2010年より前の空中写真・旧版地形図と現在の地図を見比べ、廃墟・廃集落・廃寺社を緯度経度で記録するデータベース
+
 ## 必要環境
 
 - Node.js 20 以上(開発時は v22 で確認)
@@ -51,6 +56,10 @@ cd out && python3 -m http.server 8000
 | `data/companies.ts` | 10電力会社ぶんのデータ(編集はここ1箇所でOK) |
 | `data/roadMarkings.ts` | 路面標示メタのデータ(「止まれ」字体タイプ・ウインカー促進標示・ダイヤマークなど) |
 | `data/japanPrefectures.json` | 都道府県境界の地図データ(地球地図日本より生成、要出典表示) |
+| `app/ruins/` `components/ruins/` | 廃墟アーカイブ(新旧比較マップ・データベース) |
+| `data/ruins.ts` | 廃墟アーカイブの独自記録(`curatedRuins`)・比較レイヤー定義。OSM 由来分は `data/ruinsOsm.json`(`scripts/fetch-ruins-osm.mjs` で生成) |
+| `scripts/find-ruin-candidates.mjs` | 「集落名はあるのに建物がない」地点を拾う廃集落候補の抽出スクリプト |
+| `RESEARCH_ruins.md` | 廃墟アーカイブの調査メモ・データソース・利用条件 |
 | `legacy-static/` | 移行前の静的HTML/CSS/JS版 |
 | `PLAN.md` | 作業まとめ・調査の出典・技術メモ |
 | `RESEARCH_road-markings.md` | 路面標示メタの一次調査メモ・出典一覧 |
