@@ -7,44 +7,72 @@ import * as THREE from "three";
 // Shared parts for all 10 companies' 3D pole models. Colors mirror the 2D
 // SVG legend (globals.css --part-*) so a part reads as the same color in
 // both views. Company-specific hardware (transformer mount, guy-wire guard,
-// pole-top bracket) lives in each company's own file and composes these.
+// pole-top bracket, plate layout) lives in each company's own file and
+// composes these.
 export const INSULATOR = "#4a3aa7"; // がいし・絶縁体 (violet legend color)
 export const INSULATOR_CAP = "#241f38"; // 黒いキャップ
 export const TRANSFORMER = "#eb6834"; // 変圧器
+const TRANSFORMER_RIM = "#c14e22";
 export const PLATE = "#2a78d6"; // 番号プレート frame
+const PLATE_FACE = "#eceae2";
+const PLATE_INK = "#333"; // プレート上の文字(帯で表現)
 export const GUYWIRE = "#1baf7a"; // 支線ガード
 export const METAL = "#8a8a86"; // 電柱本体・腕金 (structural gray)
-export const POLE_COLOR = "#b7b5ad";
+const POLE_COLOR = "#b7b5ad";
 export const WIRE = "#6f8db3"; // 青みがかった電線
+const GUY_STEEL = "#9a9890"; // 支線(鋼より線)
 export const WOOD = "#8a5a2b";
-export const STRIPE_DARK = "#1a1a19";
-export const STRIPE_YELLOW = "#f0b400";
+const STRIPE_DARK = "#1a1a19";
+const STRIPE_YELLOW = "#f0b400";
 export const RED_ACCENT = "#d23c3c";
+export const STICKER_YELLOW = "#e0b400";
 
 export type V3 = [number, number, number];
+type Quat = [number, number, number, number];
+
+const Y_UP = new THREE.Vector3(0, 1, 0);
+
+// from→to の線分上、割合 t (0=from, 1=to) の点の位置と、ローカルY軸を線分の
+// 向きに合わせる回転。円柱(既定でY軸方向)を斜めの線分に沿わせるのに使う。
+function alongSegment(from: V3, to: V3, t: number) {
+  const a = new THREE.Vector3(...from);
+  const dir = new THREE.Vector3(...to).sub(a);
+  const length = dir.length();
+  const p = a.addScaledVector(dir, t);
+  const q = new THREE.Quaternion().setFromUnitVectors(Y_UP, dir.normalize());
+  return { position: [p.x, p.y, p.z] as V3, quaternion: [q.x, q.y, q.z, q.w] as Quat, length };
+}
 
 // A cylinder aligned between two arbitrary points (for wires/struts that
-// run at an angle). Computes the midpoint, length, and orientation so both
-// ends land exactly where specified.
-export function Segment({ from, to, radius = 0.014, color = "#9a9890" }: { from: V3; to: V3; radius?: number; color?: string }) {
-  const { pos, quat, len } = useMemo(() => {
-    const a = new THREE.Vector3(...from);
-    const b = new THREE.Vector3(...to);
-    const dir = new THREE.Vector3().subVectors(b, a);
-    const length = dir.length();
-    const mid = new THREE.Vector3().addVectors(a, b).multiplyScalar(0.5);
-    const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
-    return { pos: [mid.x, mid.y, mid.z] as V3, quat: [q.x, q.y, q.z, q.w] as [number, number, number, number], len: length };
-  }, [from, to]);
+// run at an angle), so both ends land exactly where specified. `metal` gives
+// the shinier finish used for pole-top brackets.
+export function Segment({
+  from,
+  to,
+  radius = 0.014,
+  color = GUY_STEEL,
+  metal = false,
+}: {
+  from: V3;
+  to: V3;
+  radius?: number;
+  color?: string;
+  metal?: boolean;
+}) {
+  const { position, quaternion, length } = alongSegment(from, to, 0.5);
   return (
-    <mesh position={pos} quaternion={quat}>
-      <cylinderGeometry args={[radius, radius, len, 8]} />
-      <meshStandardMaterial color={color} roughness={0.8} />
+    <mesh position={position} quaternion={quaternion}>
+      <cylinderGeometry args={[radius, radius, length, 8]} />
+      <meshStandardMaterial color={color} roughness={metal ? 0.4 : 0.8} metalness={metal ? 0.6 : 0} />
     </mesh>
   );
 }
 
-export function PoleShaft() {
+// ---------------------------------------------------------------------------
+// 電柱本体・腕金・がいし・電線
+// ---------------------------------------------------------------------------
+
+function PoleShaft() {
   return (
     <mesh position={[0, 2.15, 0]}>
       <cylinderGeometry args={[0.1, 0.14, 4.3, 20]} />
@@ -53,9 +81,9 @@ export function PoleShaft() {
   );
 }
 
-export function CrossArm({ y = 3.5 }: { y?: number }) {
+function CrossArm() {
   return (
-    <mesh position={[0, y, 0]}>
+    <mesh position={[0, 3.5, 0]}>
       <boxGeometry args={[1.7, 0.1, 0.13]} />
       <meshStandardMaterial color={METAL} roughness={0.6} metalness={0.3} />
     </mesh>
@@ -115,14 +143,9 @@ export function PinInsulatorTriangleCap({ position }: { position: V3 }) {
   );
 }
 
-// 腕金上の高圧がいし3個+電線。がいしの形状は会社ごとに差し替え可能。
-export function ArmInsulatorsAndWires({
-  Insulator = PinInsulatorGeneric,
-  y = 3.62,
-}: {
-  Insulator?: ComponentType<{ position: V3 }>;
-  y?: number;
-}) {
+// 腕金上の高圧がいし3個+電線(Z方向に張る)。
+function ArmInsulatorsAndWires({ Insulator }: { Insulator: ComponentType<{ position: V3 }> }) {
+  const y = 3.62;
   const xs = [-0.62, 0, 0.62];
   return (
     <>
@@ -138,6 +161,22 @@ export function ArmInsulatorsAndWires({
     </>
   );
 }
+
+// 全社共通の骨格: 電柱本体+腕金+高圧がいし3個+電線。がいしの形状だけ
+// 会社ごとに差し替えられる。
+export function PoleBody({ insulator = PinInsulatorGeneric }: { insulator?: ComponentType<{ position: V3 }> }) {
+  return (
+    <>
+      <PoleShaft />
+      <CrossArm />
+      <ArmInsulatorsAndWires Insulator={insulator} />
+    </>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// ポールトップ
+// ---------------------------------------------------------------------------
 
 export function OverheadGroundWire() {
   return (
@@ -206,11 +245,138 @@ export function TentArmTop() {
   );
 }
 
-// 番号プレート(縦長・共通の青枠+面+横書き風の帯)。会社ごとに面の色や
-// 行数、ロゴの有無を変えられる。
+// ---------------------------------------------------------------------------
+// 変圧器
+// ---------------------------------------------------------------------------
+
+const TRANSFORMER_POS: V3 = [0.55, 2.9, 0];
+
+// 変圧器(缶)+上下のリム。既定では柱から缶の側面までの取付アームも描く。
+// 会社特有の取付金具・シール・引き下げ線は children として缶のローカル座標
+// (缶の中心が原点)で重ねる。
+export function Transformer({
+  position = TRANSFORMER_POS,
+  radius = 0.27,
+  height = 0.66,
+  bushings = false,
+  mountArm = true,
+  children,
+}: {
+  position?: V3;
+  radius?: number;
+  height?: number;
+  /** 缶の上面の絶縁体(ブッシング)2個 */
+  bushings?: boolean;
+  mountArm?: boolean;
+  children?: ReactNode;
+}) {
+  const top = height / 2;
+  return (
+    <group position={position}>
+      <mesh>
+        <cylinderGeometry args={[radius, radius, height, 28]} />
+        <meshStandardMaterial color={TRANSFORMER} roughness={0.55} metalness={0.15} />
+      </mesh>
+      {[top, -top].map((y) => (
+        <mesh key={y} position={[0, y, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[radius, 0.02, 8, 28]} />
+          <meshStandardMaterial color={TRANSFORMER_RIM} roughness={0.4} metalness={0.3} />
+        </mesh>
+      ))}
+      {bushings &&
+        [-0.1, 0.1].map((z) => (
+          <group key={z} position={[0, top, z]}>
+            <mesh>
+              <cylinderGeometry args={[0.04, 0.045, 0.12, 10]} />
+              <meshStandardMaterial color={INSULATOR} roughness={0.35} />
+            </mesh>
+            <mesh position={[0, 0.08, 0]}>
+              <sphereGeometry args={[0.042, 10, 8]} />
+              <meshStandardMaterial color={INSULATOR_CAP} roughness={0.45} />
+            </mesh>
+          </group>
+        ))}
+      {mountArm && <Segment from={[-0.9, 0, 0]} to={[-radius - 0.01, 0, 0]} radius={0.035} color={METAL} />}
+      {children}
+    </group>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// 番号プレート
+// ---------------------------------------------------------------------------
+
+const PLATE_POS: V3 = [0, 1.55, 0.16];
+
+// 青枠+面のプレート。面は枠から inset ぶん内側。文字・ロゴ(PlateMark /
+// PlateLogo)は children としてプレートのローカル座標で重ねる。
+export function PlateFrame({
+  position = PLATE_POS,
+  width = 0.42,
+  height = 0.74,
+  inset = 0.03,
+  faceColor = PLATE_FACE,
+  children,
+}: {
+  position?: V3;
+  width?: number;
+  height?: number;
+  inset?: number;
+  faceColor?: string;
+  children?: ReactNode;
+}) {
+  return (
+    <group position={position}>
+      <mesh>
+        <boxGeometry args={[width, height, 0.03]} />
+        <meshStandardMaterial color={PLATE} roughness={0.6} />
+      </mesh>
+      <mesh position={[0, 0, 0.017]}>
+        <boxGeometry args={[width - inset * 2, height - inset * 2, 0.01]} />
+        <meshStandardMaterial color={faceColor} roughness={0.75} />
+      </mesh>
+      {children}
+    </group>
+  );
+}
+
+// プレート面上の文字・罫線を表す薄い帯。
+export function PlateMark({
+  x = 0,
+  y = 0,
+  w,
+  h,
+  color = PLATE_INK,
+}: {
+  x?: number;
+  y?: number;
+  w: number;
+  h: number;
+  color?: string;
+}) {
+  return (
+    <mesh position={[x, y, 0.024]}>
+      <boxGeometry args={[w, h, 0.005]} />
+      <meshStandardMaterial color={color} roughness={0.8} />
+    </mesh>
+  );
+}
+
+// プレート面上の丸い社章(商標の忠実な再現ではなく識別用の模式)。
+export function PlateLogo({ x = 0, y }: { x?: number; y: number }) {
+  return (
+    <mesh position={[x, y, 0.024]} rotation={[Math.PI / 2, 0, 0]}>
+      <cylinderGeometry args={[0.045, 0.045, 0.006, 16]} />
+      <meshStandardMaterial color={PLATE} roughness={0.5} />
+    </mesh>
+  );
+}
+
+// 縦長の標準プレート(横書きの行を帯で表現)。会社ごとに面の色・行数・
+// ロゴの有無を変えられる。
 export function PlateBox({
-  position = [0, 1.55, 0.16],
-  faceColor = "#eceae2",
+  position,
+  faceColor,
   rows = 3,
   logo = false,
 }: {
@@ -221,28 +387,52 @@ export function PlateBox({
 }) {
   const rowYs = Array.from({ length: rows }, (_, i) => 0.22 - i * (0.4 / Math.max(rows - 1, 1)));
   return (
-    <group position={position}>
-      <mesh>
-        <boxGeometry args={[0.42, 0.74, 0.03]} />
-        <meshStandardMaterial color={PLATE} roughness={0.6} />
-      </mesh>
-      <mesh position={[0, 0, 0.017]}>
-        <boxGeometry args={[0.36, 0.68, 0.01]} />
-        <meshStandardMaterial color={faceColor} roughness={0.75} />
-      </mesh>
-      {logo && (
-        <mesh position={[0, 0.27, 0.024]} rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[0.045, 0.045, 0.006, 16]} />
-          <meshStandardMaterial color={PLATE} roughness={0.5} />
-        </mesh>
-      )}
+    <PlateFrame position={position} faceColor={faceColor}>
+      {logo && <PlateLogo y={0.27} />}
       {rowYs.map((y) => (
-        <mesh key={y} position={[0, y, 0.024]}>
-          <boxGeometry args={[0.24, 0.05, 0.005]} />
-          <meshStandardMaterial color="#3a3a3a" roughness={0.8} />
-        </mesh>
+        <PlateMark key={y} y={y} w={0.24} h={0.05} />
       ))}
+    </PlateFrame>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// 支線と支線ガード
+// ---------------------------------------------------------------------------
+
+const GUY_FROM: V3 = [-0.11, 2.5, 0];
+const GUY_TO: V3 = [-1.7, 0.03, 0];
+
+type GuardProps = { from: V3; to: V3; t?: number };
+
+// 支線に沿った位置 t に、ローカルY軸を支線の向きに合わせたグループを置く。
+// ガードの形状はこの中にY軸方向の立体として描けばよい。
+function AlongWire({ from, to, t, children }: { from: V3; to: V3; t: number; children: ReactNode }) {
+  const { position, quaternion } = alongSegment(from, to, t);
+  return (
+    <group position={position} quaternion={quaternion}>
+      {children}
     </group>
+  );
+}
+
+// 支線(柱の中腹から地面のアンカーまで)+任意の支線ガード。
+export function GuyWire({
+  Guard,
+  from = GUY_FROM,
+  to = GUY_TO,
+  radius = 0.015,
+}: {
+  Guard?: ComponentType<GuardProps>;
+  from?: V3;
+  to?: V3;
+  radius?: number;
+}) {
+  return (
+    <>
+      <Segment from={from} to={to} radius={radius} />
+      {Guard && <Guard from={from} to={to} />}
+    </>
   );
 }
 
@@ -283,84 +473,51 @@ function SpiralTape({
 }
 
 // ボトル型(下太・上細)の支線ガード+黒テープ螺旋巻き。関西・北陸・四国で
-// 共通の柄。支線本体(Segment)は呼び出し側で別途描画し、このパーツは
-// 支線に沿った位置に「太さの変わるガード」だけを重ねて描く。
-export function BottleGuyGuard({ from, to, t = 0.28 }: { from: V3; to: V3; t?: number }) {
-  const { pos, quat } = useMemo(() => {
-    const a = new THREE.Vector3(...from);
-    const b = new THREE.Vector3(...to);
-    const dir = new THREE.Vector3().subVectors(b, a);
-    const point = a.clone().addScaledVector(dir, t);
-    const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
-    return { pos: [point.x, point.y, point.z] as V3, quat: [q.x, q.y, q.z, q.w] as [number, number, number, number] };
-  }, [from, to, t]);
+// 共通の柄。
+export function BottleGuyGuard({ from, to, t = 0.28 }: GuardProps) {
   return (
-    <group position={pos} quaternion={quat}>
+    <AlongWire from={from} to={to} t={t}>
       <mesh>
         <cylinderGeometry args={[0.03, 0.055, 0.4, 12]} />
         <meshStandardMaterial color={GUYWIRE} roughness={0.55} />
       </mesh>
       <SpiralTape rTop={0.03} rBottom={0.055} height={0.4} turns={14} />
-    </group>
+    </AlongWire>
   );
 }
 
 // 円柱+黒テープ螺旋巻きの支線ガード(東北特有・ボトル型ではなく太さが一定)。
-export function SpiralCylinderGuyGuard({ from, to, t = 0.28 }: { from: V3; to: V3; t?: number }) {
-  const { pos, quat } = useMemo(() => {
-    const a = new THREE.Vector3(...from);
-    const b = new THREE.Vector3(...to);
-    const dir = new THREE.Vector3().subVectors(b, a);
-    const point = a.clone().addScaledVector(dir, t);
-    const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
-    return { pos: [point.x, point.y, point.z] as V3, quat: [q.x, q.y, q.z, q.w] as [number, number, number, number] };
-  }, [from, to, t]);
+export function SpiralCylinderGuyGuard({ from, to, t = 0.28 }: GuardProps) {
   return (
-    <group position={pos} quaternion={quat}>
+    <AlongWire from={from} to={to} t={t}>
       <mesh>
         <cylinderGeometry args={[0.04, 0.04, 0.42, 12]} />
         <meshStandardMaterial color={GUYWIRE} roughness={0.55} />
       </mesh>
       <SpiralTape rTop={0.04} rBottom={0.04} height={0.42} turns={14} />
-    </group>
+    </AlongWire>
   );
 }
 
 // 黒黄ストライプの支線ガード(中部・沖縄で共通)。
-export function StripedGuyGuard({ from, to, t = 0.28 }: { from: V3; to: V3; t?: number }) {
-  const { pos, quat } = useMemo(() => {
-    const a = new THREE.Vector3(...from);
-    const b = new THREE.Vector3(...to);
-    const dir = new THREE.Vector3().subVectors(b, a);
-    const point = a.clone().addScaledVector(dir, t);
-    const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
-    return { pos: [point.x, point.y, point.z] as V3, quat: [q.x, q.y, q.z, q.w] as [number, number, number, number] };
-  }, [from, to, t]);
+export function StripedGuyGuard({ from, to, t = 0.28 }: GuardProps) {
   const bands = [-0.15, -0.05, 0.05, 0.15];
   return (
-    <group position={pos} quaternion={quat}>
+    <AlongWire from={from} to={to} t={t}>
       {bands.map((y, i) => (
         <mesh key={y} position={[0, y, 0]}>
           <cylinderGeometry args={[0.045, 0.045, 0.11, 12]} />
           <meshStandardMaterial color={i % 2 === 0 ? STRIPE_YELLOW : STRIPE_DARK} roughness={0.6} />
         </mesh>
       ))}
-    </group>
+    </AlongWire>
   );
 }
 
 // 支線ガードの下部が丸みを帯びた形状(中国電力)。
-export function RoundBottomGuyGuard({ from, to, t = 0.28 }: { from: V3; to: V3; t?: number }) {
-  const { pos, quat } = useMemo(() => {
-    const a = new THREE.Vector3(...from);
-    const b = new THREE.Vector3(...to);
-    const dir = new THREE.Vector3().subVectors(b, a);
-    const point = a.clone().addScaledVector(dir, t);
-    const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
-    return { pos: [point.x, point.y, point.z] as V3, quat: [q.x, q.y, q.z, q.w] as [number, number, number, number] };
-  }, [from, to, t]);
+export function RoundBottomGuyGuard({ from, to, t = 0.28 }: GuardProps) {
   return (
-    <group position={pos} quaternion={quat}>
+    <AlongWire from={from} to={to} t={t}>
       <mesh position={[0, 0.02, 0]}>
         <cylinderGeometry args={[0.045, 0.045, 0.32, 12]} />
         <meshStandardMaterial color={GUYWIRE} roughness={0.55} />
@@ -369,29 +526,25 @@ export function RoundBottomGuyGuard({ from, to, t = 0.28 }: { from: V3; to: V3; 
         <sphereGeometry args={[0.045, 14, 10, 0, Math.PI * 2, 0, Math.PI / 2]} />
         <meshStandardMaterial color={GUYWIRE} roughness={0.55} />
       </mesh>
-    </group>
+    </AlongWire>
   );
 }
 
 // 縦長の黄色い支線ガード(北海道)。
-export function TallYellowGuyGuard({ from, to, t = 0.24 }: { from: V3; to: V3; t?: number }) {
-  const { pos, quat } = useMemo(() => {
-    const a = new THREE.Vector3(...from);
-    const b = new THREE.Vector3(...to);
-    const dir = new THREE.Vector3().subVectors(b, a);
-    const point = a.clone().addScaledVector(dir, t);
-    const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
-    return { pos: [point.x, point.y, point.z] as V3, quat: [q.x, q.y, q.z, q.w] as [number, number, number, number] };
-  }, [from, to, t]);
+export function TallYellowGuyGuard({ from, to, t = 0.24 }: GuardProps) {
   return (
-    <group position={pos} quaternion={quat}>
+    <AlongWire from={from} to={to} t={t}>
       <mesh>
         <capsuleGeometry args={[0.045, 0.5, 6, 12]} />
         <meshStandardMaterial color={STRIPE_YELLOW} roughness={0.55} />
       </mesh>
-    </group>
+    </AlongWire>
   );
 }
+
+// ---------------------------------------------------------------------------
+// シーン
+// ---------------------------------------------------------------------------
 
 // 静止した模型なので、描画は操作中だけ(frameloop="demand"。OrbitControls が
 // 変化のたびに再描画を要求する)。接地影も初回の1フレームで焼けば足りる。
