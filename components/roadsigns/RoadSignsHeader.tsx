@@ -13,6 +13,7 @@ export function RoadSignsHeader() {
           <span>道路標識メタ図鑑</span>
         </a>
         <nav className="header-nav" aria-label="道路標識メタ ショートカット">
+          <a href="#route-number">国道番号</a>
           <a href="#signal-map">信号機マップ</a>
           <a href="#signal-notes">信号機の強いネタ</a>
           <a href="#koan">公安委員会シール</a>

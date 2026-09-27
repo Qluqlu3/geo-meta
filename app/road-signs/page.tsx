@@ -8,9 +8,12 @@ import { ReferenceList } from "@/components/roadsigns/ReferenceList";
 import { RoadSignsFooter } from "@/components/roadsigns/RoadSignsFooter";
 import { RoadSignsHeader } from "@/components/roadsigns/RoadSignsHeader";
 import { RoadSignsLegend } from "@/components/roadsigns/RoadSignsLegend";
+import { RouteBatchTable } from "@/components/roadsigns/RouteBatchTable";
+import { RouteLookup } from "@/components/roadsigns/RouteLookup";
 import { SignalMap } from "@/components/roadsigns/SignalMap";
 import { SignalSpotlightCard } from "@/components/roadsigns/SignalSpotlightCard";
 import { SignalTypeTable } from "@/components/roadsigns/SignalTypeTable";
+import { nationalRoutes, nationalRoutesSource } from "@/data/nationalRoutes";
 import { signalOrientationInfo, signalSpotlights } from "@/data/roadSigns";
 
 export const metadata: Metadata = {
@@ -43,6 +46,22 @@ export default function RoadSignsPage() {
           </section>
 
           <RoadSignsLegend />
+
+          <section id="route-number">
+            <h2 className="section-title">国道番号(おにぎり標識)で絞り込む</h2>
+            <p className="section-sub">
+              国道の青い「おにぎり」標識は、ストリートビューでも数字が読めることが多い最強クラスの手がかりです。3桁の国道(101〜507号)は、指定された年ごとに「北から南へ」順に番号が振られているため、番号だけで大まかな地方が分かります。さらに路線ごとの通過都道府県を引けば、標識1枚で数県〜1県まで絞り込めます(全
+              {nationalRoutes.length}路線を収録)。
+            </p>
+            <RouteLookup />
+            <div style={{ marginTop: 24 }}>
+              <RouteBatchTable />
+            </div>
+            <p className="diagram-caption" style={{ marginTop: 10, textAlign: "left" }}>
+              出典: {nationalRoutesSource}
+              。起点・終点は「一般国道の路線を指定する政令」に基づく。重複区間(他の国道と同じ道路を共用する区間)でも標識が併記されるため、通過都道府県の端では別の番号のおにぎりと並んで立つことがある。
+            </p>
+          </section>
 
           <section id="signal-map">
             <h2 className="section-title">信号機の縦型/横型マップ</h2>

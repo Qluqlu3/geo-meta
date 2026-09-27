@@ -2,7 +2,7 @@ export function RoadSignsLegend() {
   return (
     <section id="legend">
       <h2 className="section-title">見分け方の基本カテゴリ</h2>
-      <p className="section-sub">「標識・信号機」で地域差が出やすい4つのポイント。まずはこれらの「見る場所」を覚えましょう。</p>
+      <p className="section-sub">「標識・信号機」で地域差が出やすい5つのポイント。まずはこれらの「見る場所」を覚えましょう。</p>
       <div className="legend-grid">
         <div className="legend-item">
           <svg className="icon" viewBox="0 0 40 40">
@@ -41,6 +41,19 @@ export function RoadSignsLegend() {
           </svg>
           <h4>④ 気象・規制標識</h4>
           <p>チェーン規制標識は全国13区間に限定設置。見つかれば逆にどの峠かをほぼ一意特定できる、ピンポイントで強い手がかり。</p>
+        </div>
+        <div className="legend-item">
+          <svg className="icon" viewBox="0 0 40 40">
+            <path
+              d="M6 8 Q20 5 34 8 Q37 9 36 12 L22 33 Q20 36 18 33 L4 12 Q3 9 6 8 Z"
+              fill="none"
+              stroke="var(--nr-route)"
+              strokeWidth="2.5"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <h4>⑤ 国道番号(おにぎり)</h4>
+          <p>3桁国道は指定年ごとに北→南の順で付番。番号が読めれば、路線の通過都道府県から数県〜1県まで一気に絞れる。</p>
         </div>
       </div>
     </section>
