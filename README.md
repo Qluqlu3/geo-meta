@@ -3,9 +3,9 @@
 GeoGuessr日本メタ「電柱の見た目で電力会社(≒地域)を見分ける」ための静的リファレンスサイト。
 Next.js (App Router) の SSG で静的HTMLに書き出しています。
 
-目的の異なる2系統のページがあり、`/sitemap` で分けて案内しています。
+目的の異なる2系統のページがあり、`/`(トップ)と `/sitemap` で分けて案内しています。
 
-- **地域見分けメタ図鑑**: `/`(電柱)、`/road-markings`(路面標示)、`/road-signs`(道路標識)
+- **地域見分けメタ図鑑**: `/poles`(電柱)、`/road-markings`(路面標示)、`/road-signs`(道路標識)
 - **廃墟アーカイブ(首都圏・静岡)**: `/ruins` — 2010年より前の空中写真・旧版地形図と現在の地図を見比べ、廃墟・廃集落・廃寺社を緯度経度で記録するデータベース
 
 ## 必要環境
@@ -51,7 +51,8 @@ cd out && python3 -m http.server 8000
 
 | パス | 内容 |
 | --- | --- |
-| `app/` | ページ本体・レイアウト・グローバルCSS(`/` = 電柱メタ、`/road-markings` = 路面標示メタ) |
+| `app/` | ページ本体・レイアウト・グローバルCSS(`/` = サイト入口、`/poles` = 電柱メタ、`/road-markings` = 路面標示メタ) |
+| `components/SiteMapContent.tsx` | `/` と `/sitemap` の両方から表示する、系統をまたぐ案内(実体は1つ) |
 | `components/` | UIコンポーネント一式(`components/roadmarkings/` は路面標示メタ専用) |
 | `data/companies.ts` | 10電力会社ぶんのデータ(編集はここ1箇所でOK) |
 | `data/roadMarkings.ts` | 路面標示メタのデータ(「止まれ」字体タイプ・ウインカー促進標示・ダイヤマークなど) |
