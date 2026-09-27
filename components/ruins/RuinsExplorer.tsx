@@ -204,7 +204,14 @@ export function RuinsExplorer() {
 
           <aside className="ruins-panel" aria-live="polite">
             {selectedRuin ? (
-              <RuinDetail ruin={selectedRuin} pastId={pastId} />
+              <RuinDetail
+                ruin={selectedRuin}
+                pastId={pastId}
+                onShowPast={(id) => {
+                  setPastId(id);
+                  flyTo(selectedRuin.lat, selectedRuin.lon, 16);
+                }}
+              />
             ) : selectedCandidate ? (
               <CandidateEditor
                 candidate={selectedCandidate}

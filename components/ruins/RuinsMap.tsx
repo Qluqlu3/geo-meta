@@ -228,7 +228,12 @@ export function RuinsMap({
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !focus) return;
-    map.flyTo([focus.lat, focus.lon], Math.max(map.getZoom(), focus.zoom), { duration: 0.8 });
+    const zoom = Math.max(map.getZoom(), focus.zoom);
+    // スワイプ中は地点が境界線に重ならないよう、過去側(境界より左)の真ん中に来るように中心をずらす
+    const { mode, ratio } = view.current;
+    const shift = mode === "swipe" ? (0.5 - ratio / 2) * map.getSize().x : 0;
+    const center = map.unproject(map.project([focus.lat, focus.lon], zoom).add([shift, 0]), zoom);
+    map.flyTo(center, zoom, { duration: 0.8 });
   }, [focus]);
 
   function dragTo(clientX: number) {

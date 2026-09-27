@@ -82,7 +82,16 @@ function placeText(r: Pick<Ruin, "pref" | "municipality" | "locality">) {
 
 // ---------------------------------------------------------------------------
 
-export function RuinDetail({ ruin, pastId }: { ruin: Ruin; pastId: string }) {
+export function RuinDetail({
+  ruin,
+  pastId,
+  onShowPast,
+}: {
+  ruin: Ruin;
+  pastId: string;
+  /** 根拠に挙げた年代の地図・写真を地図の過去側に表示する */
+  onShowPast: (layerId: string) => void;
+}) {
   return (
     <div className="ruins-panel-body">
       <div className="ruins-panel-head">
@@ -126,6 +135,11 @@ export function RuinDetail({ ruin, pastId }: { ruin: Ruin; pastId: string }) {
             {ruin.evidence.map((e) => (
               <li key={e.past}>
                 <strong>{pastLayerById.get(e.past)?.label ?? e.past}:</strong> {e.pastNote}
+                {pastLayerById.has(e.past) && e.past !== pastId && (
+                  <button type="button" className="ruins-copy ruins-show-past" onClick={() => onShowPast(e.past)}>
+                    この年代で表示
+                  </button>
+                )}
                 <br />
                 <strong>現在:</strong> {e.nowNote}
               </li>
