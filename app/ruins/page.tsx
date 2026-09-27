@@ -6,9 +6,9 @@ import { RuinsHeader } from "@/components/ruins/RuinsHeader";
 import { CURRENT_LAYERS, PAST_LAYERS, ruinCategoryInfo, ruins } from "@/data/ruins";
 
 export const metadata: Metadata = {
-  title: "廃墟アーカイブ(首都圏) | 新旧の地図比較で埋もれた廃墟・廃集落・廃寺社を記録する",
+  title: "廃墟アーカイブ(首都圏・静岡) | 新旧の地図比較で埋もれた廃墟・廃集落・廃寺社を記録する",
   description:
-    "2010年より前の空中写真・旧版地形図と現在の地図を見比べ、首都圏(1都7県)の廃墟・廃集落・廃寺・廃神社を緯度経度で記録するデータベース(β)。",
+    "2010年より前の空中写真・旧版地形図と現在の地図を見比べ、首都圏(1都7県)と静岡県の廃墟・廃集落・廃寺・廃神社を緯度経度で記録するデータベース(β)。",
 };
 
 export default function RuinsPage() {
@@ -21,13 +21,13 @@ export default function RuinsPage() {
       <main id="main">
         <div className="container">
           <section className="hero" id="top">
-            <span className="tagline">Haikyo Archive · 首都圏 · β</span>
+            <span className="tagline">Haikyo Archive · 首都圏・静岡 · β</span>
             <h1>新旧の地図を見比べて、埋もれた廃墟を記録する</h1>
             <p>
               昔の空中写真や地形図には家屋・田畑・寺社の記号が写っているのに、今の地図では森や更地になっている——そんな「名前も情報も残っていない場所」を掘り起こし、緯度経度で残していくデータベースです。山中の廃集落や廃寺社には住所がないことが多いため、位置はすべて緯度経度(WGS84)で記録し、市区町村・大字は国土地理院の逆ジオコーダーによる参考表示にしています。
             </p>
             <p>
-              まずは首都圏(1都7県)から着手しています。現在 {ruins.length}件(
+              首都圏(1都7県)と、隣接する静岡県から着手しています。現在 {ruins.length}件(
               {(Object.keys(ruinCategoryInfo) as (keyof typeof ruinCategoryInfo)[])
                 .map((c) => `${ruinCategoryInfo[c].label}${ruins.filter((r) => r.category === c).length}`)
                 .join("・")}

@@ -118,7 +118,7 @@ export function RuinsExplorer() {
                 setPref(v === "all" || v === "core" ? v : Number(v));
               }}
             >
-              <option value="all">首都圏すべて(1都7県)</option>
+              <option value="all">すべて(1都7県・静岡県)</option>
               <option value="core">1都3県のみ</option>
               {METRO_PREFS.map((p) => (
                 <option key={p.code} value={p.code}>

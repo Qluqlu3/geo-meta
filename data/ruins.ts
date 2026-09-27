@@ -1,4 +1,4 @@
-// 廃墟アーカイブ(首都圏): 廃墟・廃集落・廃寺・廃神社を緯度経度で記録するデータベース。
+// 廃墟アーカイブ(首都圏と静岡県): 廃墟・廃集落・廃寺・廃神社を緯度経度で記録するデータベース。
 // 地域見分けメタ(電柱・路面標示・道路標識)とは目的が異なる独立したセクションで、
 // 「2010年より前の地図・空中写真には写っているのに、今の地図では森や更地に埋もれて
 // 情報がない場所」を新旧比較で掘り起こして残すことを主眼にしている。
@@ -74,7 +74,7 @@ export const statusLabel: Record<RuinStatus, string> = {
 };
 
 // ---------------------------------------------------------------------------
-// 都県(首都圏整備法の「首都圏」= 1都7県。JISコード)
+// 都県(首都圏整備法の「首都圏」= 1都7県に、隣接する静岡県を加える。JISコード)
 // ---------------------------------------------------------------------------
 
 export const METRO_PREFS: { code: number; name: string; core: boolean }[] = [
@@ -86,12 +86,13 @@ export const METRO_PREFS: { code: number; name: string; core: boolean }[] = [
   { code: 9, name: "栃木県", core: false },
   { code: 10, name: "群馬県", core: false },
   { code: 19, name: "山梨県", core: false },
+  { code: 22, name: "静岡県", core: false },
 ];
 export const prefNameOf = new Map(METRO_PREFS.map((p) => [p.code, p.name]));
 
-/** 首都圏全体が収まる初期表示範囲 [南西, 北東] */
+/** 首都圏と静岡県東部が収まる初期表示範囲 [南西, 北東] */
 export const METRO_BOUNDS: [[number, number], [number, number]] = [
-  [34.9, 138.4],
+  [34.6, 138.1],
   [37.15, 140.9],
 ];
 
@@ -228,7 +229,7 @@ export const PAST_LAYERS: MapLayer[] = [
     minZoom: 8,
     maxNativeZoom: 15,
     years: "1928〜1945",
-    coverage: "関東全域(秩父・群馬・房総を含む)。寺社記号(卍・鳥居)と集落の家屋が描かれる",
+    coverage: "関東全域と山梨県・静岡県の大井川以東(秩父・群馬・房総・伊豆を含む)。寺社記号(卍・鳥居)と集落の家屋が描かれる",
   },
   {
     id: "kanto-02",
@@ -240,7 +241,7 @@ export const PAST_LAYERS: MapLayer[] = [
     minZoom: 8,
     maxNativeZoom: 15,
     years: "1972〜1982",
-    coverage: "関東全域。空中写真 1974〜78年と同じ時代の地図記号で確認できる",
+    coverage: "関東全域と山梨県・静岡県の大井川以東。空中写真 1974〜78年と同じ時代の地図記号で確認できる",
   },
   {
     id: "kanto-03",
@@ -252,7 +253,7 @@ export const PAST_LAYERS: MapLayer[] = [
     minZoom: 8,
     maxNativeZoom: 15,
     years: "1988〜2008",
-    coverage: "関東全域。消えた時期を絞り込むための中間の年代",
+    coverage: "関東全域と山梨県・静岡県の大井川以東。消えた時期を絞り込むための中間の年代",
   },
   {
     id: "kanto-00",
@@ -264,7 +265,7 @@ export const PAST_LAYERS: MapLayer[] = [
     minZoom: 8,
     maxNativeZoom: 15,
     years: "1894〜1915",
-    coverage: "関東全域。明治期の集落・寺社の分布",
+    coverage: "関東全域と山梨県・静岡県の大井川以東。明治期の集落・寺社の分布",
   },
   {
     id: "tokyo50-03",
@@ -609,7 +610,7 @@ const osmRuins: Ruin[] = (osm.items as OsmItem[]).map((o) => ({
 
 const curatedOsmIds = new Set(curatedRuins.flatMap((r) => (r.osm ? [r.osm] : [])));
 
-/** 首都圏(1都7県)の全レコード。独自記録を先頭に、同じ OSM 要素の重複は独自記録を優先 */
+/** 首都圏(1都7県)と静岡県の全レコード。独自記録を先頭に、同じ OSM 要素の重複は独自記録を優先 */
 export const ruins: Ruin[] = [
   ...curatedRuins,
   ...osmRuins.filter((r) => !curatedOsmIds.has(r.osm ?? "") && prefNameOf.has(r.pref)),

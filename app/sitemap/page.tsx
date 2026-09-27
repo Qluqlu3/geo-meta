@@ -3,7 +3,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const metadata: Metadata = {
   title: "サイトマップ | 地域見分けメタ図鑑 / 廃墟アーカイブ",
-  description: "GeoGuessr向けの地域見分けメタ図鑑と、首都圏の廃墟アーカイブの2系統のページ一覧。",
+  description: "GeoGuessr向けの地域見分けメタ図鑑と、首都圏・静岡の廃墟アーカイブの2系統のページ一覧。",
 };
 
 type Page = { href: string; title: string; desc: string; anchors: { id: string; label: string }[] };
@@ -53,13 +53,13 @@ const TRACKS: { id: string; title: string; lead: string; pages: Page[] }[] = [
   },
   {
     id: "ruins",
-    title: "廃墟アーカイブ(首都圏・β)",
+    title: "廃墟アーカイブ(首都圏・静岡・β)",
     lead: "2010年より前の空中写真・旧版地形図と現在の地図を見比べ、埋もれた廃墟・廃集落・廃寺社を緯度経度で記録するデータベース。",
     pages: [
       {
         href: "/ruins",
-        title: "廃墟アーカイブ(首都圏)",
-        desc: "1都7県の廃墟・廃集落・廃寺・廃神社。新旧比較マップで候補を探して記録できる。",
+        title: "廃墟アーカイブ(首都圏・静岡)",
+        desc: "1都7県と静岡県の廃墟・廃集落・廃寺・廃神社。新旧比較マップで候補を探して記録できる。",
         anchors: [
           { id: "explorer", label: "新旧比較マップ" },
           { id: "database", label: "データベース" },

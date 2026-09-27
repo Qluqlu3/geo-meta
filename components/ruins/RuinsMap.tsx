@@ -263,7 +263,7 @@ export function RuinsMap({
           </label>
         )}
         <button type="button" className="ruins-ghost-btn" onClick={() => mapRef.current?.flyToBounds(METRO_BOUNDS)}>
-          首都圏全体を表示
+          全体を表示
         </button>
       </div>
       <div className="ruins-map-frame" ref={frameRef}>
