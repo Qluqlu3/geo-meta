@@ -1,25 +1,11 @@
-import { AppShell } from "@/components/AppShell";
-import { BackToTop } from "@/components/BackToTop";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { MarkerDefs } from "@/components/MarkerDefs";
-import { companies } from "@/data/companies";
+import type { Metadata } from "next";
+import { SiteMapContent } from "@/components/SiteMapContent";
 
-export default function Home() {
-  return (
-    <>
-      <MarkerDefs />
-      <a className="skip-link" href="#main">
-        本文へスキップ
-      </a>
-      <Header companies={companies} />
-      <main id="main">
-        <div className="container">
-          <AppShell companies={companies} />
-        </div>
-      </main>
-      <Footer />
-      <BackToTop />
-    </>
-  );
+export const metadata: Metadata = {
+  title: "地域見分けメタ図鑑 / 廃墟アーカイブ",
+  description: "GeoGuessr向けの地域見分けメタ図鑑と、首都圏・静岡の廃墟アーカイブの2系統のページ一覧。",
+};
+
+export default function HomePage() {
+  return <SiteMapContent />;
 }
