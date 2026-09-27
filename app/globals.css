@@ -48,6 +48,11 @@
   --rs-vertical: #2464a8;
   --rs-mixed: #8a4fae;
   --rs-horizontal: #c98a2f;
+
+  /* 国道番号メタ: 散布図・地図の単一系列(青)と選択中の路線(オレンジ)。
+     dataviz検証スクリプトで light/dark とも CVD・コントラスト合格済み */
+  --nr-route: #2a78d6;
+  --nr-selected: #eb6834;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -90,6 +95,9 @@
     --rs-vertical: #4a8fd9;
     --rs-mixed: #b07ad9;
     --rs-horizontal: #d9a34a;
+
+    --nr-route: #3987e5;
+    --nr-selected: #d95926;
   }
 }
 :root[data-theme="dark"] {
@@ -131,6 +139,9 @@
   --rs-vertical: #4a8fd9;
   --rs-mixed: #b07ad9;
   --rs-horizontal: #d9a34a;
+
+  --nr-route: #3987e5;
+  --nr-selected: #d95926;
 }
 
 * {
@@ -855,4 +866,231 @@ footer a {
 .back-to-top.show {
   opacity: 1;
   pointer-events: auto;
+}
+
+/* ---------- 国道番号メタ(おにぎり標識の番号 → 地域) ---------- */
+.route-lookup {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.route-controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.route-shield {
+  flex: none;
+}
+.route-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.route-input label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.route-input-row {
+  display: flex;
+  gap: 6px;
+}
+.route-input-row input {
+  width: 7.5em;
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  color: var(--text-primary);
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+}
+.route-input-row button,
+.route-examples button {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  color: var(--text-secondary);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.route-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.route-examples button {
+  padding: 3px 9px;
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
+}
+.route-examples button.active {
+  color: var(--surface-1);
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+}
+.route-map-region {
+  fill: var(--gridline);
+}
+.route-map-region.hit {
+  fill: var(--nr-route);
+}
+.route-map-region.picked {
+  stroke: var(--text-primary);
+  stroke-width: 1.6;
+  paint-order: stroke;
+}
+.route-map-region:focus-visible {
+  stroke: var(--text-primary);
+  stroke-width: 1.6;
+}
+.route-result h3 {
+  margin: 2px 0 10px;
+  font-size: 1.15rem;
+}
+.route-facts {
+  display: grid;
+  grid-template-columns: 8.5em 1fr;
+  gap: 8px 12px;
+  margin: 0;
+  font-size: 0.9rem;
+}
+.route-facts dt {
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  padding-top: 2px;
+}
+.route-facts dd {
+  margin: 0;
+}
+.route-facts .area-tags {
+  margin: 0;
+}
+@media (max-width: 480px) {
+  .route-facts {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .route-facts dd {
+    margin-bottom: 8px;
+  }
+}
+.route-verdict {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+.route-verdict strong {
+  color: var(--text-primary);
+}
+.route-reverse {
+  margin-top: 16px;
+}
+.route-reverse h4 {
+  margin: 0 0 8px;
+  font-size: 0.88rem;
+}
+.route-chart-figure {
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-1);
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+.route-chart-figure figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.route-chart-figure figcaption strong {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+.route-chart {
+  position: relative;
+  width: 100%;
+}
+.route-chart {
+  outline: none;
+}
+.route-chart svg {
+  display: block;
+  cursor: crosshair;
+}
+.route-chart:focus-visible {
+  outline: 2px solid var(--nr-route);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+.route-chart-grid {
+  stroke: var(--gridline);
+  stroke-width: 1;
+}
+.route-chart-tick,
+.route-chart-band {
+  font-size: 10.5px;
+  fill: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.route-chart-band {
+  text-anchor: middle;
+  font-weight: 700;
+  fill: var(--text-secondary);
+}
+.route-chart-dot {
+  fill: var(--nr-route);
+  stroke: var(--surface-1);
+  stroke-width: 1;
+}
+.route-chart-crosshair {
+  stroke: var(--text-muted);
+  stroke-width: 1;
+}
+.route-chart-selected-line {
+  stroke: var(--nr-selected);
+  stroke-width: 1;
+}
+.route-chart-selected {
+  fill: var(--nr-selected);
+  stroke: var(--surface-1);
+  stroke-width: 2;
+}
+.route-chart-tooltip {
+  position: absolute;
+  top: 34px;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  box-shadow: var(--shadow);
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+.route-chart-tooltip strong {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+.route-chart-tooltip .muted {
+  color: var(--text-muted);
 }
