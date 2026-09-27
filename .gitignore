@@ -31,3 +31,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scripts/detect-old-map-symbols.py のタイルキャッシュ
+/.tile-cache/
