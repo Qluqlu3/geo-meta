@@ -1573,3 +1573,53 @@ table.compare td.company-cell:has(.ruins-row-btn) {
 .ruins-coord-cell code {
   margin-right: 6px;
 }
+
+/* ---------- サイトマップ(/sitemap) ---------- */
+.sitemap-tracks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 0 32px;
+}
+.sitemap-track {
+  scroll-margin-top: 72px;
+}
+.sitemap-pages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sitemap-pages li {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-1);
+  box-shadow: var(--shadow);
+  padding: 14px 16px;
+}
+.sitemap-page-link {
+  font-weight: 700;
+  font-size: 1.02rem;
+}
+.sitemap-pages p {
+  margin: 4px 0 8px;
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+}
+.sitemap-pages .area-tags {
+  margin-bottom: 0;
+}
+.sitemap-pages .area-tags a {
+  font-size: 0.76rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.sitemap-pages .area-tags a:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
