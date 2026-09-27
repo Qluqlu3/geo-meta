@@ -59,6 +59,7 @@ cd out && python3 -m http.server 8000
 | `app/ruins/` `components/ruins/` | 廃墟アーカイブ(新旧比較マップ・データベース) |
 | `data/ruins.ts` | 廃墟アーカイブの独自記録(`curatedRuins`)・比較レイヤー定義。OSM 由来分は `data/ruinsOsm.json`(`scripts/fetch-ruins-osm.mjs` で生成) |
 | `scripts/find-ruin-candidates.mjs` | 「集落名はあるのに建物がない」地点を拾う廃集落候補の抽出スクリプト |
+| `scripts/detect-old-map-symbols.py` → `scripts/find-vanished-shrines.mjs` | 旧版地形図の寺社記号を画像照合で検出し、現行の地図から消えたものを `data/ruinsOldMapSymbols.json` に書き出す(前者は Python + `opencv-python-headless` `numpy` が必要) |
 | `RESEARCH_ruins.md` | 廃墟アーカイブの調査メモ・データソース・利用条件 |
 | `legacy-static/` | 移行前の静的HTML/CSS/JS版 |
 | `PLAN.md` | 作業まとめ・調査の出典・技術メモ |
