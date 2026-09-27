@@ -4,60 +4,22 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { CompanyDiagram } from "./CompanyDiagram";
 import { DetailPoints, hasDetailPoints } from "./DetailPoints";
+import { hasPole3D } from "./diagram3d/ids";
 
-const loadingFallback = () => <div className="diagram-3d-loading">読み込み中…</div>;
-
-const DIAGRAM_3D: Record<string, ReturnType<typeof dynamic>> = {
-  hokkaido: dynamic(() => import("./diagram3d/HokkaidoPole3D").then((m) => m.HokkaidoPole3D), {
-    ssr: false,
-    loading: loadingFallback,
-  }),
-  tohoku: dynamic(() => import("./diagram3d/TohokuPole3D").then((m) => m.TohokuPole3D), {
-    ssr: false,
-    loading: loadingFallback,
-  }),
-  tepco: dynamic(() => import("./diagram3d/TepcoPole3D").then((m) => m.TepcoPole3D), {
-    ssr: false,
-    loading: loadingFallback,
-  }),
-  chubu: dynamic(() => import("./diagram3d/ChubuPole3D").then((m) => m.ChubuPole3D), {
-    ssr: false,
-    loading: loadingFallback,
-  }),
-  hokuriku: dynamic(() => import("./diagram3d/HokurikuPole3D").then((m) => m.HokurikuPole3D), {
-    ssr: false,
-    loading: loadingFallback,
-  }),
-  kansai: dynamic(() => import("./diagram3d/KansaiPole3D").then((m) => m.KansaiPole3D), {
-    ssr: false,
-    loading: loadingFallback,
-  }),
-  chugoku: dynamic(() => import("./diagram3d/ChugokuPole3D").then((m) => m.ChugokuPole3D), {
-    ssr: false,
-    loading: loadingFallback,
-  }),
-  shikoku: dynamic(() => import("./diagram3d/ShikokuPole3D").then((m) => m.ShikokuPole3D), {
-    ssr: false,
-    loading: loadingFallback,
-  }),
-  kyushu: dynamic(() => import("./diagram3d/KyushuPole3D").then((m) => m.KyushuPole3D), {
-    ssr: false,
-    loading: loadingFallback,
-  }),
-  okinawa: dynamic(() => import("./diagram3d/OkinawaPole3D").then((m) => m.OkinawaPole3D), {
-    ssr: false,
-    loading: loadingFallback,
-  }),
-};
+// three.js を含む3D識別図は、3Dタブを開いたときに初めて読み込む(SSRしない)。
+const Pole3D = dynamic(() => import("./diagram3d/Pole3D").then((m) => m.Pole3D), {
+  ssr: false,
+  loading: () => <div className="diagram-3d-loading">読み込み中…</div>,
+});
 
 type Mode = "2d" | "3d" | "detail";
 
 export function DiagramView({ id, caption }: { id: string; caption: string }) {
   const [mode, setMode] = useState<Mode>("2d");
-  const Diagram3D = DIAGRAM_3D[id];
+  const has3D = hasPole3D(id);
   const hasDetail = hasDetailPoints(id);
 
-  if (!Diagram3D && !hasDetail) {
+  if (!has3D && !hasDetail) {
     return (
       <>
         <CompanyDiagram id={id} />
@@ -78,7 +40,7 @@ export function DiagramView({ id, caption }: { id: string; caption: string }) {
         >
           模式図
         </button>
-        {Diagram3D && (
+        {has3D && (
           <button
             type="button"
             role="tab"
@@ -108,10 +70,10 @@ export function DiagramView({ id, caption }: { id: string; caption: string }) {
           <p className="diagram-caption">{caption}</p>
         </>
       )}
-      {mode === "3d" && Diagram3D && (
+      {mode === "3d" && has3D && (
         <>
           <div className="diagram-3d-canvas">
-            <Diagram3D />
+            <Pole3D id={id} />
           </div>
           <p className="diagram-caption">{caption}(3D・ドラッグで回転/ピンチでズーム)</p>
         </>

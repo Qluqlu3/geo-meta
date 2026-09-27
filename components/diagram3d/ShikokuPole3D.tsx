@@ -1,16 +1,4 @@
-"use client";
-
-import {
-  ArmInsulatorsAndWires,
-  BottleGuyGuard,
-  CrossArm,
-  LBracketTop,
-  METAL,
-  PoleShaft,
-  SceneShell,
-  Segment,
-  TRANSFORMER,
-} from "./Shared3D";
+import { ArmInsulatorsAndWires, BottleGuyGuard, CrossArm, LBracketTop, METAL, PoleShaft, Segment, TRANSFORMER } from "./Shared3D";
 
 // 変圧器(缶): 高圧引き下げ線が直角(90°)に曲がる+底面にシール。
 function BentDropTransformer() {
@@ -39,7 +27,7 @@ function BentDropTransformer() {
   );
 }
 
-function Pole() {
+export function ShikokuPole() {
   const guyFrom: [number, number, number] = [-0.11, 2.5, 0];
   const guyTo: [number, number, number] = [-1.7, 0.03, 0];
   return (
@@ -69,13 +57,5 @@ function Pole() {
       <Segment from={guyFrom} to={guyTo} radius={0.015} color="#9a9890" />
       <BottleGuyGuard from={guyFrom} to={guyTo} />
     </group>
-  );
-}
-
-export function ShikokuPole3D() {
-  return (
-    <SceneShell>
-      <Pole />
-    </SceneShell>
   );
 }

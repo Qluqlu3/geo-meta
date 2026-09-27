@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArmInsulatorsAndWires,
   BottleGuyGuard,
@@ -7,7 +5,6 @@ import {
   METAL,
   PLATE,
   PoleShaft,
-  SceneShell,
   Segment,
   TentArmTop,
   TRANSFORMER,
@@ -53,7 +50,7 @@ function NarrowWidePlate() {
   );
 }
 
-function Pole() {
+export function HokurikuPole() {
   const guyFrom: [number, number, number] = [-0.11, 2.5, 0];
   const guyTo: [number, number, number] = [-1.7, 0.03, 0];
   return (
@@ -71,13 +68,5 @@ function Pole() {
       <Segment from={guyFrom} to={guyTo} radius={0.015} color="#9a9890" />
       <BottleGuyGuard from={guyFrom} to={guyTo} />
     </group>
-  );
-}
-
-export function HokurikuPole3D() {
-  return (
-    <SceneShell>
-      <Pole />
-    </SceneShell>
   );
 }

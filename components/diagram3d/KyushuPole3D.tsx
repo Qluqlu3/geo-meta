@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArmInsulatorsAndWires,
   CrossArm,
@@ -7,7 +5,6 @@ import {
   PinInsulatorTriangleCap,
   PlateBox,
   PoleShaft,
-  SceneShell,
   Segment,
   TRANSFORMER,
 } from "./Shared3D";
@@ -32,7 +29,7 @@ function GenericTransformer() {
   );
 }
 
-function Pole() {
+export function KyushuPole() {
   return (
     <group>
       <PoleShaft />
@@ -50,13 +47,5 @@ function Pole() {
           直接差し込まれているタイプ(ガードなし) */}
       <Segment from={[-0.02, 2.5, 0.02]} to={[-1.7, 0.03, 0]} radius={0.014} color="#9a9890" />
     </group>
-  );
-}
-
-export function KyushuPole3D() {
-  return (
-    <SceneShell>
-      <Pole />
-    </SceneShell>
   );
 }

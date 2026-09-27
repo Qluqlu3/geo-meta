@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArmInsulatorsAndWires,
   ConeTop,
@@ -7,7 +5,6 @@ import {
   METAL,
   PLATE,
   PoleShaft,
-  SceneShell,
   Segment,
   SpiralCylinderGuyGuard,
   TRANSFORMER,
@@ -79,7 +76,7 @@ function WideGrayPlate() {
   );
 }
 
-function Pole() {
+export function TohokuPole() {
   const guyFrom: [number, number, number] = [-0.11, 2.5, 0];
   const guyTo: [number, number, number] = [-1.7, 0.03, 0];
   return (
@@ -97,13 +94,5 @@ function Pole() {
       <Segment from={guyFrom} to={guyTo} radius={0.015} color="#9a9890" />
       <SpiralCylinderGuyGuard from={guyFrom} to={guyTo} />
     </group>
-  );
-}
-
-export function TohokuPole3D() {
-  return (
-    <SceneShell>
-      <Pole />
-    </SceneShell>
   );
 }

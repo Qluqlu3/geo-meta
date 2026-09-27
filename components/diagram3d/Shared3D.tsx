@@ -1,5 +1,3 @@
-"use client";
-
 import { ContactShadows, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import type { ComponentType, ReactNode } from "react";

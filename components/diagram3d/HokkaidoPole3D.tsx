@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArmInsulatorsAndWires,
   ConeTop,
@@ -7,7 +5,6 @@ import {
   METAL,
   PlateBox,
   PoleShaft,
-  SceneShell,
   Segment,
   TallYellowGuyGuard,
   TRANSFORMER,
@@ -49,7 +46,7 @@ function PlusBarTransformer() {
   );
 }
 
-function Pole() {
+export function HokkaidoPole() {
   return (
     <group>
       <PoleShaft />
@@ -65,13 +62,5 @@ function Pole() {
       <Segment from={[-0.11, 2.5, 0]} to={[-1.7, 0.03, 0]} radius={0.015} color="#9a9890" />
       <TallYellowGuyGuard from={[-0.11, 2.5, 0]} to={[-1.7, 0.03, 0]} />
     </group>
-  );
-}
-
-export function HokkaidoPole3D() {
-  return (
-    <SceneShell>
-      <Pole />
-    </SceneShell>
   );
 }

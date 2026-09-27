@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArmInsulatorsAndWires,
   CrossArm,
@@ -7,7 +5,6 @@ import {
   METAL,
   PlateBox,
   PoleShaft,
-  SceneShell,
   Segment,
   StripedGuyGuard,
   TRANSFORMER,
@@ -57,7 +54,7 @@ function TriangleArmTop() {
   );
 }
 
-function Pole() {
+export function ChubuPole() {
   const guyFrom: [number, number, number] = [-0.11, 2.5, 0];
   const guyTo: [number, number, number] = [-1.7, 0.03, 0];
   return (
@@ -77,13 +74,5 @@ function Pole() {
       <Segment from={guyFrom} to={guyTo} radius={0.015} color="#9a9890" />
       <StripedGuyGuard from={guyFrom} to={guyTo} />
     </group>
-  );
-}
-
-export function ChubuPole3D() {
-  return (
-    <SceneShell>
-      <Pole />
-    </SceneShell>
   );
 }

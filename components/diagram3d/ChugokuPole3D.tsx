@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArmInsulatorsAndWires,
   CrossArm,
@@ -9,7 +7,6 @@ import {
   PoleShaft,
   RED_ACCENT,
   RoundBottomGuyGuard,
-  SceneShell,
   Segment,
   TRANSFORMER,
 } from "./Shared3D";
@@ -56,7 +53,7 @@ function StackedPlates() {
   );
 }
 
-function Pole() {
+export function ChugokuPole() {
   const guyFrom: [number, number, number] = [-0.11, 2.5, 0];
   const guyTo: [number, number, number] = [-1.7, 0.03, 0];
   return (
@@ -73,13 +70,5 @@ function Pole() {
       <Segment from={guyFrom} to={guyTo} radius={0.015} color="#9a9890" />
       <RoundBottomGuyGuard from={guyFrom} to={guyTo} />
     </group>
-  );
-}
-
-export function ChugokuPole3D() {
-  return (
-    <SceneShell>
-      <Pole />
-    </SceneShell>
   );
 }

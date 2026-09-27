@@ -1,7 +1,3 @@
-"use client";
-
-import { ContactShadows, OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
 import { useMemo } from "react";
 import * as THREE from "three";
 
@@ -116,7 +112,7 @@ function DArm({ position, rotation }: { position: V3; rotation?: V3 }) {
   );
 }
 
-function Pole() {
+export function TepcoPole() {
   const armInsulatorX = [-0.62, 0, 0.62];
   return (
     <group>
@@ -247,26 +243,5 @@ function Pole() {
           anchor. 東京電力特有の支線ガードの記述はないため無地の支線のみ描画。 */}
       <Segment from={[-0.11, 2.5, 0]} to={[-1.7, 0.03, 0]} radius={0.015} color="#9a9890" />
     </group>
-  );
-}
-
-export function TepcoPole3D() {
-  return (
-    <Canvas camera={{ position: [3.4, 2.9, 4.6], fov: 38 }} shadows dpr={[1, 2]}>
-      <ambientLight intensity={0.7} />
-      <directionalLight position={[4, 6, 3]} intensity={1.3} castShadow shadow-mapSize={[1024, 1024]} />
-      <directionalLight position={[-3, 2, -4]} intensity={0.35} />
-      <Pole />
-      <ContactShadows position={[0, 0, 0]} opacity={0.35} scale={8} blur={2} far={2} />
-      <OrbitControls
-        makeDefault
-        enablePan={false}
-        minDistance={2.6}
-        maxDistance={8}
-        target={[0.1, 2.2, 0]}
-        minPolarAngle={Math.PI / 6}
-        maxPolarAngle={Math.PI / 2.05}
-      />
-    </Canvas>
   );
 }
