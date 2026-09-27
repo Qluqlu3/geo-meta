@@ -7,7 +7,15 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!legacy-static", "!data/japanPrefectures.json", "!data/nationalRoutes.json", "!out"]
+    "includes": [
+      "**",
+      "!legacy-static",
+      "!data/japanPrefectures.json",
+      "!data/nationalRoutes.json",
+      "!data/ruinsOsm.json",
+      "!data/gsiMuni.json",
+      "!out"
+    ]
   },
   "formatter": {
     "enabled": true,
