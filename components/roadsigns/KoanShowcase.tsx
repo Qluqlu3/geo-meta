@@ -1,5 +1,6 @@
 import { koanPlates, koanSources } from "@/data/roadSigns";
 import { RichText } from "../RichText";
+import { SourceList } from "../SourceList";
 import { KoanPlateIcon } from "./KoanPlateIcon";
 
 export function KoanShowcase() {
@@ -19,15 +20,7 @@ export function KoanShowcase() {
           </div>
         ))}
       </div>
-      <ul className="source-list">
-        {koanSources.map((s) => (
-          <li key={s.url}>
-            <a href={s.url} target="_blank" rel="noreferrer">
-              {s.label}
-            </a>
-          </li>
-        ))}
-      </ul>
+      <SourceList sources={koanSources} />
     </div>
   );
 }

@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { BackToTop } from "@/components/BackToTop";
+import { ReferenceList } from "@/components/ReferenceList";
 import { DiamondShowcase } from "@/components/roadmarkings/DiamondShowcase";
-import { ReferenceList } from "@/components/roadmarkings/ReferenceList";
 import { RoadMarkingsFooter } from "@/components/roadmarkings/RoadMarkingsFooter";
 import { RoadMarkingsHeader } from "@/components/roadmarkings/RoadMarkingsHeader";
 import { SnowPipeCard } from "@/components/roadmarkings/SnowPipeCard";
-import { SpotlightCard } from "@/components/roadmarkings/SpotlightCard";
+import { SpotlightIcon } from "@/components/roadmarkings/SpotlightIcon";
 import { TomareMap } from "@/components/roadmarkings/TomareMap";
 import { TomareTypeTable } from "@/components/roadmarkings/TomareTypeTable";
-import { spotlights, tomareTypeInfo } from "@/data/roadMarkings";
+import { SpotlightCard } from "@/components/SpotlightCard";
+import { referenceNotes, spotlights, tomareTypeInfo } from "@/data/roadMarkings";
 
 export const metadata: Metadata = {
   title: "路面標示メタ図鑑 | GeoGuessr 日本 路面標示の見分け方ガイド(β)",
@@ -77,7 +78,7 @@ export default function RoadMarkingsPage() {
               電柱プレートに近い、地域が一意に特定できるタイプの法定外表示。JAFの調査で「ウインカーを出さない県」の上位に挙がった県が中心です。
             </p>
             {spotlights.map((s) => (
-              <SpotlightCard key={s.id} spotlight={s} />
+              <SpotlightCard key={s.id} spotlight={s} icon={<SpotlightIcon kind={s.icon} />} />
             ))}
           </section>
 
@@ -100,7 +101,7 @@ export default function RoadMarkingsPage() {
             <p className="section-sub">
               再現性が低い・範囲が広すぎる・廃止方向にあるなどの理由で主要コンテンツにはしていないが、記録として残している事例。
             </p>
-            <ReferenceList />
+            <ReferenceList notes={referenceNotes} />
           </section>
         </div>
       </main>

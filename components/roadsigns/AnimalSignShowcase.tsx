@@ -1,4 +1,5 @@
 import { animalSignCaveat, animalSignSources, animalSigns } from "@/data/roadSigns";
+import { SourceList } from "../SourceList";
 import { AnimalSignIcon } from "./AnimalSignIcon";
 
 export function AnimalSignShowcase() {
@@ -21,15 +22,7 @@ export function AnimalSignShowcase() {
       <p className="diagram-caption" style={{ marginTop: 10, textAlign: "left" }}>
         {animalSignCaveat}
       </p>
-      <ul className="source-list">
-        {animalSignSources.map((s) => (
-          <li key={s.url}>
-            <a href={s.url} target="_blank" rel="noreferrer">
-              {s.label}
-            </a>
-          </li>
-        ))}
-      </ul>
+      <SourceList sources={animalSignSources} />
     </div>
   );
 }

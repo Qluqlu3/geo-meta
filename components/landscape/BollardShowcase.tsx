@@ -1,5 +1,6 @@
 import { bollardCaveat, bollardPatterns, bollardSources, confidenceLabel } from "@/data/landscape";
 import { RichText } from "../RichText";
+import { SourceList } from "../SourceList";
 import { BollardIcon } from "./BollardIcon";
 
 export function BollardShowcase() {
@@ -29,15 +30,7 @@ export function BollardShowcase() {
       <p className="diagram-caption" style={{ marginTop: 10, textAlign: "left" }}>
         {bollardCaveat}
       </p>
-      <ul className="source-list">
-        {bollardSources.map((s) => (
-          <li key={s.url}>
-            <a href={s.url} target="_blank" rel="noreferrer">
-              {s.label}
-            </a>
-          </li>
-        ))}
-      </ul>
+      <SourceList sources={bollardSources} />
     </div>
   );
 }

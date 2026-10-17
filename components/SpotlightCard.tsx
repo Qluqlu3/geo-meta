@@ -1,9 +1,21 @@
-import type { Spotlight } from "@/data/roadMarkings";
-import { confidenceLabel } from "@/data/roadMarkings";
-import { RichText } from "../RichText";
-import { SpotlightIcon } from "./SpotlightIcon";
+import type { ReactNode } from "react";
+import { type Confidence, confidenceLabel } from "@/data/roadMarkings";
+import { RichText } from "./RichText";
+import { type Source, SourceList } from "./SourceList";
 
-export function SpotlightCard({ spotlight }: { spotlight: Spotlight }) {
+export type SpotlightContent = {
+  id: string;
+  title: string;
+  areas: string[];
+  confidence: Confidence;
+  summary: string;
+  points: { k: string; v: string }[];
+  note: string;
+  sources: Source[];
+};
+
+// 路面標示メタ・道路標識メタの「強いネタ」カード。図(アイコン)だけページごとに差し替える。
+export function SpotlightCard({ spotlight, icon }: { spotlight: SpotlightContent; icon: ReactNode }) {
   return (
     <article className="company-card" id={spotlight.id}>
       <div className="company-head">
@@ -17,7 +29,7 @@ export function SpotlightCard({ spotlight }: { spotlight: Spotlight }) {
       </div>
       <div className="company-body">
         <div className="diagram-box">
-          <SpotlightIcon kind={spotlight.icon} />
+          {icon}
           <p className="diagram-caption">{spotlight.summary}</p>
         </div>
         <div>
@@ -34,15 +46,7 @@ export function SpotlightCard({ spotlight }: { spotlight: Spotlight }) {
           <div className="confuse-note">
             <RichText text={spotlight.note} />
           </div>
-          <ul className="source-list">
-            {spotlight.sources.map((s) => (
-              <li key={s.url}>
-                <a href={s.url} target="_blank" rel="noreferrer">
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <SourceList sources={spotlight.sources} />
         </div>
       </div>
     </article>

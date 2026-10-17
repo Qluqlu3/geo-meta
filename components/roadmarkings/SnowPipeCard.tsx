@@ -1,5 +1,6 @@
 import { confidenceLabel, snowPipeNote } from "@/data/roadMarkings";
 import { RichText } from "../RichText";
+import { SourceList } from "../SourceList";
 
 function SnowPipeIcon() {
   return (
@@ -48,15 +49,7 @@ export function SnowPipeCard() {
           <div className="confuse-note">
             <RichText text={n.note} />
           </div>
-          <ul className="source-list">
-            {n.sources.map((s) => (
-              <li key={s.url}>
-                <a href={s.url} target="_blank" rel="noreferrer">
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <SourceList sources={n.sources} />
         </div>
       </div>
     </article>

@@ -1,4 +1,5 @@
 import { chainSections, chainSectionsNote, chainSectionsSources } from "@/data/roadSigns";
+import { SourceList } from "../SourceList";
 import { ChainSignIcon } from "./ChainSignIcon";
 
 const AREAS = Array.from(new Set(chainSections.flatMap((c) => c.prefectures)));
@@ -22,15 +23,7 @@ export function ChainRegulationTable() {
         </div>
         <div>
           <div className="confuse-note">{chainSectionsNote}</div>
-          <ul className="source-list">
-            {chainSectionsSources.map((s) => (
-              <li key={s.url}>
-                <a href={s.url} target="_blank" rel="noreferrer">
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <SourceList sources={chainSectionsSources} />
         </div>
       </div>
       <div className="table-scroll" style={{ marginTop: 16 }}>

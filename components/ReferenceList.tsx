@@ -1,9 +1,19 @@
-import { confidenceLabel, referenceNotes } from "@/data/roadMarkings";
+import { confidenceLabel } from "@/data/roadMarkings";
+import { type Source, SourceList } from "./SourceList";
 
-export function ReferenceList() {
+export type ReferenceNoteContent = {
+  id: string;
+  title: string;
+  areas: string[];
+  note: string;
+  sources: Source[];
+};
+
+// 路面標示メタ・道路標識メタ末尾の「参考程度(採用保留)」一覧。
+export function ReferenceList({ notes }: { notes: readonly ReferenceNoteContent[] }) {
   return (
     <div className="reference-list">
-      {referenceNotes.map((r) => (
+      {notes.map((r) => (
         <div className="reference-item" key={r.id}>
           <div className="reference-item-head">
             <h4>{r.title}</h4>
@@ -15,15 +25,7 @@ export function ReferenceList() {
             ))}
           </div>
           <p>{r.note}</p>
-          <ul className="source-list">
-            {r.sources.map((s) => (
-              <li key={s.url}>
-                <a href={s.url} target="_blank" rel="noreferrer">
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <SourceList sources={r.sources} />
         </div>
       ))}
     </div>

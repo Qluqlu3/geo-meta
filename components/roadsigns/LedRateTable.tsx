@@ -1,4 +1,5 @@
 import { ledRateNote } from "@/data/roadSigns";
+import { SourceList } from "../SourceList";
 
 function fmt(v: number | undefined): string {
   return v === undefined ? "—" : `${v.toFixed(1)}%`;
@@ -39,13 +40,7 @@ export function LedRateTable() {
           </tbody>
         </table>
       </div>
-      <ul className="source-list">
-        <li>
-          <a href={source.url} target="_blank" rel="noreferrer">
-            {source.label}
-          </a>
-        </li>
-      </ul>
+      <SourceList sources={[source]} />
     </article>
   );
 }

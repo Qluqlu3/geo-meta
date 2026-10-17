@@ -1,4 +1,5 @@
 import { type DiamondNote, diamondNotes, diamondSourceNote, diamondSources } from "@/data/roadMarkings";
+import { SourceList } from "../SourceList";
 
 // 菱形の頂点(上/右/下/左)。実物は横1.5m×縦5m程度で縦長のため、模式図も縦長比率にしている。
 // viewBoxを菱形の実寸に近い縦長(22x40)にタイトに合わせることで、表示を大きくしたときに
@@ -101,15 +102,7 @@ export function DiamondShowcase() {
       <p className="diagram-caption" style={{ marginTop: 10, textAlign: "left" }}>
         {diamondSourceNote}
       </p>
-      <ul className="source-list">
-        {diamondSources.map((s) => (
-          <li key={s.url}>
-            <a href={s.url} target="_blank" rel="noreferrer">
-              {s.label}
-            </a>
-          </li>
-        ))}
-      </ul>
+      <SourceList sources={diamondSources} />
     </div>
   );
 }

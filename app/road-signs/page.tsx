@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
 import { BackToTop } from "@/components/BackToTop";
+import { ReferenceList } from "@/components/ReferenceList";
 import { AnimalSignShowcase } from "@/components/roadsigns/AnimalSignShowcase";
 import { ChainRegulationTable } from "@/components/roadsigns/ChainRegulationTable";
 import { KoanShowcase } from "@/components/roadsigns/KoanShowcase";
 import { LedRateTable } from "@/components/roadsigns/LedRateTable";
-import { ReferenceList } from "@/components/roadsigns/ReferenceList";
 import { RoadSignsFooter } from "@/components/roadsigns/RoadSignsFooter";
 import { RoadSignsHeader } from "@/components/roadsigns/RoadSignsHeader";
 import { RoadSignsLegend } from "@/components/roadsigns/RoadSignsLegend";
 import { RouteBatchTable } from "@/components/roadsigns/RouteBatchTable";
 import { RouteLookup } from "@/components/roadsigns/RouteLookup";
 import { SignalMap } from "@/components/roadsigns/SignalMap";
-import { SignalSpotlightCard } from "@/components/roadsigns/SignalSpotlightCard";
+import { SignalSpotlightIcon } from "@/components/roadsigns/SignalSpotlightIcon";
 import { SignalTypeTable } from "@/components/roadsigns/SignalTypeTable";
+import { SpotlightCard } from "@/components/SpotlightCard";
 import { nationalRoutes, nationalRoutesSource } from "@/data/nationalRoutes";
-import { signalOrientationInfo, signalSpotlights } from "@/data/roadSigns";
+import { referenceNotes, signalOrientationInfo, signalSpotlights } from "@/data/roadSigns";
 
 export const metadata: Metadata = {
   title: "道路標識メタ図鑑 | GeoGuessr 日本 標識・信号機の見分け方ガイド(β)",
@@ -101,7 +102,7 @@ export default function RoadSignsPage() {
               縦型/横型以外にも、警察庁の規格変更や各県警の更新方針の違いから生まれた、信号機まわりの強い識別ポイント。
             </p>
             {signalSpotlights.map((s) => (
-              <SignalSpotlightCard key={s.id} spotlight={s} />
+              <SpotlightCard key={s.id} spotlight={s} icon={<SignalSpotlightIcon kind={s.icon} />} />
             ))}
             <LedRateTable />
           </section>
@@ -136,7 +137,7 @@ export default function RoadSignsPage() {
             <p className="section-sub">
               裏付け不足・未開拓・既存の結論と矛盾するなどの理由で主要コンテンツにはしていないが、記録として残している事例。
             </p>
-            <ReferenceList />
+            <ReferenceList notes={referenceNotes} />
           </section>
         </div>
       </main>
