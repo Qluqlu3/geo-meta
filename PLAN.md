@@ -10,7 +10,7 @@ GeoGuessr日本メタ「電柱で電力会社(≒地域)を見分ける」ため
 | `app/page.tsx` / `app/layout.tsx` | ページ本体・メタデータ |
 | `app/globals.css` | デザイントークン・レイアウト・ライト/ダーク対応(内容は旧版と同一) |
 | `data/companies.ts` | 10電力会社ぶんのデータ(エリア・比較表・特徴・混同注意・地図座標など) |
-| `components/poles/` | 電柱メタ専用: `PolesHeader` `AppShell`(検索state) `JapanMap` `CompareTable` `CompanyCard` `DiagramView` `CompanyDiagram` `DetailPoints` `PolesLegend` `PolesFooter` `MarkerDefs` `diagram3d/` |
+| `components/poles/` | 電柱メタ専用: `PolesHeader` `AppShell`(検索state) `JapanMap` `CompareTable` `CompanyCard` `DiagramView` `CompanyDiagram`+`diagramParts` `DetailPoints`+`detailIcons` `PolesLegend` `PolesFooter` `MarkerDefs` `diagram3d/` |
 | `components/` 直下 | 複数ページで共用: `SiteHeader` `SiteFooter` `ThemeToggle` `BackToTop` `RichText` `PrefectureMap` `SpotlightCard` `ReferenceList` `SourceList` `SiteMapContent` |
 | `next.config.ts` | `output: "export"` (静的書き出し) + `images.unoptimized` |
 | `legacy-static/` | 移行前の素のHTML/CSS/JS版(参考保存、ビルドには含まれない) |
@@ -27,7 +27,7 @@ pnpm dev     # 開発サーバー(http://localhost:3000)
 
 - 10社ぶんのカード・比較表は **`data/companies.ts` 1箇所を編集すれば全箇所に反映**される(旧版はHTMLを10箇所コピペしていた)
 - 地図は `data/japanPrefectures.json`(実際の都道府県境界データ、後述)を電力会社IDでグルーピングして描画。色は `companies.ts` の `colorVar` を引く
-- 識別図(SVG)は各社ごとに描画内容が異なる一点物のため `components/poles/CompanyDiagram.tsx` に個別実装として残置(データ化はしていない)。ポール(電柱本体)のグラデーションと接地影は共通コンポーネント化(`Ground`, `#pole-gradient`)
+- 識別図(SVG)は各社ごとに描画内容が異なる一点物のため `components/poles/CompanyDiagram.tsx` に個別実装として残置(データ化はしていない)。ポール(電柱本体)のグラデーションと接地影などの共通部品は `components/poles/diagramParts.tsx` に分離(`Ground`, `PoleBase`, `#pole-gradient` など)。識別ポイントのアイコンも同様に `detailIcons.tsx` に分け、`DetailPoints.tsx` は会社別の定義と描画だけを持つ
 - 検索絞り込み・テーマ切替・地図クリック・back-to-topはクライアントコンポーネント(`"use client"`)、それ以外はサーバーコンポーネントのままSSGされる
 
 ## サイト構成
