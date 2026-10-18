@@ -1,4 +1,5 @@
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
 
 type Page = { href: string; title: string; desc: string; anchors: { id: string; label: string }[] };
 
@@ -71,21 +72,13 @@ const TRACKS: { id: string; title: string; lead: string; pages: Page[] }[] = [
 export function SiteMapContent() {
   return (
     <>
-      <header className="site-header">
-        <div className="container">
-          <a className="brand" href="#top">
-            <span>サイトマップ</span>
+      <SiteHeader title="サイトマップ" navLabel="系統">
+        {TRACKS.map((t) => (
+          <a key={t.id} href={`#${t.id}`}>
+            {t.title}
           </a>
-          <nav className="header-nav" aria-label="系統">
-            {TRACKS.map((t) => (
-              <a key={t.id} href={`#${t.id}`}>
-                {t.title}
-              </a>
-            ))}
-          </nav>
-          <ThemeToggle />
-        </div>
-      </header>
+        ))}
+      </SiteHeader>
       <main id="main">
         <div className="container">
           <section className="hero" id="top">
@@ -119,11 +112,9 @@ export function SiteMapContent() {
           </div>
         </div>
       </main>
-      <footer>
-        <div className="container">
-          <p>各ページの出典・利用条件は、それぞれのページのフッターを参照してください。</p>
-        </div>
-      </footer>
+      <SiteFooter sitemapLink={false}>
+        <p>各ページの出典・利用条件は、それぞれのページのフッターを参照してください。</p>
+      </SiteFooter>
     </>
   );
 }
