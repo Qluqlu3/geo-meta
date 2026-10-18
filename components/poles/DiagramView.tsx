@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import type { CompanyId } from "@/data/companies";
 import { CompanyDiagram } from "./CompanyDiagram";
 import { DetailPoints, hasDetailPoints } from "./DetailPoints";
 import { hasPole3D } from "./diagram3d/ids";
@@ -14,7 +15,7 @@ const Pole3D = dynamic(() => import("./diagram3d/Pole3D").then((m) => m.Pole3D),
 
 type Mode = "2d" | "3d" | "detail";
 
-export function DiagramView({ id, caption }: { id: string; caption: string }) {
+export function DiagramView({ id, caption }: { id: CompanyId; caption: string }) {
   const [mode, setMode] = useState<Mode>("2d");
   const has3D = hasPole3D(id);
   const hasDetail = hasDetailPoints(id);

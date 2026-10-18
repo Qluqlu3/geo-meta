@@ -7,6 +7,7 @@
 // company's own brand color, so a given part always reads as the same
 // color across all 10 companies (see Legend for the color key).
 import type { ComponentType } from "react";
+import type { CompanyId } from "@/data/companies";
 
 const GUYWIRE = "var(--part-guywire)";
 const TRANSFORMER = "var(--part-transformer)";
@@ -417,7 +418,8 @@ function Okinawa() {
   );
 }
 
-const DIAGRAMS: Record<string, ComponentType> = {
+// CompanyId を網羅する Record なので、会社を足して模式図を登録し忘れると型エラーになる。
+const DIAGRAMS: Record<CompanyId, ComponentType> = {
   hokkaido: Hokkaido,
   tohoku: Tohoku,
   tepco: Tepco,
@@ -430,8 +432,7 @@ const DIAGRAMS: Record<string, ComponentType> = {
   okinawa: Okinawa,
 };
 
-export function CompanyDiagram({ id }: { id: string }) {
+export function CompanyDiagram({ id }: { id: CompanyId }) {
   const Diagram = DIAGRAMS[id];
-  if (!Diagram) return null;
   return <Diagram />;
 }

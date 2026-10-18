@@ -1,6 +1,6 @@
 "use client";
 
-import type { Company } from "@/data/companies";
+import { type Company, isCompanyId } from "@/data/companies";
 import { PrefectureMap, type PrefFeature } from "../PrefectureMap";
 
 function jumpTo(id: string) {
@@ -31,19 +31,17 @@ function Prefecture({ feature, colorVar, companyName }: { feature: PrefFeature; 
 }
 
 export function JapanMap({ companies }: { companies: Company[] }) {
-  const colorByRegion = new Map(companies.map((c) => [c.id, c.colorVar]));
-  const nameByRegion = new Map(companies.map((c) => [c.id, c.name]));
+  const companyById = new Map(companies.map((c) => [c.id, c]));
+  // 地図データ(JSON)の region は文字列なので、CompanyId か確かめてから引く。
+  const companyOf = (region: string) => (isCompanyId(region) ? companyById.get(region) : undefined);
 
   return (
     <PrefectureMap
       label="日本の電力会社供給エリア地図(都道府県境入り)"
-      renderPrefecture={(f) => (
-        <Prefecture
-          feature={f}
-          colorVar={colorByRegion.get(f.region) ?? "--text-muted"}
-          companyName={nameByRegion.get(f.region) ?? f.region}
-        />
-      )}
+      renderPrefecture={(f) => {
+        const company = companyOf(f.region);
+        return <Prefecture feature={f} colorVar={company?.colorVar ?? "--text-muted"} companyName={company?.name ?? f.region} />;
+      }}
     />
   );
 }

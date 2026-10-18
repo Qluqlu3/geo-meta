@@ -1,7 +1,8 @@
 // Per-company "識別ポイント" panels: small labelled illustrations of the
-// confirmed identification patterns, grouped by confidence. Bespoke per
-// company (currently TEPCO), matching the community cheat-sheet layout.
+// confirmed identification patterns, grouped by confidence, matching the
+// community cheat-sheet layout.
 import type { ReactNode } from "react";
+import type { CompanyId } from "@/data/companies";
 
 const T = "var(--part-transformer)";
 const P = "var(--part-plate)";
@@ -511,7 +512,8 @@ function ConcretePole() {
 type DetailItem = { icon: ReactNode; label: string };
 type DetailCategory = { cat: string; badge: "confirmed" | "likely" | "region"; items: DetailItem[] };
 
-const DETAILS: Record<string, DetailCategory[]> = {
+// 識別ポイントは任意(ない会社は模式図だけを出す)。キーは CompanyId で綴りを検査する。
+const DETAILS: Partial<Record<CompanyId, DetailCategory[]>> = {
   tepco: [
     {
       cat: "確定情報",
@@ -724,11 +726,11 @@ const BADGE_LABEL: Record<DetailCategory["badge"], string> = {
   region: "地域別",
 };
 
-export function hasDetailPoints(id: string): boolean {
+export function hasDetailPoints(id: CompanyId): boolean {
   return id in DETAILS;
 }
 
-export function DetailPoints({ id }: { id: string }) {
+export function DetailPoints({ id }: { id: CompanyId }) {
   const categories = DETAILS[id];
   if (!categories) return null;
   return (

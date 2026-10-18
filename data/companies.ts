@@ -1,5 +1,26 @@
+// 10電力会社のID。地図データ(japanPrefectures.json の region)、カードのアンカー、
+// 会社別の模式図・識別ポイント・3Dモデルの登録キーはすべてこのIDで揃える。
+export const COMPANY_IDS = [
+  "hokkaido",
+  "tohoku",
+  "tepco",
+  "chubu",
+  "hokuriku",
+  "kansai",
+  "chugoku",
+  "shikoku",
+  "kyushu",
+  "okinawa",
+] as const;
+
+export type CompanyId = (typeof COMPANY_IDS)[number];
+
+export function isCompanyId(id: string): id is CompanyId {
+  return (COMPANY_IDS as readonly string[]).includes(id);
+}
+
 export type Company = {
-  id: string;
+  id: CompanyId;
   name: string;
   romaji: string;
   colorVar: string; // CSS custom property name, e.g. "--c-hokkaido"
