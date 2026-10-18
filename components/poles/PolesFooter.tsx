@@ -1,6 +1,6 @@
-import { SiteFooter } from "./SiteFooter";
+import { SiteFooter } from "../SiteFooter";
 
-export function Footer() {
+export function PolesFooter() {
   return (
     <SiteFooter>
       <p>

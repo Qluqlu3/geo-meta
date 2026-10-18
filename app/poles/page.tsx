@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { AppShell } from "@/components/AppShell";
 import { BackToTop } from "@/components/BackToTop";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { MarkerDefs } from "@/components/MarkerDefs";
+import { AppShell } from "@/components/poles/AppShell";
+import { MarkerDefs } from "@/components/poles/MarkerDefs";
+import { PolesFooter } from "@/components/poles/PolesFooter";
+import { PolesHeader } from "@/components/poles/PolesHeader";
 import { companies } from "@/data/companies";
 
 export const metadata: Metadata = {
@@ -19,13 +19,13 @@ export default function PolesPage() {
       <a className="skip-link" href="#main">
         本文へスキップ
       </a>
-      <Header companies={companies} />
+      <PolesHeader companies={companies} />
       <main id="main">
         <div className="container">
           <AppShell companies={companies} />
         </div>
       </main>
-      <Footer />
+      <PolesFooter />
       <BackToTop />
     </>
   );

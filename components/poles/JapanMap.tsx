@@ -1,7 +1,7 @@
 "use client";
 
 import type { Company } from "@/data/companies";
-import { PrefectureMap, type PrefFeature } from "./PrefectureMap";
+import { PrefectureMap, type PrefFeature } from "../PrefectureMap";
 
 function jumpTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });

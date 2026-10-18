@@ -1,6 +1,6 @@
 import type { Company } from "@/data/companies";
+import { RichText } from "../RichText";
 import { DiagramView } from "./DiagramView";
-import { RichText } from "./RichText";
 
 const PART_COLOR_VAR: Record<string, string> = {
   支線プレート: "--part-guywire",

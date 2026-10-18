@@ -5,7 +5,7 @@ import type { Company } from "@/data/companies";
 import { CompanyCard } from "./CompanyCard";
 import { CompareTable } from "./CompareTable";
 import { JapanMap } from "./JapanMap";
-import { Legend } from "./Legend";
+import { PolesLegend } from "./PolesLegend";
 
 function searchBlob(c: Company): string {
   return [
@@ -75,7 +75,7 @@ export function AppShell({ companies }: { companies: Company[] }) {
         </div>
       </section>
 
-      <Legend />
+      <PolesLegend />
 
       <section id="map-section">
         <h2 className="section-title">供給エリア地図</h2>

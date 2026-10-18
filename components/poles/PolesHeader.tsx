@@ -1,7 +1,7 @@
 import type { Company } from "@/data/companies";
-import { SiteHeader } from "./SiteHeader";
+import { SiteHeader } from "../SiteHeader";
 
-export function Header({ companies }: { companies: Company[] }) {
+export function PolesHeader({ companies }: { companies: Company[] }) {
   return (
     <SiteHeader
       title="電柱メタ図鑑"

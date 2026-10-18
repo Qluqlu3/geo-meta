@@ -53,7 +53,7 @@ cd out && python3 -m http.server 8000
 | --- | --- |
 | `app/` | ページ本体・レイアウト・グローバルCSS(`/` = サイト入口、`/poles` = 電柱メタ、`/road-markings` = 路面標示メタ) |
 | `components/SiteMapContent.tsx` | `/` と `/sitemap` の両方から表示する、系統をまたぐ案内(実体は1つ) |
-| `components/` | UIコンポーネント一式(`components/roadmarkings/` は路面標示メタ専用) |
+| `components/` | UIコンポーネント一式。直下は複数ページで共用する部品、`components/poles/` `components/roadmarkings/` `components/roadsigns/` `components/ruins/` はそれぞれのページ専用 |
 | `data/companies.ts` | 10電力会社ぶんのデータ(編集はここ1箇所でOK) |
 | `data/roadMarkings.ts` | 路面標示メタのデータ(「止まれ」字体タイプ・ウインカー促進標示・ダイヤマークなど) |
 | `data/japanPrefectures.json` | 都道府県境界の地図データ(地球地図日本より生成、要出典表示) |

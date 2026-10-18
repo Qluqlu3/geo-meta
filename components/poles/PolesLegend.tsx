@@ -1,4 +1,4 @@
-export function Legend() {
+export function PolesLegend() {
   return (
     <section id="legend">
       <h2 className="section-title">見分け方の基本カテゴリ</h2>
