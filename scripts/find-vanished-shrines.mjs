@@ -15,7 +15,7 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { VectorTile } from "@mapbox/vector-tile";
-import Pbf from "pbf";
+import { PbfReader } from "pbf";
 
 const UA = "haikyo-archive-symbol-script/0.1";
 const Z = 14;
@@ -58,7 +58,7 @@ async function currentFeatures(x, y) {
       });
       if (res.status === 404) break;
       if (!res.ok) throw new Error(String(res.status));
-      const t = new VectorTile(new Pbf(new Uint8Array(await res.arrayBuffer())));
+      const t = new VectorTile(new PbfReader(new Uint8Array(await res.arrayBuffer())));
       for (const [layer, prop] of [
         ["symbol", "ftCode"],
         ["label", "annoCtg"],

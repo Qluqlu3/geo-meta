@@ -11,7 +11,7 @@
 
 import { writeFileSync } from "node:fs";
 import { VectorTile } from "@mapbox/vector-tile";
-import Pbf from "pbf";
+import { PbfReader } from "pbf";
 
 const UA = "haikyo-archive-candidate-script/0.1";
 const Z = 15; // 建物が省略されずに入る最小のズーム
@@ -43,7 +43,7 @@ async function tile(x, y) {
         headers: { "User-Agent": UA },
       });
       if (res.status === 404) return null;
-      if (res.ok) return new VectorTile(new Pbf(new Uint8Array(await res.arrayBuffer())));
+      if (res.ok) return new VectorTile(new PbfReader(new Uint8Array(await res.arrayBuffer())));
     } catch {}
     await sleep(1000 * (attempt + 1));
   }
