@@ -1,4 +1,5 @@
-import { bollardCaveat, bollardPatterns, bollardSources, confidenceLabel } from "@/data/landscape";
+import { bollardCaveat, bollardPatterns, bollardSources } from "@/data/landscape";
+import { confidenceLabel } from "@/data/metaCommon";
 import { RichText } from "../RichText";
 import { SourceList } from "../SourceList";
 import { BollardIcon } from "./BollardIcon";

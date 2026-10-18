@@ -3,8 +3,7 @@
 // 電柱プレートに匹敵するレベルで体系化されている「ボラード(視線誘導標)の縞模様・反射板
 // パターン」を収録している。詳しい調査経緯は RESEARCH_landscape.md を参照。
 
-export type { Confidence } from "./roadMarkings";
-export { confidenceLabel } from "./roadMarkings";
+import type { Confidence } from "./metaCommon";
 
 // ---------------------------------------------------------------------------
 // ボラード(視線誘導標)の縞模様・反射板パターン
@@ -21,7 +20,7 @@ export type BollardPattern = {
   title: string;
   desc: string;
   tip: string;
-  confidence: import("./roadMarkings").Confidence;
+  confidence: Confidence;
 };
 
 export const bollardPatterns: BollardPattern[] = [

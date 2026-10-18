@@ -1,4 +1,4 @@
-type Kind = "no-hood" | "flash";
+import type { SignalSpotlightIconKind as Kind } from "@/data/roadSigns";
 
 // オリジナルの模式アイコン(実際の信号機の写真・正確な縮尺ではない)。
 // 「no-hood」は庇の有無を左右で比較、「flash」は一灯点滅式信号機を表現している。

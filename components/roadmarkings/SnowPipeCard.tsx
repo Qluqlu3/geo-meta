@@ -1,4 +1,5 @@
-import { confidenceLabel, snowPipeNote } from "@/data/roadMarkings";
+import { confidenceLabel } from "@/data/metaCommon";
+import { snowPipeNote } from "@/data/roadMarkings";
 import { RichText } from "../RichText";
 import { SourceList } from "../SourceList";
 

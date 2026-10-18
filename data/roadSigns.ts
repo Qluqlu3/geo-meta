@@ -2,8 +2,7 @@
 // 地域差を整理したデータ。路面に直接ペイントされたもの(止まれの字体・ダイヤマーク等)は
 // data/roadMarkings.ts を参照。詳しい調査経緯は RESEARCH_road-signs.md を参照。
 
-export type { Confidence } from "./roadMarkings";
-export { confidenceLabel } from "./roadMarkings";
+import type { ReferenceNote, Spotlight } from "./metaCommon";
 
 // ---------------------------------------------------------------------------
 // 信号機の縦型/横型(都道府県別・47都道府県ぶん)
@@ -93,19 +92,9 @@ export const signalOrientationSources = [
 // 信号機のその他の強いネタ(電柱メタの「ウインカー促進標示」に相当するカード群)
 // ---------------------------------------------------------------------------
 
-export type SignalSpotlight = {
-  id: string;
-  icon: "no-hood" | "flash";
-  title: string;
-  areas: string[];
-  confidence: import("./roadMarkings").Confidence;
-  summary: string;
-  points: { k: string; v: string }[];
-  note: string;
-  sources: { label: string; url: string }[];
-};
+export type SignalSpotlightIconKind = "no-hood" | "flash";
 
-export const signalSpotlights: SignalSpotlight[] = [
+export const signalSpotlights: Spotlight<SignalSpotlightIconKind>[] = [
   {
     id: "no-hood",
     icon: "no-hood",
@@ -377,14 +366,6 @@ export const chainSectionsSources = [
 // 参考程度(採用保留・弱いネタ): 裏付け不足/未開拓/既存の結論と矛盾するなどの
 // 理由で主要コンテンツにはしていないが、記録として残しておく事例
 // ---------------------------------------------------------------------------
-
-export type ReferenceNote = {
-  id: string;
-  title: string;
-  areas: string[];
-  note: string;
-  sources: { label: string; url: string }[];
-};
 
 export const referenceNotes: ReferenceNote[] = [
   {

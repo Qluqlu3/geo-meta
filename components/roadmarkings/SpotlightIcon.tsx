@@ -1,4 +1,4 @@
-type Kind = "star" | "olive" | "balloon";
+import type { SpotlightIconKind as Kind } from "@/data/roadMarkings";
 
 const COLOR: Record<Kind, string> = {
   star: "#caa000",

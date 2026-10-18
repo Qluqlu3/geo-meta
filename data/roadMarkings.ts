@@ -2,13 +2,7 @@
 // 電柱と違い管理主体が都道府県(公安委員会)単位でバラバラなため、電力会社のような
 // きれいな地方区分にはならない。詳細は RESEARCH_road-markings.md を参照。
 
-export type Confidence = "confirmed" | "likely" | "reference";
-
-export const confidenceLabel: Record<Confidence, string> = {
-  confirmed: "複数ソースで確認",
-  likely: "有力(裏取り一部)",
-  reference: "参考程度",
-};
+import type { Confidence, ReferenceNote, Spotlight } from "./metaCommon";
 
 // ---------------------------------------------------------------------------
 // 「止まれ」路面標示の字体タイプ(都道府県別・47都道府県ぶん)
@@ -102,19 +96,9 @@ export const tomareByPrefecture = new Map(tomarePrefectures.map((p) => [p.nameJa
 // スポットライト事例: 電柱プレートに近い「今も現役で地域固有」の強いネタ
 // ---------------------------------------------------------------------------
 
-export type Spotlight = {
-  id: string;
-  icon: "star" | "olive" | "balloon";
-  title: string;
-  areas: string[];
-  confidence: Confidence;
-  summary: string;
-  points: { k: string; v: string }[];
-  note: string;
-  sources: { label: string; url: string }[];
-};
+export type SpotlightIconKind = "star" | "olive" | "balloon";
 
-export const spotlights: Spotlight[] = [
+export const spotlights: Spotlight<SpotlightIconKind>[] = [
   {
     id: "okayama-star",
     icon: "star",
@@ -225,14 +209,6 @@ export const snowPipeNote = {
 // 参考程度(採用保留・弱いネタ): 再現性が低い/範囲が広すぎる/廃止方向などの理由で
 // 主要コンテンツにはしていないが、記録として残しておく事例
 // ---------------------------------------------------------------------------
-
-export type ReferenceNote = {
-  id: string;
-  title: string;
-  areas: string[];
-  note: string;
-  sources: { label: string; url: string }[];
-};
 
 export const referenceNotes: ReferenceNote[] = [
   {

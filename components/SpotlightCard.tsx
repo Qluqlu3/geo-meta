@@ -1,21 +1,10 @@
 import type { ReactNode } from "react";
-import { type Confidence, confidenceLabel } from "@/data/roadMarkings";
+import { confidenceLabel, type Spotlight } from "@/data/metaCommon";
 import { RichText } from "./RichText";
-import { type Source, SourceList } from "./SourceList";
-
-export type SpotlightContent = {
-  id: string;
-  title: string;
-  areas: string[];
-  confidence: Confidence;
-  summary: string;
-  points: { k: string; v: string }[];
-  note: string;
-  sources: Source[];
-};
+import { SourceList } from "./SourceList";
 
 // 路面標示メタ・道路標識メタの「強いネタ」カード。図(アイコン)だけページごとに差し替える。
-export function SpotlightCard({ spotlight, icon }: { spotlight: SpotlightContent; icon: ReactNode }) {
+export function SpotlightCard({ spotlight, icon }: { spotlight: Spotlight; icon: ReactNode }) {
   return (
     <article className="company-card" id={spotlight.id}>
       <div className="company-head">
